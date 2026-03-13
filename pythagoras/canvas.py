@@ -1,34 +1,42 @@
-from .pobject import PObject
 from heapq import heapify, heappush
 
-class Canvas(object):
-    elements: list[PObject]
+from .pobject import PObject
 
-    def __init__(self, *args: PObject) -> None:
-        self.elements = list(args)
-        heapify(self.elements)
+
+class Canvas:
+    height: int
+    width: int
+    __elements: list[PObject]
+
+    def __init__(self, height: int, width: int, *args: PObject) -> None:
+        self.height = height
+        self.width = width
+        self.__elements = list(args)
+        heapify(self.__elements)
 
     def add(self, *args: PObject) -> None:
         for obj in args:
-            heappush(self.elements, obj)
+            heappush(self.__elements, obj)
 
-    @property
     def tikz(self) -> str:
-        return "\n".join(map(lambda e: e.tikz, self.elements))
+        return (
+            r"\documentclass[crop,tikz]{standalone}"
+            + "\n"
+            + r"\begin{document}"
+            + "\n"
+            + r"\begin{tikzpicture}"
+            + "\n"
+            + "\n".join(e.tikz() for e in self.__elements)
+            + "\n"
+            + r"\end{tikzpicture}"
+            + "\n"
+            + r"\end{document}"
+        )
 
-    @property
-    def tikz_doc(self) -> str:
-        return r"\documentclass[crop,tikz]{standalone}"+'\n'\
-             + r"\begin{document}"+'\n'\
-             + r"\begin{tikzpicture}"+'\n'\
-             + f"{self.tikz}\n"\
-             + r"\end{tikzpicture}"+'\n'\
-             + r"\end{document}"+'\n'
-
-    @property
-    def pstricks(self) -> str:
-        return "\n".join(map(lambda e: e.pstricks, self.elements))
-
-    @property
     def svg(self) -> str:
-        return "\n".join(map(lambda e: e.svg, self.elements))
+        return (
+            f'<svg width="{self.width}" height="{self.height}" xmlns="http://www.w3.org/2000/svg">\n'
+            + "\n".join(e.svg() for e in self.__elements)
+            + "\n"
+            + "</svg>"
+        )
