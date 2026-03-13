@@ -97,8 +97,8 @@ class Circle(PObject):
         s = (d1 + d2 + d3) / 2
         area = sqrt(abs(s * (s - d1) * (s - d2) * (s - d3)))
 
-        ix = 2 * (d1 * x1 + d2 * x2 + d3 * x3) / s
-        iy = 2 * (d1 * y1 + d2 * y2 + d3 * y3) / s
+        ix = (d1 * x1 + d2 * x2 + d3 * x3) / (2 * s)
+        iy = (d1 * y1 + d2 * y2 + d3 * y3) / (2 * s)
 
         return cls(ix, iy, area / s, zord)
 
