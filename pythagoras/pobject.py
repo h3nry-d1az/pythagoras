@@ -15,5 +15,12 @@ class PObject(ABC):
         pass
 
     @abstractmethod
-    def svg(self, *args: str, **kwargs: POProperty) -> str:
+    def svg(
+        self,
+        width: float,
+        height: float,
+        scale: float,
+        *args: str,
+        **kwargs: POProperty,
+    ) -> str:
         pass
