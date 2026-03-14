@@ -11,12 +11,17 @@ class PObject(ABC):
         return self._zord < other._zord
 
     @abstractmethod
+    def extrema(self) -> list[tuple[float, float]]:
+        pass
+
+    @abstractmethod
     def tikz(self, *args: str, **kwargs: POProperty) -> str:
         pass
 
     @abstractmethod
     def svg(
         self,
+        origin: tuple[float, float],
         width: float,
         height: float,
         scale: float,

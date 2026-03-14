@@ -2,7 +2,7 @@ from math import sqrt
 
 from pythagoras import Canvas, Circle, Label, Point
 
-ctx = Canvas(125, 125)
+ctx = Canvas()
 ctx.scale = 50
 
 ctx.add(p1 := Point(0, 1, 0.05), fill="red")

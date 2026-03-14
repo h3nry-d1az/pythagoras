@@ -16,12 +16,16 @@ class Label(PObject):
         self.tag = tag
         self._zord = zord
 
+    def extrema(self) -> list[tuple[float, float]]:
+        return [(self.x, self.y)]
+
     def tikz(self, *args: str, **kwargs: str | float) -> str:
         compile_options_tikz(kwargs)
         return tikz_command("node", f"at ({self.x}, {self.y}) {{{f'${self.tag}$'}}}")
 
     def svg(
         self,
+        origin: tuple[float, float],
         width: float,
         height: float,
         scale: float,
@@ -29,6 +33,8 @@ class Label(PObject):
         **kwargs: str | float,
     ) -> str:
         x, y = cartesian_to_canvas(self.x, self.y, width, height, scale)
+        x -= origin[0]
+        y += origin[1]
         w, h = min(width - x, x), min(height - y, y)
         px, py = x - w, y - h
         compile_options_svg(kwargs)

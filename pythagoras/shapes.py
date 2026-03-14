@@ -20,6 +20,9 @@ class Path(PObject):
         if len(self.points) < 2:
             raise RuntimeError("A path must have at least two points.")
 
+    def extrema(self) -> list[tuple[float, float]]:
+        return self.points
+
     def tikz(self, *args: str, **kwargs: str | float) -> str:
         compile_options_tikz(kwargs)
         return tikz_command(
@@ -31,6 +34,7 @@ class Path(PObject):
 
     def svg(
         self,
+        origin: tuple[float, float],
         width: float,
         height: float,
         scale: float,
@@ -41,11 +45,10 @@ class Path(PObject):
         style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
         style.update(kwargs)
         pp0 = cartesian_to_canvas(*self.points[0], width, height, scale)
-        path = f"M {pp0[0]} {pp0[1]}"
+        path = f"M {pp0[0] - origin[0]} {pp0[1] + origin[1]}"
         for p in self.points[1:]:
             pp = cartesian_to_canvas(*p, width, height, scale)
-            # print(p, pp)
-            path += f" L {pp[0]} {pp[1]}"
+            path += f" L {pp[0] - origin[0]} {pp[1] + origin[1]}"
         return svg_command("path", *args, d=path, **style)
 
 
@@ -61,6 +64,7 @@ class Polygon(Path):
 
     def svg(
         self,
+        origin: tuple[float, float],
         width: float,
         height: float,
         scale: float,
@@ -68,7 +72,7 @@ class Polygon(Path):
         **kwargs: str | float,
     ) -> str:
         self.points.append(self.points[0])
-        code = super().svg(width, height, scale, *args, **kwargs)
+        code = super().svg(origin, width, height, scale, *args, **kwargs)
         self.points.pop()
         return code
 

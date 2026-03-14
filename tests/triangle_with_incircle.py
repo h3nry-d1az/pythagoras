@@ -1,6 +1,6 @@
 from pythagoras import Canvas, Circle, Label, Path, Polygon
 
-ctx = Canvas(500, 500)
+ctx = Canvas()
 ctx.scale = 20
 
 triangle = Polygon.triangle_from_lengths(13, 14, 15)

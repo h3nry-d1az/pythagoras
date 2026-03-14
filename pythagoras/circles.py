@@ -29,8 +29,17 @@ class Circle(PObject):
             cmd, f"({self.x}, {self.y}) circle ({self.radius})", *args, **kwargs
         )
 
+    def extrema(self) -> list[tuple[float, float]]:
+        return [
+            (self.x + self.radius, self.y + self.radius),
+            (self.x + self.radius, self.y - self.radius),
+            (self.x - self.radius, self.y + self.radius),
+            (self.x - self.radius, self.y - self.radius),
+        ]
+
     def svg(
         self,
+        origin: tuple[float, float],
         width: float,
         height: float,
         scale: float,
@@ -38,6 +47,8 @@ class Circle(PObject):
         **kwargs: str | float,
     ) -> str:
         cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
+        cx -= origin[0]
+        cy += origin[1]
         style: dict[str, str | float] = {
             "cx": cx,
             "cy": cy,
@@ -114,6 +125,7 @@ class Point(Circle):
 
     def svg(
         self,
+        origin: tuple[float, float],
         width: float,
         height: float,
         scale: float,
@@ -122,4 +134,4 @@ class Point(Circle):
     ) -> str:
         style: dict[str, str | float] = {"fill": "white", "color": "black"}
         style.update(kwargs)
-        return super().svg(width, height, scale, *args, **style)
+        return super().svg(origin, width, height, scale, *args, **style)
