@@ -2,6 +2,8 @@ from heapq import heapify, heappush
 
 from .pobject import PObject, POProperty
 
+__all__ = ["Canvas"]
+
 
 class Canvas:
     scale: float
@@ -51,7 +53,7 @@ class Canvas:
         height = self._ymax - self._ymin + 5
         O = ((self._xmax + self._xmin) / 2, (self._ymax + self._ymin) / 2)
         return (
-            f'<svg width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg">\n'
+            f'<svg width="{width:.4f}" height="{height:.4f}" xmlns="http://www.w3.org/2000/svg">\n'
             + "\n".join(
                 e.svg(O, width, height, self.scale, *a, **k)
                 for e, a, k in self.__elements

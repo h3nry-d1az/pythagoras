@@ -10,6 +10,8 @@ from .backend import (
 from .pobject import PObject
 from .utils import cartesian_to_canvas
 
+__all__ = ["Path", "Polygon"]
+
 
 class Path(PObject):
     points: list[tuple[float, float]]
@@ -45,10 +47,10 @@ class Path(PObject):
         style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
         style.update(kwargs)
         pp0 = cartesian_to_canvas(*self.points[0], width, height, scale)
-        path = f"M {pp0[0] - origin[0]} {pp0[1] + origin[1]}"
+        path = f"M {pp0[0] - origin[0]:.4f} {pp0[1] + origin[1]:.4f}"
         for p in self.points[1:]:
             pp = cartesian_to_canvas(*p, width, height, scale)
-            path += f" L {pp[0] - origin[0]} {pp[1] + origin[1]}"
+            path += f" L {pp[0] - origin[0]:.4f} {pp[1] + origin[1]:.4f}"
         return svg_command("path", *args, d=path, **style)
 
 

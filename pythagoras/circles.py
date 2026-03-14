@@ -1,4 +1,4 @@
-from math import hypot, sqrt
+from math import atan2, cos, degrees, hypot, radians, sin, sqrt
 from typing import Self
 
 from .backend import (
@@ -9,6 +9,8 @@ from .backend import (
 )
 from .pobject import PObject
 from .utils import cartesian_to_canvas
+
+__all__ = ["Circle", "Ellipse", "Point"]
 
 
 class Circle(PObject):
@@ -112,6 +114,88 @@ class Circle(PObject):
         iy = (d1 * y1 + d2 * y2 + d3 * y3) / (2 * s)
 
         return cls(ix, iy, area / s, zord)
+
+
+class Ellipse(PObject):
+    x: float
+    y: float
+    rx: float
+    ry: float
+    theta: float
+
+    def __init__(self, x: float, y: float, rx: float, ry: float, zord: int = 0) -> None:
+        self.x = x
+        self.y = y
+        self.rx = rx
+        self.ry = ry
+        self.theta = 0
+        self._zord = zord
+
+    def extrema(self) -> list[tuple[float, float]]:
+        dx = hypot(
+            self.rx * cos(radians(self.theta)), self.ry * sin(radians(self.theta))
+        )
+        dy = hypot(
+            self.rx * sin(radians(self.theta)), self.ry * cos(radians(self.theta))
+        )
+        return [
+            (self.x + dx, self.y + dy),
+            (self.x + dx, self.y - dy),
+            (self.x - dx, self.y + dy),
+            (self.x - dx, self.y - dy),
+        ]
+
+    def tikz(self, *args: str, **kwargs: str | float) -> str:
+        cmd = "filldraw" if "fill" in kwargs else "draw"
+        compile_options_tikz(kwargs)
+        return tikz_command(
+            cmd,
+            f"({self.x}, {self.y}) ellipse [x radius={self.rx}, y radius={self.ry}, rotate={self.theta}]",
+            *args,
+            **kwargs,
+        )
+
+    def svg(
+        self,
+        origin: tuple[float, float],
+        width: float,
+        height: float,
+        scale: float,
+        *args: str,
+        **kwargs: str | float,
+    ) -> str:
+        cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
+        cx -= origin[0]
+        cy += origin[1]
+        style: dict[str, str | float] = {
+            "cx": cx,
+            "cy": cy,
+            "rx": self.rx * scale,
+            "ry": self.ry * scale,
+            "transform": f"rotate({-self.theta:.4f}, {cx:.4f}, {cy:.4f})",
+            "fill": "none",
+            "stroke": "black",
+        }
+        style.update(kwargs)
+        compile_options_svg(style)
+        return svg_command("ellipse", *args, **style)
+
+    @classmethod
+    def from_foci(
+        cls,
+        f1: tuple[float, float],
+        f2: tuple[float, float],
+        p: tuple[float, float],
+        zord: int = 0,
+    ) -> Self:
+        x = (f1[0] + f2[0]) / 2
+        y = (f1[1] + f2[1]) / 2
+        c = hypot(f1[0] - f2[0], f1[1] - f2[1]) / 2
+        rx = (hypot(f1[0] - p[0], f1[1] - p[1]) + hypot(f2[0] - p[0], f2[1] - p[1])) / 2
+        ry = sqrt(rx**2 - c**2) if rx > c else 0
+        ell = cls(x, y, rx, ry, zord)
+        ell.theta = degrees(atan2(f2[1] - f1[1], f2[0] - f1[0]))
+        return ell
 
 
 class Point(Circle):

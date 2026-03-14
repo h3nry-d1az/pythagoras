@@ -2,6 +2,7 @@ from itertools import chain
 
 from .pobject import POProperty
 
+__all__ = ["compile_options_svg", "compile_options_tikz", "svg_command", "tikz_command"]
 __options_dict = {"fill": ("fill", "fill"), "color": ("color", "stroke")}
 
 
@@ -16,7 +17,10 @@ def tikz_command(name: str, body: str, *args: str, **kwargs: POProperty) -> str:
 
 def svg_command(name: str, *args: str, **kwargs: POProperty) -> str:
     if args or kwargs:
-        kwargs_ = (f'{p[0]}="{p[1]}"' for p in kwargs.items())
+        kwargs_ = (
+            f'{p[0]}="{p[1] if isinstance(p[1], str) else round(p[1], 4)}"'
+            for p in kwargs.items()
+        )
         params = " ".join(chain(args, kwargs_))
     else:
         params = ""

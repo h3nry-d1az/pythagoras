@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Self
 
+__all__ = ["POProperty", "PObject"]
+
 POProperty = str | float
 
 

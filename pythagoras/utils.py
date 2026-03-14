@@ -1,3 +1,6 @@
+__all__ = ["cartesian_to_canvas"]
+
+
 def cartesian_to_canvas(
     x: float, y: float, width: float, height: float, scale: float
 ) -> tuple[float, float]:

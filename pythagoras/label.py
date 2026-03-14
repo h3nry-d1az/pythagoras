@@ -4,6 +4,8 @@ from .backend import compile_options_svg, compile_options_tikz, tikz_command
 from .pobject import PObject
 from .utils import cartesian_to_canvas
 
+__all__ = ["Label"]
+
 
 class Label(PObject):
     x: float
@@ -40,8 +42,8 @@ class Label(PObject):
         compile_options_svg(kwargs)
         fs = kwargs.get("font_scale", scale)
         return (
-            f'<foreignObject x="{px}" y="{py}" width="{2 * w}" height="{2 * h}">\n'
-            f'<div xmlns="http://www.w3.org/1999/xhtml" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: {12 * fs}px;">\n'
+            f'<foreignObject x="{px:.4f}" y="{py:.4f}" width="{2 * w:.4f}" height="{2 * h:.4f}">\n'
+            f'<div xmlns="http://www.w3.org/1999/xhtml" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: {12 * fs:.4f}px;">\n'
             f"{convert(self.tag)}"
             "</div>"
             "</foreignObject>"
