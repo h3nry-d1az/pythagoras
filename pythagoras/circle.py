@@ -99,7 +99,7 @@ class Circle(PObject):
         p2: tuple[float, float],
         p3: tuple[float, float],
         zord: int = 0,
-    ) -> Self:
+    ) -> tuple[Self, tuple[float, float], tuple[float, float], tuple[float, float]]:
         x1, y1 = p1
         x2, y2 = p2
         x3, y3 = p3
@@ -113,7 +113,16 @@ class Circle(PObject):
         ix = (d1 * x1 + d2 * x2 + d3 * x3) / (2 * s)
         iy = (d1 * y1 + d2 * y2 + d3 * y3) / (2 * s)
 
-        return cls(ix, iy, area / s, zord)
+        q1 = (s - d1) / d3
+        q2 = (s - d2) / d1
+        q3 = (s - d3) / d2
+
+        return (
+            cls(ix, iy, area / s, zord),
+            (p1[0] + (p2[0] - p1[0]) * q1, p1[1] + (p2[1] - p1[1]) * q1),
+            (p2[0] + (p3[0] - p2[0]) * q2, p2[1] + (p3[1] - p2[1]) * q2),
+            (p3[0] + (p1[0] - p3[0]) * q3, p3[1] + (p1[1] - p3[1]) * q3),
+        )
 
 
 class Ellipse(PObject):
