@@ -1,12 +1,7 @@
-from math import cos, sin, sqrt, tau
+from math import cos, radians, sin, sqrt, tau
 from typing import Self
 
-from .backend import (
-    compile_options_svg,
-    compile_options_tikz,
-    svg_command,
-    tikz_command,
-)
+from .backend import compile_options_svg, compile_options_tikz, svg_path, tikz_command
 from .pobject import PObject
 from .utils import cartesian_to_canvas
 
@@ -46,12 +41,26 @@ class Path(PObject):
         compile_options_svg(kwargs)
         style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
         style.update(kwargs)
-        pp0 = cartesian_to_canvas(*self.points[0], width, height, scale)
-        path = f"M {pp0[0] - origin[0]:.4f} {pp0[1] + origin[1]:.4f}"
-        for p in self.points[1:]:
-            pp = cartesian_to_canvas(*p, width, height, scale)
-            path += f" L {pp[0] - origin[0]:.4f} {pp[1] + origin[1]:.4f}"
-        return svg_command("path", *args, d=path, **style)
+        return svg_path(
+            (cartesian_to_canvas(*p, width, height, scale) for p in self.points),
+            origin,
+            width,
+            height,
+            scale,
+            *args,
+            **style,
+        )
+
+    def rotate(self, point: tuple[float, float], theta: float) -> None:
+        px, py = point
+        alpha = radians(theta)
+        self.points = [
+            (
+                (x - px) * cos(alpha) - (y - py) * sin(alpha) + py,
+                (x - px) * sin(alpha) + (y - py) * cos(alpha),
+            )
+            for x, y in self.points
+        ]
 
 
 class Polygon(Path):

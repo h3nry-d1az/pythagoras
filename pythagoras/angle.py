@@ -4,12 +4,13 @@ from .backend import (
     compile_options_svg,
     compile_options_tikz,
     svg_command,
+    svg_path,
     tikz_command,
 )
 from .pobject import PObject
 from .utils import cartesian_to_canvas
 
-__all__ = ["Angle"]
+__all__ = ["Angle", "RAngle"]
 
 
 class Angle(PObject):
@@ -85,7 +86,7 @@ class Angle(PObject):
 
         return tikz_command(
             "draw",
-            f"({start_x:.4f}, {start_y:.4f}) arc ({deg1:.4f}:{deg2:.4f}:{self.radius:.4f})",
+            f"({start_x}, {start_y}) arc ({deg1}:{deg2}:{self.radius})",
             *args,
             **kwargs,
         )
@@ -138,3 +139,55 @@ class Angle(PObject):
 
         d = f"M {start_x:.4f} {start_y:.4f} A {self.radius * scale:.4f} {self.radius * scale:.4f} 0 {large_arc_flag} {sweep_flag} {end_x:.4f} {end_y:.4f}"
         return svg_command("path", *args, d=d, **style)
+
+
+class RAngle(Angle):
+    def extrema(self) -> list[tuple[float, float]]:
+        rn = self.radius / (2 ** (1 / 2))
+
+        v1 = (self.p1[0] - self.p2[0], self.p1[1] - self.p2[1])
+        n1 = hypot(*v1)
+        u1 = (v1[0] / n1, v1[1] / n1)
+
+        v2 = (self.p3[0] - self.p2[0], self.p3[1] - self.p2[1])
+        n2 = hypot(*v2)
+        u2 = (v2[0] / n2, v2[1] / n2)
+
+        return [
+            self.p2,
+            (self.p2[0] + u1[0] * rn, self.p2[1] + u1[1] * rn),
+            (self.p2[0] + (u1[0] + u2[0]) * rn, self.p2[1] + (u1[1] + u2[1]) * rn),
+            (self.p2[0] + u2[0] * rn, self.p2[1] + u2[1] * rn),
+        ]
+
+    def tikz(self, *args: str, **kwargs: str | float) -> str:
+        compile_options_tikz(kwargs)
+        points = self.extrema()
+        points.append(points[0])
+        return tikz_command(
+            "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in points), *args, **kwargs
+        )
+
+    def svg(
+        self,
+        origin: tuple[float, float],
+        width: float,
+        height: float,
+        scale: float,
+        *args: str,
+        **kwargs: str | float,
+    ) -> str:
+        compile_options_svg(kwargs)
+        style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
+        style.update(kwargs)
+        points = self.extrema()
+        points.append(points[0])
+        return svg_path(
+            (cartesian_to_canvas(*p, width, height, scale) for p in points),
+            origin,
+            width,
+            height,
+            scale,
+            *args,
+            **style,
+        )

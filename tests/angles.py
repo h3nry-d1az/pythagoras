@@ -1,13 +1,15 @@
 from pythagoras import *
 
 ctx = Canvas()
-ctx.scale = 20
+ctx.scale = 50
 
-triangle = Polygon.triangle_from_lengths(13, 14, 15)
+# triangle = Polygon((0, 0), (4, 0), (4, 3))
+triangle = Polygon.triangle_from_lengths(3, 4, 5)
+triangle.rotate((0, 0), 20)
 ctx.add(triangle)
 
-ctx.add(Angle(triangle.points[1], triangle.points[0], triangle.points[2], 2.5))
-ctx.add(Angle(triangle.points[0], triangle.points[1], triangle.points[2], 2.5))
-ctx.add(Angle(triangle.points[0], triangle.points[2], triangle.points[1], 2.5))
+ctx.add(Angle(triangle.points[1], triangle.points[0], triangle.points[2], 1))
+ctx.add(Angle(triangle.points[2], triangle.points[1], triangle.points[0], 1))
+ctx.add(RAngle(triangle.points[0], triangle.points[2], triangle.points[1], 0.75))
 
 print(ctx.svg())
