@@ -10,7 +10,11 @@ __all__ = [
     "svg_path",
     "tikz_command",
 ]
-__options_dict = {"fill": ("fill", "fill"), "color": ("color", "stroke")}
+__options_dict = {
+    "fill": ("fill", "fill"),
+    "color": ("color", "stroke"),
+    "thickness": ("line width", "stroke-width"),
+}
 
 
 def tikz_command(name: str, body: str, *args: str, **kwargs: POProperty) -> str:

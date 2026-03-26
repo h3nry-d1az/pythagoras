@@ -19,7 +19,12 @@ class Label(PObject):
         self._zord = zord
 
     def extrema(self) -> list[tuple[float, float]]:
-        return [(self.x, self.y)]
+        return [
+            (self.x - 0.05, self.y + 0.05),
+            (self.x + 0.05 * len(self.tag), self.y + 0.05),
+            (self.x - 0.05, self.y - 0.05),
+            (self.x + 0.05 * len(self.tag), self.y - 0.05),
+        ]
 
     def tikz(self, *args: str, **kwargs: str | float) -> str:
         compile_options_tikz(kwargs)
