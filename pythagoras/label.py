@@ -11,19 +11,23 @@ class Label(PObject):
     x: float
     y: float
     tag: str
+    padding: float
 
-    def __init__(self, x: float, y: float, tag: str, zord: int = 0) -> None:
+    def __init__(
+        self, x: float, y: float, tag: str, padding: float = 0.05, zord: int = 0
+    ) -> None:
         self.x = x
         self.y = y
         self.tag = tag
+        self.padding = padding
         self._zord = zord
 
     def extrema(self) -> list[tuple[float, float]]:
         return [
-            (self.x - 0.05, self.y + 0.05),
-            (self.x + 0.05 * len(self.tag), self.y + 0.05),
-            (self.x - 0.05, self.y - 0.05),
-            (self.x + 0.05 * len(self.tag), self.y - 0.05),
+            (self.x - self.padding, self.y + self.padding),
+            (self.x + self.padding * len(self.tag), self.y + self.padding),
+            (self.x - self.padding, self.y - self.padding),
+            (self.x + self.padding * len(self.tag), self.y - self.padding),
         ]
 
     def tikz(self, *args: str, **kwargs: str | float) -> str:
