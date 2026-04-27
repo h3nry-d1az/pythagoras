@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from math import hypot
+from math import cos, hypot, sin
 from typing import Self
 
 __all__ = ["Vector"]
@@ -46,3 +46,19 @@ class Vector:
 
     def __complex__(self) -> complex:
         return complex(self.x, self.y)
+
+    def __lshift__(self, angle: float) -> Self:
+        return self.__class__(
+            self.x * cos(angle) - self.y * sin(angle),
+            self.x * sin(angle) + self.y * cos(angle),
+        )
+
+    def __rshift__(self, angle: float) -> Self:
+        return self.__class__(
+            self.x * cos(angle) + self.y * sin(angle),
+            -self.x * sin(angle) + self.y * cos(angle),
+        )
+
+    @property
+    def perp(self) -> Self:
+        return self.__class__(-self.y, self.x)

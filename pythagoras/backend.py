@@ -20,10 +20,10 @@ __options_dict = {
 def tikz_command(name: str, body: str, *args: str, **kwargs: POProperty) -> str:
     if args or kwargs:
         kwargs_ = (f"{p[0]}={p[1]}" for p in sorted(kwargs.items(), key=lambda p: p[0]))
-        params = f"[{', '.join(chain(args, kwargs_))}]"
+        params = f"{', '.join(chain(args, kwargs_))}"
     else:
         params = ""
-    return rf"\{name}{params} {body};"
+    return rf"\{name}[{params}] {body};"
 
 
 def svg_command(name: str, *args: str, **kwargs: POProperty) -> str:
