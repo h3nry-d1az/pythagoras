@@ -5,3 +5,4 @@ from .label import *
 from .plot import *
 from .pobject import *
 from .shape import *
+from .vector import *
