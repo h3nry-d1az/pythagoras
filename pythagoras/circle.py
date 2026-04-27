@@ -24,13 +24,6 @@ class Circle(PObject):
         self.radius = radius
         self._zord = zord
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        cmd = "filldraw" if "fill" in kwargs else "draw"
-        compile_options_tikz(kwargs)
-        return tikz_command(
-            cmd, f"({self.x}, {self.y}) circle ({self.radius})", *args, **kwargs
-        )
-
     def extrema(self) -> list[tuple[float, float]]:
         return [
             (self.x + self.radius, self.y + self.radius),
@@ -38,6 +31,13 @@ class Circle(PObject):
             (self.x - self.radius, self.y + self.radius),
             (self.x - self.radius, self.y - self.radius),
         ]
+
+    def tikz(self, *args: str, **kwargs: str | float) -> str:
+        cmd = "filldraw" if "fill" in kwargs else "draw"
+        compile_options_tikz(kwargs)
+        return tikz_command(
+            cmd, f"({self.x}, {self.y}) circle ({self.radius})", *args, **kwargs
+        )
 
     def svg(
         self,

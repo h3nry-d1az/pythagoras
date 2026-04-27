@@ -1,5 +1,3 @@
-from heapq import heapify, heappush
-
 from .pobject import PObject, POProperty
 
 __all__ = ["Canvas"]
@@ -21,7 +19,6 @@ class Canvas:
         self._ymin = 0
         self._ymax = 0
         self.__elements = []
-        heapify(self.__elements)
 
     def add(self, obj: PObject, *args: str, **kwargs: POProperty) -> None:
         for p in obj.extrema():
@@ -30,7 +27,7 @@ class Canvas:
             self._xmax = max(p[0], self._xmax)
             self._ymin = min(p[1], self._ymin)
             self._ymax = max(p[1], self._ymax)
-        heappush(self.__elements, (obj, args, kwargs))
+        self.__elements.append((obj, args, kwargs))
 
     def tikz(self) -> str:
         return (
@@ -41,7 +38,7 @@ class Canvas:
             + r"\begin{tikzpicture}"
             + (f"[scale={self.scale}]" if self.scale != 1 else "")
             + "\n"
-            + "\n".join(e.tikz(*a, **k) for e, a, k in self.__elements)
+            + "\n".join(e.tikz(*a, **k) for e, a, k in sorted(self.__elements))
             + "\n"
             + r"\end{tikzpicture}"
             + "\n"
@@ -56,7 +53,7 @@ class Canvas:
             f'<svg width="{width:.4f}" height="{height:.4f}" xmlns="http://www.w3.org/2000/svg">\n'
             + "\n".join(
                 e.svg(O, width, height, self.scale, *a, **k)
-                for e, a, k in self.__elements
+                for e, a, k in sorted(self.__elements)
             )
             + "\n"
             + "</svg>"

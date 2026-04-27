@@ -1,4 +1,4 @@
-from pythagoras import *
+from pythagoras.prelude import *
 
 ctx = Canvas()
 ctx.scale = 50

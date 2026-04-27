@@ -1,4 +1,4 @@
-from pythagoras import Canvas, Circle, Label, Path, Point, Polygon
+from pythagoras.prelude import Canvas, Circle, Label, Path, Point, Polygon
 
 ctx = Canvas()
 ctx.scale = 20

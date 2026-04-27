@@ -1,6 +1,0 @@
-from .angle import *
-from .canvas import *
-from .circle import *
-from .label import *
-from .pobject import *
-from .shape import *

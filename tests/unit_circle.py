@@ -1,6 +1,6 @@
 from math import sqrt
 
-from pythagoras import Canvas, Circle, Label, Point
+from pythagoras.prelude import Canvas, Circle, Label, Point
 
 ctx = Canvas()
 ctx.scale = 50

@@ -1,4 +1,4 @@
-from pythagoras import Canvas, Ellipse, Point
+from pythagoras.prelude import Canvas, Ellipse, Point
 
 ctx = Canvas()
 ctx.scale = 100
