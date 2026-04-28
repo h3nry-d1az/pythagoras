@@ -59,6 +59,18 @@ class Vector:
             -self.x * sin(angle) + self.y * cos(angle),
         )
 
+    def __ilshift__(self, angle: float) -> Self:
+        x, y = self.x, self.y
+        self.x = x * cos(angle) - y * sin(angle)
+        self.y = x * sin(angle) + y * cos(angle)
+        return self
+
+    def __irshift__(self, angle: float) -> Self:
+        x, y = self.x, self.y
+        self.x = x * cos(angle) - y * sin(angle)
+        self.y = -x * sin(angle) + y * cos(angle)
+        return self
+
     @property
     def perp(self) -> Self:
         return self.__class__(-self.y, self.x)

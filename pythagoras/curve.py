@@ -138,6 +138,10 @@ class Arc(PObject):
         r = self.radius * scale
         px, py = cartesian_to_canvas(*self.p, width, height, scale)
         ex, ey = cartesian_to_canvas(*self.end_point, width, height, scale)
+        px -= origin[0]
+        py += origin[1]
+        ex -= origin[0]
+        ey += origin[1]
         return svg_command(
             "path",
             *args,
