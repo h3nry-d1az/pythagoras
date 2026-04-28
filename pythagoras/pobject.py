@@ -9,15 +9,27 @@ POProperty = str | float
 class PObject(ABC):
     _zord: int
 
-    def __lt__(self, other: Self):
+    def __lt__(self, other: Self) -> bool:
         return self._zord < other._zord
 
     @abstractmethod
     def extrema(self) -> list[tuple[float, float]]:
+        """
+        Computes the furthermost points of the figure.
+
+        Returns:
+            A list with the bounding points of the object.
+        """
         pass
 
     @abstractmethod
     def tikz(self, *args: str, **kwargs: POProperty) -> str:
+        """
+        Compiles the object into a sequence of TikZ instructions.
+
+        Returns:
+            The resulting TikZ code.
+        """
         pass
 
     @abstractmethod
@@ -30,4 +42,10 @@ class PObject(ABC):
         *args: str,
         **kwargs: POProperty,
     ) -> str:
+        """
+        Compiles the object into SVG commands.
+
+        Returns:
+            The corresponding SVG code.
+        """
         pass

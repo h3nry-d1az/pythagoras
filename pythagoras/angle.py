@@ -14,6 +14,10 @@ __all__ = ["Angle", "RAngle"]
 
 
 class Angle(PObject):
+    """
+    An angle described by three points and its radius, following the right-hand rule.
+    """
+
     p1: tuple[float, float]
     p2: tuple[float, float]
     p3: tuple[float, float]
@@ -27,6 +31,16 @@ class Angle(PObject):
         radius: float = 1,
         zord: int = 0,
     ) -> None:
+        """
+        Instantiates an object of the `Angle` class.
+
+        Parameters:
+            p1: Starting point.
+            p2: Corner of the angle.
+            p3: End point.
+            radius: Radius.
+            zord: Rendering priority (see `PObject._zord`)
+        """
         self.p1 = p1
         self.p2 = p2
         self.p3 = p3
@@ -142,6 +156,11 @@ class Angle(PObject):
 
 
 class RAngle(Angle):
+    """
+    A special type of `Angle` instance, where the shape is drawn with straight lines instead of an arc.
+    This results in a square whenever the angle measures 90 degrees, and a rhombus otherwise.
+    """
+
     def extrema(self) -> list[tuple[float, float]]:
         rn = self.radius / (2 ** (1 / 2))
 
