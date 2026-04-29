@@ -1,8 +1,10 @@
 from math import atan2, cos, degrees, hypot, radians, sin, sqrt
 from typing import Self
 
-from .backend import svg_command, tikz_command
+from .backend import fill_default_args, svg_command, tikz_command
 from .pobject import PObject, POProperty
+from .style import color
+from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
 
 __all__ = ["Circle", "Ellipse", "Point"]
@@ -40,11 +42,8 @@ class Circle(PObject):
         ]
 
     def tikz(self, *args: POProperty) -> str:
-        cmd = "filldraw" if "fill" in kwargs else "draw"
-        compile_options_tikz(kwargs)
-        return tikz_command(
-            cmd, f"({self.x}, {self.y}) circle ({self.radius})", *args, **kwargs
-        )
+        cmd = "filldraw" if any(isinstance(x, Fill) for x in args) else "draw"
+        return tikz_command(cmd, f"({self.x}, {self.y}) circle ({self.radius})", *args)
 
     def svg(
         self,
@@ -202,14 +201,12 @@ class Ellipse(PObject):
             (self.x - dx, self.y - dy),
         ]
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        cmd = "filldraw" if "fill" in kwargs else "draw"
-        compile_options_tikz(kwargs)
+    def tikz(self, *args: POProperty) -> str:
+        cmd = "filldraw" if any(isinstance(x, Fill) for x in args) else "draw"
         return tikz_command(
             cmd,
             f"({self.x}, {self.y}) ellipse [x radius={self.rx}, y radius={self.ry}, rotate={self.theta}]",
             *args,
-            **kwargs,
         )
 
     def svg(
@@ -218,8 +215,7 @@ class Ellipse(PObject):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
         cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
         cx -= origin[0]
@@ -274,10 +270,12 @@ class Point(Circle):
     def __init__(self, x: float, y: float, _radius: float = 1, zord: int = 0) -> None:
         super().__init__(x, y, _radius, zord)
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        style: dict[str, str | float] = {"fill": "white", "color": "black"}
-        style.update(kwargs)
-        return super().tikz(*args, **style)
+    def tikz(self, *args: POProperty) -> str:
+        return super().tikz(
+            *fill_default_args(
+                args, (Fill, Fill(color.WHITE)), (Stroke, Stroke(color.BLACK))
+            )
+        )
 
     def svg(
         self,
@@ -285,9 +283,14 @@ class Point(Circle):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
-        style: dict[str, str | float] = {"fill": "white", "color": "black"}
-        style.update(kwargs)
-        return super().svg(origin, width, height, scale, *args, **style)
+        return super().svg(
+            origin,
+            width,
+            height,
+            scale,
+            *fill_default_args(
+                args, (Fill, Fill(color.WHITE)), (Stroke, Stroke(color.BLACK))
+            ),
+        )

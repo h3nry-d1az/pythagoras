@@ -1,8 +1,9 @@
 from latex2mathml.converter import convert
 
-from .backend import compile_options_svg, compile_options_tikz, tikz_command
-from .pobject import PObject
+from .backend import tikz_command
+from .pobject import PObject, POProperty
 from .utils import cartesian_to_canvas
+from .style.draw import FontSize
 
 __all__ = ["Label"]
 
@@ -30,9 +31,10 @@ class Label(PObject):
             (self.x + self.padding * len(self.tag), self.y - self.padding),
         ]
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        compile_options_tikz(kwargs)
-        return tikz_command("node", f"at ({self.x}, {self.y}) {{{f'${self.tag}$'}}}")
+    def tikz(self, *args: POProperty) -> str:
+        return tikz_command(
+            "node", f"at ({self.x}, {self.y}) {{{f'${self.tag}$'}}}", *args
+        )
 
     def svg(
         self,
@@ -40,19 +42,21 @@ class Label(PObject):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
         x, y = cartesian_to_canvas(self.x, self.y, width, height, scale)
         x -= origin[0]
         y += origin[1]
         w, h = min(width - x, x), min(height - y, y)
         px, py = x - w, y - h
-        compile_options_svg(kwargs)
-        fs = kwargs.get("font_scale", scale)
+        fs = None
+        for p in args:
+            if isinstance(p, FontSize):
+                fs = p
+                break
         return (
             f'<foreignObject x="{px:.4f}" y="{py:.4f}" width="{2 * w:.4f}" height="{2 * h:.4f}">\n'
-            f'<div xmlns="http://www.w3.org/1999/xhtml" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: {12 * fs:.4f}px;">\n'
+            f'<div xmlns="http://www.w3.org/1999/xhtml" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;{f" font-size: {fs.size}{fs.unit};" if fs else ""}">\n'
             f"{convert(self.tag)}"
             "</div>"
             "</foreignObject>"

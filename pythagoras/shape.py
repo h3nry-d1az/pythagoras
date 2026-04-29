@@ -1,8 +1,10 @@
 from math import cos, inf, radians, sin, sqrt, tau
 from typing import Self
 
-from .backend import compile_options_svg, compile_options_tikz, svg_path, tikz_command
-from .pobject import PObject
+from .backend import fill_default_args, svg_path, tikz_command
+from .pobject import PObject, POProperty
+from .style import color
+from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
 
 __all__ = ["Path", "Polygon"]
@@ -30,13 +32,9 @@ class Path(PObject):
                 mxy = p[1]
         return [(mnx, mny), (mxx, mxy)]
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        compile_options_tikz(kwargs)
+    def tikz(self, *args: POProperty) -> str:
         return tikz_command(
-            "draw",
-            " -- ".join(f"({p[0]}, {p[1]})" for p in self.points),
-            *args,
-            **kwargs,
+            "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in self.points), *args
         )
 
     def svg(
@@ -45,20 +43,15 @@ class Path(PObject):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
-        compile_options_svg(kwargs)
-        style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
-        style.update(kwargs)
         return svg_path(
             (cartesian_to_canvas(*p, width, height, scale) for p in self.points),
             origin,
             width,
             height,
             scale,
-            *args,
-            **style,
+            *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )
 
     def rotate(self, point: tuple[float, float], theta: float) -> None:
@@ -74,13 +67,11 @@ class Path(PObject):
 
 
 class Polygon(Path):
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        compile_options_tikz(kwargs)
+    def tikz(self, *args: POProperty) -> str:
         return tikz_command(
             "draw",
             " -- ".join(f"({p[0]}, {p[1]})" for p in self.points) + " -- cycle",
             *args,
-            **kwargs,
         )
 
     def svg(
@@ -89,11 +80,10 @@ class Polygon(Path):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
         self.points.append(self.points[0])
-        code = super().svg(origin, width, height, scale, *args, **kwargs)
+        code = super().svg(origin, width, height, scale, *args)
         self.points.pop()
         return code
 

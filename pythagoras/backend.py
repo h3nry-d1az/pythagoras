@@ -1,21 +1,9 @@
 from collections.abc import Iterable
 
 from .pobject import POProperty
+from .style import CustomStyle
 
 __all__ = ["svg_command", "svg_path", "tikz_command"]
-
-
-class __svg_d(POProperty):
-    path: str
-
-    def __init__(self, path: str) -> None:
-        self.path = path
-
-    def svg(self) -> str:
-        return f'd="{self.path}"'
-
-    def tikz(self) -> str:
-        return super().tikz()
 
 
 def tikz_command(name: str, body: str, *args: POProperty) -> str:
@@ -41,4 +29,14 @@ def svg_path(
     path = f"M {p0[0] - origin[0]:.4f} {p0[1] + origin[1]:.4f}"
     for p in iterator:
         path += f" L {p[0] - origin[0]:.4f} {p[1] + origin[1]:.4f}"
-    return svg_command("path", __svg_d(path), *args)
+    return svg_command("path", CustomStyle("d", path), *args)
+
+
+def fill_default_args(
+    args: Iterable[POProperty], *defaults: tuple[type, POProperty]
+) -> list[POProperty]:
+    xs = list(args)
+    for q, e in defaults:
+        if not any(isinstance(x, q) for x in args):
+            xs.append(e)
+    return xs

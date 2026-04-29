@@ -2,14 +2,10 @@ from collections.abc import Callable
 from math import atan2, cos, degrees, hypot, inf, pi, sin, tau
 from typing import Self
 
-from .backend import (
-    compile_options_svg,
-    compile_options_tikz,
-    svg_command,
-    svg_path,
-    tikz_command,
-)
-from .pobject import PObject
+from .backend import fill_default_args, svg_command, svg_path, tikz_command
+from .pobject import PObject, POProperty
+from .style import CustomStyle, color
+from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
 
 __all__ = ["Arc", "Parametric"]
@@ -111,16 +107,14 @@ class Arc(PObject):
             y_min = self.o[1] - r
         return [(x_min, y_min), (x_max, y_max)]
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        compile_options_tikz(kwargs)
+    def tikz(self, *args: POProperty) -> str:
         x, y = self.p[0] - self.o[0], self.p[1] - self.o[1]
         alpha = atan2(y, x)
         beta = alpha + self.theta
         return tikz_command(
             "draw",
-            *args,
-            *kwargs,
             f"({self.p[0]}, {self.p[1]}) arc ({degrees(alpha)}:{degrees(beta)}:{self.radius})",
+            *args,
         )
 
     def svg(
@@ -129,12 +123,8 @@ class Arc(PObject):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
-        compile_options_svg(kwargs)
-        style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
-        style.update(kwargs)
         r = self.radius * scale
         px, py = cartesian_to_canvas(*self.p, width, height, scale)
         ex, ey = cartesian_to_canvas(*self.end_point, width, height, scale)
@@ -144,9 +134,11 @@ class Arc(PObject):
         ey += origin[1]
         return svg_command(
             "path",
-            *args,
-            d=f"M {px:.8f} {py:.8f} A {r:.8f} {r:.8f} 0 {1 if abs(self.theta) >= pi else 0} 0 {ex:.4f} {ey:.4f}",
-            **style,
+            CustomStyle(
+                "d",
+                f"M {px:.8f} {py:.8f} A {r:.8f} {r:.8f} 0 {1 if abs(self.theta) >= pi else 0} 0 {ex:.4f} {ey:.4f}",
+            ),
+            *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )
 
 
@@ -191,13 +183,9 @@ class Parametric(PObject):
                 mxy = p[1]
         return [(mnx, mny), (mxx, mxy)]
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        compile_options_tikz(kwargs)
+    def tikz(self, *args: POProperty) -> str:
         return tikz_command(
-            "draw",
-            " -- ".join(f"({p[0]}, {p[1]})" for p in self.make_points()),
-            *args,
-            **kwargs,
+            "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in self.make_points()), *args
         )
 
     def svg(
@@ -206,18 +194,13 @@ class Parametric(PObject):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
-        compile_options_svg(kwargs)
-        style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
-        style.update(kwargs)
         return svg_path(
             (cartesian_to_canvas(*p, width, height, scale) for p in self.make_points()),
             origin,
             width,
             height,
             scale,
-            *args,
-            **style,
+            *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )
