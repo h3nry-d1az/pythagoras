@@ -3,7 +3,7 @@ from typing import Self
 
 from .backend import fill_default_args, svg_command, tikz_command
 from .pobject import PObject, POProperty
-from .style import color
+from .style import CustomStyle, color
 from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
 
@@ -56,16 +56,16 @@ class Circle(PObject):
         cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
         cx -= origin[0]
         cy += origin[1]
-        style: dict[str, str | float] = {
-            "cx": cx,
-            "cy": cy,
-            "r": self.radius * scale,
-            "fill": "none",
-            "stroke": "black",
-        }
-        style.update(kwargs)
-        compile_options_svg(style)
-        return svg_command("circle", *args, **style)
+        args = (
+            CustomStyle("cx", cx),
+            CustomStyle("cy", cy),
+            CustomStyle("r", self.radius * scale),
+            *args,
+        )
+        return svg_command(
+            "circle",
+            *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
+        )
 
     @classmethod
     def triangle_circumcircle(
@@ -220,18 +220,18 @@ class Ellipse(PObject):
         cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
         cx -= origin[0]
         cy += origin[1]
-        style: dict[str, str | float] = {
-            "cx": cx,
-            "cy": cy,
-            "rx": self.rx * scale,
-            "ry": self.ry * scale,
-            "transform": f"rotate({-self.theta:.4f}, {cx:.4f}, {cy:.4f})",
-            "fill": "none",
-            "stroke": "black",
-        }
-        style.update(kwargs)
-        compile_options_svg(style)
-        return svg_command("ellipse", *args, **style)
+        args = (
+            CustomStyle("cx", cx),
+            CustomStyle("cy", cy),
+            CustomStyle("rx", self.rx * scale),
+            CustomStyle("ry", self.ry * scale),
+            CustomStyle("transform", f"rotate({-self.theta:.4f}, {cx:.4f}, {cy:.4f})"),
+            *args,
+        )
+        return svg_command(
+            "ellipse",
+            *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
+        )
 
     @classmethod
     def from_foci(

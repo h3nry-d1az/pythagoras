@@ -1,8 +1,9 @@
 from math import atan2, ceil, cos, degrees, floor, hypot, pi, radians, sin
 
-from .backend import svg_command, svg_path, tikz_command
+from .backend import fill_default_args, svg_command, svg_path, tikz_command
 from .pobject import PObject, POProperty
-from .style import CustomStyle
+from .style import CustomStyle, color
+from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
 
 __all__ = ["Angle", "RAngle"]
@@ -110,9 +111,6 @@ class Angle(PObject):
         scale: float,
         *args: POProperty,
     ) -> str:
-        # TODO: Fix style
-        style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
-
         ax_c, ay_c = cartesian_to_canvas(*self.p1, width, height, scale)
         bx_c, by_c = cartesian_to_canvas(*self.p2, width, height, scale)
         cx_c, cy_c = cartesian_to_canvas(*self.p3, width, height, scale)
@@ -148,7 +146,11 @@ class Angle(PObject):
         sweep_flag = 0
 
         d = f"M {start_x:.4f} {start_y:.4f} A {self.radius * scale:.4f} {self.radius * scale:.4f} 0 {large_arc_flag} {sweep_flag} {end_x:.4f} {end_y:.4f}"
-        return svg_command("path", CustomStyle("d", d), *args, **style)
+        return svg_command(
+            "path",
+            CustomStyle("d", d),
+            *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
+        )
 
 
 class RAngle(Angle):
@@ -190,9 +192,6 @@ class RAngle(Angle):
         scale: float,
         *args: POProperty,
     ) -> str:
-        # TODO: Fix style dict
-        style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
-
         points = self.extrema()
         points.append(points[0])
         return svg_path(
@@ -201,5 +200,5 @@ class RAngle(Angle):
             width,
             height,
             scale,
-            *args,
+            *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )

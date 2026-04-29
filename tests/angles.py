@@ -1,4 +1,6 @@
-from pythagoras.prelude import *
+from pythagoras.angle import Angle, RAngle
+from pythagoras.canvas import Canvas
+from pythagoras.shape import Polygon
 
 ctx = Canvas()
 ctx.scale = 50

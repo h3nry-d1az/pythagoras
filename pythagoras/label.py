@@ -2,8 +2,8 @@ from latex2mathml.converter import convert
 
 from .backend import tikz_command
 from .pobject import PObject, POProperty
-from .utils import cartesian_to_canvas
 from .style.draw import FontSize
+from .utils import cartesian_to_canvas
 
 __all__ = ["Label"]
 
