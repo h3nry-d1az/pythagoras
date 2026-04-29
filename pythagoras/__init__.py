@@ -8,6 +8,7 @@ from . import (
     pobject,
     prelude,
     shape,
+    style,
     utils,
     vector,
 )
@@ -22,6 +23,7 @@ __all__ = [
     "pobject",
     "prelude",
     "shape",
+    "style",
     "utils",
     "vector",
 ]

@@ -1,13 +1,8 @@
 from math import atan2, cos, degrees, hypot, radians, sin, sqrt
 from typing import Self
 
-from .backend import (
-    compile_options_svg,
-    compile_options_tikz,
-    svg_command,
-    tikz_command,
-)
-from .pobject import PObject
+from .backend import svg_command, tikz_command
+from .pobject import PObject, POProperty
 from .utils import cartesian_to_canvas
 
 __all__ = ["Circle", "Ellipse", "Point"]
@@ -44,7 +39,7 @@ class Circle(PObject):
             (self.x - self.radius, self.y - self.radius),
         ]
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
+    def tikz(self, *args: POProperty) -> str:
         cmd = "filldraw" if "fill" in kwargs else "draw"
         compile_options_tikz(kwargs)
         return tikz_command(
@@ -57,8 +52,7 @@ class Circle(PObject):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
         cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
         cx -= origin[0]

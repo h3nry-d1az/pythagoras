@@ -5,4 +5,5 @@ from .curve import *
 from .label import *
 from .pobject import *
 from .shape import *
+from .style import *
 from .vector import *

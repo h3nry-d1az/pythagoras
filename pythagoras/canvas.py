@@ -20,7 +20,7 @@ class Canvas:
     _ymin: float
     _ymax: float
     _yrange: list[float]
-    __elements: list[tuple[PObject, tuple[str, ...], dict[str, POProperty]]]
+    __elements: list[tuple[PObject, tuple[POProperty, ...]]]
 
     def __init__(self, scale: float = 1) -> None:
         """
@@ -37,7 +37,7 @@ class Canvas:
         self._ymax = 0
         self.__elements = []
 
-    def add(self, obj: PObject, *args: str, **kwargs: POProperty) -> None:
+    def add(self, obj: PObject, *args: POProperty) -> None:
         """
         Appends an element into the list of objects to be renderded.
 
@@ -53,7 +53,7 @@ class Canvas:
             self._xmax = max(p[0], self._xmax)
             self._ymin = min(p[1], self._ymin)
             self._ymax = max(p[1], self._ymax)
-        self.__elements.append((obj, args, kwargs))
+        self.__elements.append((obj, args))
 
     def tikz(self) -> str:
         """
@@ -70,7 +70,7 @@ class Canvas:
             + r"\begin{tikzpicture}"
             + (f"[scale={self.scale}]" if self.scale != 1 else "")
             + "\n"
-            + "\n".join(e.tikz(*a, **k) for e, a, k in sorted(self.__elements))
+            + "\n".join(e.tikz(*a) for e, a in sorted(self.__elements))
             + "\n"
             + r"\end{tikzpicture}"
             + "\n"
@@ -90,8 +90,8 @@ class Canvas:
         return (
             f'<svg width="{width:.4f}" height="{height:.4f}" xmlns="http://www.w3.org/2000/svg">\n'
             + "\n".join(
-                e.svg(O, width, height, self.scale, *a, **k)
-                for e, a, k in sorted(self.__elements)
+                e.svg(O, width, height, self.scale, *a)
+                for e, a in sorted(self.__elements)
             )
             + "\n"
             + "</svg>"

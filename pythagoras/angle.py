@@ -1,13 +1,7 @@
 from math import atan2, ceil, cos, degrees, floor, hypot, pi, radians, sin
 
-from .backend import (
-    compile_options_svg,
-    compile_options_tikz,
-    svg_command,
-    svg_path,
-    tikz_command,
-)
-from .pobject import PObject
+from .backend import svg_command, svg_path, tikz_command
+from .pobject import PObject, POProperty
 from .utils import cartesian_to_canvas
 
 __all__ = ["Angle", "RAngle"]
@@ -89,8 +83,7 @@ class Angle(PObject):
 
         return extrema
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        compile_options_tikz(kwargs)
+    def tikz(self, *args: POProperty) -> str:
         v1x, v1y = self.p1[0] - self.p2[0], self.p1[1] - self.p2[1]
         v2x, v2y = self.p3[0] - self.p2[0], self.p3[1] - self.p2[1]
 
@@ -105,10 +98,7 @@ class Angle(PObject):
         start_y = self.p2[1] + self.radius * sin(radians(deg1))
 
         return tikz_command(
-            "draw",
-            f"({start_x}, {start_y}) arc ({deg1}:{deg2}:{self.radius})",
-            *args,
-            **kwargs,
+            "draw", f"({start_x}, {start_y}) arc ({deg1}:{deg2}:{self.radius})", *args
         )
 
     def svg(
@@ -117,10 +107,9 @@ class Angle(PObject):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
-        compile_options_svg(kwargs)
+        # TODO: Fix style
         style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
 
         ax_c, ay_c = cartesian_to_canvas(*self.p1, width, height, scale)
@@ -185,12 +174,11 @@ class RAngle(Angle):
             (self.p2[0] + u2[0] * rn, self.p2[1] + u2[1] * rn),
         ]
 
-    def tikz(self, *args: str, **kwargs: str | float) -> str:
-        compile_options_tikz(kwargs)
+    def tikz(self, *args: POProperty) -> str:
         points = self.extrema()
         points.append(points[0])
         return tikz_command(
-            "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in points), *args, **kwargs
+            "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in points), *args
         )
 
     def svg(
@@ -199,12 +187,11 @@ class RAngle(Angle):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: str | float,
+        *args: POProperty,
     ) -> str:
-        compile_options_svg(kwargs)
+        # TODO: Fix style dict
         style: dict[str, str | float] = {"fill": "none", "stroke": "black"}
-        style.update(kwargs)
+
         points = self.extrema()
         points.append(points[0])
         return svg_path(

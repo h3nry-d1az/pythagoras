@@ -3,7 +3,27 @@ from typing import Self
 
 __all__ = ["POProperty", "PObject"]
 
-POProperty = str | float
+
+class POProperty(ABC):
+    @abstractmethod
+    def tikz(self) -> str:
+        """
+        Compiles the property into TikZ syntax.
+
+        Returns:
+            The corresponding TikZ property.
+        """
+        pass
+
+    @abstractmethod
+    def svg(self) -> str:
+        """
+        Compiles the property into SVG syntax.
+
+        Returns:
+            The corresponding SVG property.
+        """
+        pass
 
 
 class PObject(ABC):
@@ -23,7 +43,7 @@ class PObject(ABC):
         pass
 
     @abstractmethod
-    def tikz(self, *args: str, **kwargs: POProperty) -> str:
+    def tikz(self, *args: POProperty) -> str:
         """
         Compiles the object into a sequence of TikZ instructions.
 
@@ -39,8 +59,7 @@ class PObject(ABC):
         width: float,
         height: float,
         scale: float,
-        *args: str,
-        **kwargs: POProperty,
+        *args: POProperty,
     ) -> str:
         """
         Compiles the object into SVG commands.

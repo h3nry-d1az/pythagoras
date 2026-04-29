@@ -35,6 +35,19 @@ class Vector:
     def __rmul__(self, alpha: float) -> Self:
         return self * alpha
 
+    def __imul__(self, alpha: float) -> Self:
+        self.x *= alpha
+        self.y *= alpha
+        return self
+
+    def __truediv__(self, alpha: float) -> Self:
+        return self.__class__(self.x / alpha, self.y / alpha)
+
+    def __itruediv__(self, alpha: float) -> Self:
+        self.x /= alpha
+        self.y /= alpha
+        return self
+
     def __matmul__(self, other: Self) -> float:
         return self.x * other.x + self.y * other.y
 
