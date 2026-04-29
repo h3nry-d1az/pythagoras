@@ -14,11 +14,23 @@ __all__ = ["Circle", "Ellipse", "Point"]
 
 
 class Circle(PObject):
+    """
+    Circle `PObject`. As its name suggests, renders into a cirlce when drawn.
+
+    Attributes:
+        x: $x$-coordinate of the center.
+        y: $y$-coordinate of the center.
+        radius: Radius.
+    """
+
     x: float
     y: float
     radius: float
 
     def __init__(self, x: float, y: float, radius: float, zord: int = 0) -> None:
+        """
+        Instantiates a `Circle` object.
+        """
         self.x = x
         self.y = y
         self.radius = radius
@@ -63,13 +75,27 @@ class Circle(PObject):
         return svg_command("circle", *args, **style)
 
     @classmethod
-    def from_three_points(
+    def triangle_circumcircle(
         cls,
         p1: tuple[float, float],
         p2: tuple[float, float],
         p3: tuple[float, float],
         zord: int = 0,
     ) -> Self:
+        """
+        Generate the circle that passes through three given points. Recall that the
+        circumcircle of a triangle is the intersection of the side bisectors; this is
+        the way it is found.
+
+        Parameters:
+            p1: First point of the triangle.
+            p2: Second point of the triangle.
+            p3: Third point of the triangle.
+            zord: Rendering priority of the circle.
+
+        Returns:
+            A circle that passes through `p1`, `p2` and `p3`.
+        """
         x1, y1 = p1
         x2, y2 = p2
         x3, y3 = p3
@@ -93,13 +119,27 @@ class Circle(PObject):
         return cls(xc, yc, r, zord)
 
     @classmethod
-    def triangle_incenter(
+    def triangle_incircle(
         cls,
         p1: tuple[float, float],
         p2: tuple[float, float],
         p3: tuple[float, float],
         zord: int = 0,
     ) -> tuple[Self, tuple[float, float], tuple[float, float], tuple[float, float]]:
+        """
+        Computes the points of tangency and the center of the incircle of the triangle
+        delimited by three points. The incircle of a triangle is computed as the intersection
+        of its angle bisectors.
+
+        Parameters:
+            p1: First point of the triangle.
+            p2: Second point of the triangle.
+            p3: Third point of the triangle.
+            zord: Rendering priority of the circle.
+
+        Returns:
+            The incircle together with the three points of tangency.
+        """
         x1, y1 = p1
         x2, y2 = p2
         x3, y3 = p3
@@ -126,6 +166,17 @@ class Circle(PObject):
 
 
 class Ellipse(PObject):
+    """
+    An ellipse.
+
+    Attributes:
+        x: $x$-coordinate of its center.
+        y: $y$-coordinate of its center.
+        rx: Length of the semi axis corresponding to the $x$ axis.
+        ry: Length of the semi axis corresponding to the $y$ axis.
+        theta: Angle of rotation with respect to the positive $x$ axis.
+    """
+
     x: float
     y: float
     rx: float
@@ -133,6 +184,9 @@ class Ellipse(PObject):
     theta: float
 
     def __init__(self, x: float, y: float, rx: float, ry: float, zord: int = 0) -> None:
+        """
+        Instantiates an `Ellipse` object.
+        """
         self.x = x
         self.y = y
         self.rx = rx
@@ -197,6 +251,17 @@ class Ellipse(PObject):
         p: tuple[float, float],
         zord: int = 0,
     ) -> Self:
+        """
+        Creates an ellipse from its center and foci.
+
+        Parameters:
+            f1: First focus point.
+            f2: Second focus point.
+            p: Center of the ellipse.
+
+        Returns:
+            Ellipse with the given foci and center.
+        """
         x = (f1[0] + f2[0]) / 2
         y = (f1[1] + f2[1]) / 2
         c = hypot(f1[0] - f2[0], f1[1] - f2[1]) / 2
@@ -208,6 +273,10 @@ class Ellipse(PObject):
 
 
 class Point(Circle):
+    """
+    A circle small enough to represent a point.
+    """
+
     def __init__(self, x: float, y: float, _radius: float = 1, zord: int = 0) -> None:
         super().__init__(x, y, _radius, zord)
 

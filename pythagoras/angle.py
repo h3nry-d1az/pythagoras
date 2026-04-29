@@ -16,6 +16,12 @@ __all__ = ["Angle", "RAngle"]
 class Angle(PObject):
     """
     An angle described by three points and its radius, following the right-hand rule.
+
+    Attributes:
+        p1: Starting point.
+        p2: Corner of the angle.
+        p3: End point.
+        radius: Radius of the arc.
     """
 
     p1: tuple[float, float]

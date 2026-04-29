@@ -4,6 +4,16 @@ __all__ = ["Canvas"]
 
 
 class Canvas:
+    """
+    Container class for a collection of `PObject`'s. Controls the SVG and TikZ output,
+    and resizes automatically when a new element is added.
+
+    Attributes:
+        scale: The scaling factor by which the canvas is stretched. When exporting to TikZ,
+               this is compiled exactly into `[scale={scale}]`, and when using SVG, the
+               distances are muliplied by its value.
+    """
+
     scale: float
     _xmin: float
     _xmax: float
@@ -12,8 +22,15 @@ class Canvas:
     _yrange: list[float]
     __elements: list[tuple[PObject, tuple[str, ...], dict[str, POProperty]]]
 
-    def __init__(self) -> None:
-        self.scale = 1
+    def __init__(self, scale: float = 1) -> None:
+        """
+        Constructor for the `Canvas` class. Only accepts the scaling factor as input,
+        elements must be added through the `Canvas.add` method.
+
+        Parameters:
+            scale: The scaling factor of the canvas.
+        """
+        self.scale = scale
         self._xmin = 0
         self._xmax = 0
         self._ymin = 0
@@ -21,6 +38,15 @@ class Canvas:
         self.__elements = []
 
     def add(self, obj: PObject, *args: str, **kwargs: POProperty) -> None:
+        """
+        Appends an element into the list of objects to be renderded.
+
+        Parameters:
+            obj: `PObject` to be included into the scene.
+            *args: Non-associative specifiers of the object, i.e.: `dashed` or `dotted`.
+            **kwargs: Associative specifiers of the object, for example `fill=blue` or
+                      `color=red`.
+        """
         for p in obj.extrema():
             p = (p[0] * self.scale, p[1] * self.scale)
             self._xmin = min(p[0], self._xmin)
@@ -30,6 +56,12 @@ class Canvas:
         self.__elements.append((obj, args, kwargs))
 
     def tikz(self) -> str:
+        """
+        Render the scene into TikZ.
+
+        Returns:
+            The compiled TikZ document.
+        """
         return (
             r"\documentclass[crop,tikz]{standalone}"
             + "\n"
@@ -46,6 +78,12 @@ class Canvas:
         )
 
     def svg(self) -> str:
+        """
+        Render the scene into SVG.
+
+        Returns:
+            The final SVG picture.
+        """
         width = self._xmax - self._xmin + 5
         height = self._ymax - self._ymin + 5
         O = ((self._xmax + self._xmin) / 2, (self._ymax + self._ymin) / 2)

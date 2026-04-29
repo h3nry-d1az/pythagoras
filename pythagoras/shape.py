@@ -1,4 +1,4 @@
-from math import cos, radians, sin, sqrt, tau
+from math import cos, inf, radians, sin, sqrt, tau
 from typing import Self
 
 from .backend import compile_options_svg, compile_options_tikz, svg_path, tikz_command
@@ -18,7 +18,17 @@ class Path(PObject):
             raise RuntimeError("A path must have at least two points.")
 
     def extrema(self) -> list[tuple[float, float]]:
-        return self.points
+        mxx, mxy, mnx, mny = -inf, -inf, inf, inf
+        for p in self.points:
+            if p[0] < mnx:
+                mnx = p[0]
+            if p[0] > mxx:
+                mxx = p[0]
+            if p[1] < mny:
+                mny = p[1]
+            if p[1] > mxy:
+                mxy = p[1]
+        return [(mnx, mny), (mxx, mxy)]
 
     def tikz(self, *args: str, **kwargs: str | float) -> str:
         compile_options_tikz(kwargs)
