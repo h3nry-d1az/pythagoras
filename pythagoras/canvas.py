@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+
 from .pobject import PObject, POProperty
 
 __all__ = ["Canvas"]
@@ -43,9 +45,8 @@ class Canvas:
 
         Parameters:
             obj: `PObject` to be included into the scene.
-            *args: Non-associative specifiers of the object, i.e.: `dashed` or `dotted`.
-            **kwargs: Associative specifiers of the object, for example `fill=blue` or
-                      `color=red`.
+            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See `pythagoras.style` for
+                further information on styling.
         """
         for p in obj.extrema():
             p = (p[0] * self.scale, p[1] * self.scale)
@@ -54,6 +55,18 @@ class Canvas:
             self._ymin = min(p[1], self._ymin)
             self._ymax = max(p[1], self._ymax)
         self.__elements.append((obj, args))
+
+    def add_many(self, objs: Iterable[PObject], *args: POProperty) -> None:
+        """
+        Appends a collection of elements sharing common arguments into the list of objects to be renderded.
+
+        Parameters:
+            objs: Sequence of `PObject`'s to be included into the scene.
+            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See `pythagoras.style` for
+                further information on styling.
+        """
+        for obj in objs:
+            self.add(obj, *args)
 
     def tikz(self) -> str:
         """

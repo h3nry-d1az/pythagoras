@@ -1,4 +1,5 @@
-from math import cos, inf, radians, sin, sqrt, tau
+from collections.abc import Iterator
+from math import cos, floor, inf, radians, sin, sqrt, tau
 from typing import Self
 
 from .backend import fill_default_args, svg_path, tikz_command
@@ -7,7 +8,7 @@ from .style import color
 from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
 
-__all__ = ["Path", "Polygon"]
+__all__ = ["Path", "Polygon", "grid"]
 
 
 class Path(PObject):
@@ -102,3 +103,21 @@ class Polygon(Path):
         cx = (0 + c + x) / 3
         cy = y / 3
         return cls((-cx, -cy), (c - cx, -cy), (x - cx, y - cy), zord=zord)
+
+
+def grid(
+    start: tuple[float, float],
+    end: tuple[float, float],
+    step: tuple[float, float],
+    zord: int = 0,
+) -> Iterator[Path]:
+    px = start[0] + floor((end[0] - start[0]) / step[0]) * step[0]
+    py = start[1] + floor((end[1] - start[1]) / step[1]) * step[1]
+    y = start[1]
+    while y <= end[1]:
+        yield Path((start[0], y), (px, y), zord=zord)
+        y += step[1]
+    x = start[0]
+    while x <= end[0]:
+        yield Path((x, start[1]), (x, py), zord=zord)
+        x += step[0]

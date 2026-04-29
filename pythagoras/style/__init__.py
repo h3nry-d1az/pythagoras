@@ -2,7 +2,9 @@ from dataclasses import dataclass
 from typing import Any
 
 from ..pobject import POProperty as __POProperty
-from . import color, draw
+from . import color, draw, line
+
+__all__ = ["CustomStyle", "color", "draw", "line"]
 
 
 @dataclass
@@ -15,6 +17,3 @@ class CustomStyle(__POProperty):
 
     def tikz(self) -> str:
         return f"{self.param}={self.value}"
-
-
-__all__ = ["color", "draw"]
