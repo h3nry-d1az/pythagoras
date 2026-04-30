@@ -12,6 +12,15 @@ __all__ = ["Arc", "Parametric"]
 
 
 class Arc(PObject):
+    """
+    An arc of a circle.
+
+    Attributes:
+        o: Center of the circle in which the arc is contained.
+        p: Starting point of the arc.
+        theta: Angle spanned by the arc.
+    """
+
     o: tuple[float, float]
     p: tuple[float, float]
     theta: float
@@ -23,6 +32,15 @@ class Arc(PObject):
         theta: float,
         zord: int = 0,
     ) -> None:
+        """
+        Instantiate an arc of a circle.
+
+        Attributes:
+            o: Center of the circle in which the arc is contained.
+            p: Starting point of the arc.
+            theta: Angle spanned by the arc.
+            zord: Rendering priority (see `PObject._zord`).
+        """
         self.o = o
         self.p = p
         self.theta = theta
@@ -36,6 +54,18 @@ class Arc(PObject):
         p3: tuple[float, float],
         zord: int = 0,
     ) -> Self:
+        """
+        Construct the arc that passes through three points.
+
+        Parameters:
+            p1: First point.
+            p2: Second point.
+            p3: Third point.
+            zord: Rendering priority (see `PObject._zord`).
+
+        Returns:
+            An instance of `Arc`.
+        """
         x1, y1 = p1[0], p1[1]
         x2, y2 = p2[0], p2[1]
         x3, y3 = p3[0], p3[1]
@@ -59,17 +89,39 @@ class Arc(PObject):
 
     @classmethod
     def from_two_points_and_angle(
-        cls, p1: tuple[float, float], p2: tuple[float, float], theta: float
+        cls,
+        p1: tuple[float, float],
+        p2: tuple[float, float],
+        theta: float,
+        zord: int = 0,
     ) -> Self:
-        return cls(((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2), p1, theta)
+        """
+        Construct the arc that passes through two points and spans a given angle.
+
+        Parameters:
+            p1: First point.
+            p2: Second point.
+            theta: Angle spanned.
+            zord: Rendering priority (see `PObject._zord`).
+
+        Returns:
+            An instance of `Arc`.
+        """
+        return cls(((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2), p1, theta, zord)
 
     @property
     def radius(self) -> float:
+        """
+        Gives the radius of the circle in which the arc is contained.
+        """
         x, y = self.p[0] - self.o[0], self.p[1] - self.o[1]
         return hypot(x, y)
 
     @property
     def end_point(self) -> tuple[float, float]:
+        """
+        Compute the end point of the arc.
+        """
         x, y = self.p[0] - self.o[0], self.p[1] - self.o[1]
         return (
             x * cos(self.theta) - y * sin(self.theta) + self.o[0],
@@ -143,6 +195,16 @@ class Arc(PObject):
 
 
 class Parametric(PObject):
+    """
+    Curve traced by a parametric function.
+
+    Attributes:
+        f: The function which determines the shape.
+        a: Start of the time domain.
+        b: End of the time domain.
+        dt: Increment in time between each point.
+    """
+
     f: Callable[[float], tuple[float, float]]
     a: float
     b: float
@@ -156,6 +218,16 @@ class Parametric(PObject):
         dt: float = 0,
         zord: int = 0,
     ) -> None:
+        """
+        Instantiate a parametric curve.
+
+        Parameters:
+            f: The function which determines the shape.
+            a: Start of the time domain.
+            b: End of the time domain.
+            dt: Increment in time between each point.
+            zord: Rendering priority (see `PObject._zord`).
+        """
         self.f = f
         self.a = a
         self.b = b
@@ -163,6 +235,12 @@ class Parametric(PObject):
         self._zord = zord
 
     def make_points(self) -> list[tuple[float, float]]:
+        """
+        Compute the positions of each of the samples of the curve.
+
+        Returns:
+            List containing the sampled points.
+        """
         ps: list[tuple[float, float]] = []
         t = self.a
         while t <= self.b:

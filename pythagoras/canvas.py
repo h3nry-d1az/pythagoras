@@ -27,7 +27,7 @@ class Canvas:
     def __init__(self, scale: float = 1) -> None:
         """
         Constructor for the `Canvas` class. Only accepts the scaling factor as input,
-        elements must be added through the `Canvas.add` method.
+        elements must be added through the `Canvas.add`/`Canvas.add_many` methods.
 
         Parameters:
             scale: The scaling factor of the canvas.

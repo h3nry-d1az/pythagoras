@@ -10,6 +10,10 @@ class Vector:
     x: float
     y: float
 
+    @classmethod
+    def from_two_points(cls, p1: tuple[float, float], p2: tuple[float, float]) -> Self:
+        return cls(p2[0] - p1[0], p2[1] - p1[1])
+
     def __call__(self) -> tuple[float, float]:
         return (self.x, self.y)
 

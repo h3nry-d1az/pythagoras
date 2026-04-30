@@ -41,7 +41,7 @@ class Angle(PObject):
             p2: Corner of the angle.
             p3: End point.
             radius: Radius.
-            zord: Rendering priority (see `PObject._zord`)
+            zord: Rendering priority (see `PObject._zord`).
         """
         self.p1 = p1
         self.p2 = p2

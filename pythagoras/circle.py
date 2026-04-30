@@ -27,6 +27,12 @@ class Circle(PObject):
     def __init__(self, x: float, y: float, radius: float, zord: int = 0) -> None:
         """
         Instantiates a `Circle` object.
+
+        Parameters:
+            x: $x$-coordinate of the center.
+            y: $y$-coordinate of the center.
+            radius: Radius.
+            zord: Rendering priority (see `PObject._zord`).
         """
         self.x = x
         self.y = y
@@ -179,6 +185,14 @@ class Ellipse(PObject):
     def __init__(self, x: float, y: float, rx: float, ry: float, zord: int = 0) -> None:
         """
         Instantiates an `Ellipse` object.
+
+        Parameters:
+            x: $x$-coordinate of its center.
+            y: $y$-coordinate of its center.
+            rx: Length of the semi axis corresponding to the $x$ axis.
+            ry: Length of the semi axis corresponding to the $y$ axis.
+            theta: Angle of rotation with respect to the positive $x$ axis.
+            zord: Rendering priority (see `PObject._zord`).
         """
         self.x = x
         self.y = y
@@ -267,8 +281,17 @@ class Point(Circle):
     A circle small enough to represent a point.
     """
 
-    def __init__(self, x: float, y: float, _radius: float = 1, zord: int = 0) -> None:
-        super().__init__(x, y, _radius, zord)
+    def __init__(self, x: float, y: float, radius: float = 1, zord: int = 0) -> None:
+        """
+        Creates a point object.
+
+        Parameters:
+            x: $x$-coordinate of its center.
+            y: $y$-coordinate of its center.
+            radius: Radius of the point, defaults to one.
+            zord: Rendering priority of the object.
+        """
+        super().__init__(x, y, radius, zord)
 
     def tikz(self, *args: POProperty) -> str:
         return super().tikz(
