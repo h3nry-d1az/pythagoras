@@ -208,3 +208,7 @@ __marimo__/
 
 # SVG output files
 *.svg
+
+# Auto-generated module documentation files
+docs/source/*.rst
+!docs/source/index.rst

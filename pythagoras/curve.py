@@ -32,15 +32,6 @@ class Arc(PObject):
         theta: float,
         zord: int = 0,
     ) -> None:
-        """
-        Instantiate an arc of a circle.
-
-        Attributes:
-            o: Center of the circle in which the arc is contained.
-            p: Starting point of the arc.
-            theta: Angle spanned by the arc.
-            zord: Rendering priority (see `PObject._zord`).
-        """
         self.o = o
         self.p = p
         self.theta = theta
@@ -218,16 +209,6 @@ class Parametric(PObject):
         dt: float = 0,
         zord: int = 0,
     ) -> None:
-        """
-        Instantiate a parametric curve.
-
-        Parameters:
-            f: The function which determines the shape.
-            a: Start of the time domain.
-            b: End of the time domain.
-            dt: Increment in time between each point.
-            zord: Rendering priority (see `PObject._zord`).
-        """
         self.f = f
         self.a = a
         self.b = b

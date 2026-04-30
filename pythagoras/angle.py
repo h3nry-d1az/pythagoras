@@ -33,16 +33,6 @@ class Angle(PObject):
         radius: float = 1,
         zord: int = 0,
     ) -> None:
-        """
-        Instantiates an object of the `Angle` class.
-
-        Parameters:
-            p1: Starting point.
-            p2: Corner of the angle.
-            p3: End point.
-            radius: Radius.
-            zord: Rendering priority (see `PObject._zord`).
-        """
         self.p1 = p1
         self.p2 = p2
         self.p3 = p3

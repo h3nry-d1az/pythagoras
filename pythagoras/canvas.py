@@ -25,13 +25,6 @@ class Canvas:
     __elements: list[tuple[PObject, tuple[POProperty, ...]]]
 
     def __init__(self, scale: float = 1) -> None:
-        """
-        Constructor for the `Canvas` class. Only accepts the scaling factor as input,
-        elements must be added through the `Canvas.add`/`Canvas.add_many` methods.
-
-        Parameters:
-            scale: The scaling factor of the canvas.
-        """
         self.scale = scale
         self._xmin = 0
         self._xmax = 0
