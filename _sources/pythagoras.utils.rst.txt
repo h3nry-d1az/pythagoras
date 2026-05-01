@@ -1,0 +1,7 @@
+pythagoras.utils module
+=======================
+
+.. automodule:: pythagoras.utils
+   :members:
+   :show-inheritance:
+   :undoc-members:

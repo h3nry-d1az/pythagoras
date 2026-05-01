@@ -1,0 +1,7 @@
+pythagoras.style.line module
+============================
+
+.. automodule:: pythagoras.style.line
+   :members:
+   :show-inheritance:
+   :undoc-members:

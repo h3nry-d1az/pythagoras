@@ -1,0 +1,21 @@
+pythagoras.style package
+========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pythagoras.style.color
+   pythagoras.style.draw
+   pythagoras.style.line
+   pythagoras.style.opacity
+
+Module contents
+---------------
+
+.. automodule:: pythagoras.style
+   :members:
+   :show-inheritance:
+   :undoc-members:

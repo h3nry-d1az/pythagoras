@@ -1,0 +1,7 @@
+pythagoras.label module
+=======================
+
+.. automodule:: pythagoras.label
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pythagoras.style.draw &#8212; Pythagoras 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8e8a900e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/traditional.css?v=f6356284" />
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../style.html" accesskey="U">pythagoras.style</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.style.draw</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pythagoras.style.draw</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">POProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">Color</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fill&quot;</span><span class="p">,</span> <span class="s2">&quot;LineWidth&quot;</span><span class="p">,</span> <span class="s2">&quot;Stroke&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Fill">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.Fill">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Fill</span><span class="p">(</span><span class="n">POProperty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fill style for shapes.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        color: Fill color. If `None`, the shape is not filled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">color</span><span class="p">:</span> <span class="n">Color</span> <span class="o">|</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Fill.svg">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.Fill.svg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;fill=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">svg</span><span class="p">()</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span>
+            <span class="k">else</span> <span class="s1">&#39;fill=&quot;none&quot;&#39;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Fill.tikz">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.Fill.tikz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;fill=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">tikz</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Stroke">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.Stroke">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Stroke</span><span class="p">(</span><span class="n">POProperty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stroke (outline) style for shapes.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        color: Stroke color. If `None`, no stroke is drawn.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">color</span><span class="p">:</span> <span class="n">Color</span> <span class="o">|</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Stroke.svg">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.Stroke.svg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;stroke=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">svg</span><span class="p">()</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span>
+            <span class="k">else</span> <span class="s1">&#39;stroke=&quot;none&quot;&#39;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Stroke.tikz">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.Stroke.tikz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;draw=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">tikz</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="LineWidth">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.LineWidth">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LineWidth</span><span class="p">(</span><span class="n">POProperty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Line width specification for strokes.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        width: Line width magnitude.</span>
+<span class="sd">        unit: Unit for the width (default: &#39;pt&#39;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">width</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pt&quot;</span>
+
+<div class="viewcode-block" id="LineWidth.svg">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.LineWidth.svg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;stroke-width=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
+
+
+<div class="viewcode-block" id="LineWidth.tikz">
+<a class="viewcode-back" href="../../../pythagoras.style.draw.html#pythagoras.style.draw.LineWidth.tikz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;line width=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</div>
+
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FontSize</span><span class="p">(</span><span class="n">POProperty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Font size specifier.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        size: Font size value.</span>
+<span class="sd">        unit: Unit for the font size (default: &#39;pt&#39;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">size</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pt&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;font-size=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">rf</span><span class="s2">&quot;font=\fontsize</span><span class="se">{{</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="se">}}{{</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="se">}}</span><span class="s2">\selectfont&quot;</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../style.html" >pythagoras.style</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.style.draw</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, Henry Díaz Bordón.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    </div>
+  </body>
+</html>

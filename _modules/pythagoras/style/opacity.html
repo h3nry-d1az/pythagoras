@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pythagoras.style.opacity &#8212; Pythagoras 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8e8a900e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/traditional.css?v=f6356284" />
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../style.html" accesskey="U">pythagoras.style</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.style.opacity</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pythagoras.style.opacity</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">POProperty</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;FillOpacity&quot;</span><span class="p">,</span> <span class="s2">&quot;Opacity&quot;</span><span class="p">,</span> <span class="s2">&quot;StrokeOpacity&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Opacity">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.Opacity">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Opacity</span><span class="p">(</span><span class="n">POProperty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Global opacity for an element.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        opacity: Opacity value between 0 (transparent) and 1 (opaque).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">opacity</span><span class="p">:</span> <span class="nb">float</span>
+
+<div class="viewcode-block" id="Opacity.svg">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.Opacity.svg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;opacity=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">opacity</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
+
+
+<div class="viewcode-block" id="Opacity.tikz">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.Opacity.tikz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;opacity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">opacity</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="FillOpacity">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.FillOpacity">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FillOpacity</span><span class="p">(</span><span class="n">POProperty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Opacity applied only to the fill of an element.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        opacity: Fill opacity between 0 and 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">opacity</span><span class="p">:</span> <span class="nb">float</span>
+
+<div class="viewcode-block" id="FillOpacity.svg">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.FillOpacity.svg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;fill-opacity=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">opacity</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
+
+
+<div class="viewcode-block" id="FillOpacity.tikz">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.FillOpacity.tikz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;fill opacity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">opacity</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="StrokeOpacity">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.StrokeOpacity">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StrokeOpacity</span><span class="p">(</span><span class="n">POProperty</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Opacity applied only to the stroke (outline) of an element.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        opacity: Stroke opacity between 0 and 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">opacity</span><span class="p">:</span> <span class="nb">float</span>
+
+<div class="viewcode-block" id="StrokeOpacity.svg">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.StrokeOpacity.svg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;stroke-opacity=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">opacity</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
+
+
+<div class="viewcode-block" id="StrokeOpacity.tikz">
+<a class="viewcode-back" href="../../../pythagoras.style.opacity.html#pythagoras.style.opacity.StrokeOpacity.tikz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;draw opacity=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">opacity</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../style.html" >pythagoras.style</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.style.opacity</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, Henry Díaz Bordón.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    </div>
+  </body>
+</html>

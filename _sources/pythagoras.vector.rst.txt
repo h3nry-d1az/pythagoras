@@ -1,0 +1,7 @@
+pythagoras.vector module
+========================
+
+.. automodule:: pythagoras.vector
+   :members:
+   :show-inheritance:
+   :undoc-members:

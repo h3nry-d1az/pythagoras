@@ -1,0 +1,36 @@
+pythagoras package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pythagoras.style
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pythagoras.angle
+   pythagoras.backend
+   pythagoras.canvas
+   pythagoras.circle
+   pythagoras.curve
+   pythagoras.label
+   pythagoras.pobject
+   pythagoras.prelude
+   pythagoras.shape
+   pythagoras.utils
+   pythagoras.vector
+
+Module contents
+---------------
+
+.. automodule:: pythagoras
+   :members:
+   :show-inheritance:
+   :undoc-members:

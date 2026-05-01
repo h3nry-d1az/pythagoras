@@ -1,0 +1,7 @@
+pythagoras.prelude module
+=========================
+
+.. automodule:: pythagoras.prelude
+   :members:
+   :show-inheritance:
+   :undoc-members:

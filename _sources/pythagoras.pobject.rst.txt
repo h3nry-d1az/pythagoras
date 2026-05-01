@@ -1,0 +1,7 @@
+pythagoras.pobject module
+=========================
+
+.. automodule:: pythagoras.pobject
+   :members:
+   :show-inheritance:
+   :undoc-members:

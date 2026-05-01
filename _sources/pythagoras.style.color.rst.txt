@@ -1,0 +1,7 @@
+pythagoras.style.color module
+=============================
+
+.. automodule:: pythagoras.style.color
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+pythagoras.style.opacity module
+===============================
+
+.. automodule:: pythagoras.style.opacity
+   :members:
+   :show-inheritance:
+   :undoc-members:

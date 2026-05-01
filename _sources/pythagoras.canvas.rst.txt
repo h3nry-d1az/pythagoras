@@ -1,0 +1,7 @@
+pythagoras.canvas module
+========================
+
+.. automodule:: pythagoras.canvas
+   :members:
+   :show-inheritance:
+   :undoc-members:

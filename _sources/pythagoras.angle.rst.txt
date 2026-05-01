@@ -1,0 +1,7 @@
+pythagoras.angle module
+=======================
+
+.. automodule:: pythagoras.angle
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,7 @@
+pythagoras.curve module
+=======================
+
+.. automodule:: pythagoras.curve
+   :members:
+   :show-inheritance:
+   :undoc-members:

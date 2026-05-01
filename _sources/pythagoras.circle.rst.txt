@@ -1,0 +1,7 @@
+pythagoras.circle module
+========================
+
+.. automodule:: pythagoras.circle
+   :members:
+   :show-inheritance:
+   :undoc-members:

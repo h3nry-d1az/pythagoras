@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pythagoras.style.color &#8212; Pythagoras 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8e8a900e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/traditional.css?v=f6356284" />
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../style.html" accesskey="U">pythagoras.style</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.style.color</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pythagoras.style.color</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">`Color` RGB container and predefined color constants. Included colors:</span>
+
+<span class="sd">- ``BLACK``: (0, 0, 0).</span>
+<span class="sd">- ``WHITE``: (255, 255, 255).</span>
+<span class="sd">- ``RED``: (255, 0, 0).</span>
+<span class="sd">- ``LIME``: (0, 255, 0).</span>
+<span class="sd">- ``BLUE``: (0, 0, 255).</span>
+<span class="sd">- ``YELLOW``: (255, 255, 0).</span>
+<span class="sd">- ``CYAN``: (0, 255, 255).</span>
+<span class="sd">- ``MAGENTA``: (255, 0, 255).</span>
+<span class="sd">- ``SILVER``: (192, 192, 192).</span>
+<span class="sd">- ``GRAY``: (128, 128, 128).</span>
+<span class="sd">- ``MAROON``: (128, 0, 0).</span>
+<span class="sd">- ``OLIVE``: (128, 128, 0).</span>
+<span class="sd">- ``GREEN``: (0, 128, 0).</span>
+<span class="sd">- ``PURPLE``: (128, 0, 128).</span>
+<span class="sd">- ``TEAL``: (0, 128, 128).</span>
+<span class="sd">- ``NAVY``: (0, 0, 128).</span>
+<span class="sd">- ``ORANGE``: (255, 165, 0).</span>
+<span class="sd">- ``PINK``: (255, 192, 203).</span>
+<span class="sd">- ``BROWN``: (165, 42, 42).</span>
+<span class="sd">- ``GOLD``: (255, 215, 0).</span>
+<span class="sd">- ``INDIGO``: (75, 0, 130).</span>
+<span class="sd">- ``VIOLET``: (238, 130, 238).</span>
+<span class="sd">- ``BEIGE``: (245, 245, 220).</span>
+<span class="sd">- ``TURQUOISE``: (64, 224, 208).</span>
+<span class="sd">- ``CORAL``: (255, 127, 80).</span>
+<span class="sd">- ``LIGHT_RED``: (255, 128, 128).</span>
+<span class="sd">- ``LIGHT_BLUE``: (173, 216, 230).</span>
+<span class="sd">- ``LIGHT_GREEN``: (144, 238, 144).</span>
+<span class="sd">- ``LIGHT_CYAN``: (224, 255, 255).</span>
+<span class="sd">- ``LIGHT_YELLOW``: (255, 255, 224).</span>
+<span class="sd">- ``LIGHT_GRAY``: (211, 211, 211).</span>
+<span class="sd">- ``LIGHT_PINK``: (255, 182, 193).</span>
+<span class="sd">- ``LIGHT_PURPLE``: (204, 153, 255).</span>
+<span class="sd">- ``LIGHT_ORANGE``: (255, 200, 120).</span>
+<span class="sd">- ``LIGHT_BROWN``: (210, 180, 140).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;BEIGE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BLACK&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BLUE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BROWN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CORAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CYAN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GOLD&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GRAY&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GREEN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;INDIGO&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_BLUE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_BROWN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_CYAN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_GRAY&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_GREEN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_ORANGE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_PINK&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_PURPLE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_RED&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIGHT_YELLOW&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LIME&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MAGENTA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MAROON&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NAVY&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OLIVE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ORANGE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PINK&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PURPLE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RED&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SILVER&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TEAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TURQUOISE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VIOLET&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WHITE&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;YELLOW&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Color&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="Color">
+<a class="viewcode-back" href="../../../pythagoras.style.color.html#pythagoras.style.color.Color">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RGB color container.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        r: Red channel (0-255).</span>
+<span class="sd">        g: Green channel (0-255).</span>
+<span class="sd">        b: Blue channel (0-255).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">r</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">g</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">int</span>
+
+<div class="viewcode-block" id="Color.tikz">
+<a class="viewcode-back" href="../../../pythagoras.style.color.html#pythagoras.style.color.Color.tikz">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2">rgb,255: red,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="si">}</span><span class="s2">; green,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="si">}</span><span class="s2">; blue,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="Color.svg">
+<a class="viewcode-back" href="../../../pythagoras.style.color.html#pythagoras.style.color.Color.svg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;rgb(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">+=</span> <span class="n">other</span><span class="o">.</span><span class="n">r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">+=</span> <span class="n">other</span><span class="o">.</span><span class="n">g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">+=</span> <span class="n">other</span><span class="o">.</span><span class="n">b</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__isub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">-=</span> <span class="n">other</span><span class="o">.</span><span class="n">r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">-=</span> <span class="n">other</span><span class="o">.</span><span class="n">g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">-=</span> <span class="n">other</span><span class="o">.</span><span class="n">b</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">alpha</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">//</span> <span class="n">alpha</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__itruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+
+<span class="n">BLACK</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">WHITE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">RED</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">LIME</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">BLUE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">YELLOW</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">CYAN</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">MAGENTA</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">SILVER</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">192</span><span class="p">)</span>
+<span class="n">GRAY</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">MAROON</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">OLIVE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">PURPLE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">TEAL</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">NAVY</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">ORANGE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">PINK</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">203</span><span class="p">)</span>
+<span class="n">BROWN</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">165</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="n">GOLD</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">INDIGO</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">130</span><span class="p">)</span>
+<span class="n">VIOLET</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">238</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">238</span><span class="p">)</span>
+<span class="n">BEIGE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">245</span><span class="p">,</span> <span class="mi">245</span><span class="p">,</span> <span class="mi">220</span><span class="p">)</span>
+<span class="n">TURQUOISE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">208</span><span class="p">)</span>
+<span class="n">CORAL</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+
+<span class="n">LIGHT_RED</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">LIGHT_BLUE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">173</span><span class="p">,</span> <span class="mi">216</span><span class="p">,</span> <span class="mi">230</span><span class="p">)</span>
+<span class="n">LIGHT_GREEN</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">144</span><span class="p">,</span> <span class="mi">238</span><span class="p">,</span> <span class="mi">144</span><span class="p">)</span>
+<span class="n">LIGHT_CYAN</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">LIGHT_YELLOW</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+<span class="n">LIGHT_GRAY</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">)</span>
+<span class="n">LIGHT_PINK</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">193</span><span class="p">)</span>
+<span class="n">LIGHT_PURPLE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">204</span><span class="p">,</span> <span class="mi">153</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">LIGHT_ORANGE</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">LIGHT_BROWN</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">140</span><span class="p">)</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../style.html" >pythagoras.style</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.style.color</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, Henry Díaz Bordón.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    </div>
+  </body>
+</html>

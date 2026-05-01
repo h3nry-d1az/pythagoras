@@ -1,0 +1,7 @@
+pythagoras.style.draw module
+============================
+
+.. automodule:: pythagoras.style.draw
+   :members:
+   :show-inheritance:
+   :undoc-members:

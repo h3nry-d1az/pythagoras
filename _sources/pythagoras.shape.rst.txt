@@ -1,0 +1,7 @@
+pythagoras.shape module
+=======================
+
+.. automodule:: pythagoras.shape
+   :members:
+   :show-inheritance:
+   :undoc-members:
