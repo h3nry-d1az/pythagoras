@@ -5,6 +5,7 @@ authors = [
   { name="Henry Díaz Bordón", email="henrydiazbordon@gmail.com" },
 ]
 description = "Python drawing package which exports to TikZ and SVG"
+dependencies = ["latex2mathml>=3.81.0"]
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
