@@ -113,6 +113,14 @@
 <div class="viewcode-block" id="Path.rotate">
 <a class="viewcode-back" href="../../pythagoras.shape.html#pythagoras.shape.Path.rotate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rotates all the points of the `Shape` object by a given angle around some point,</span>
+<span class="sd">        and consequently the shape itself.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            point: Center of rotation.</span>
+<span class="sd">            theta: Angle of rotation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">px</span><span class="p">,</span> <span class="n">py</span> <span class="o">=</span> <span class="n">point</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="p">[</span>
@@ -167,6 +175,19 @@
 <a class="viewcode-back" href="../../pythagoras.shape.html#pythagoras.shape.Polygon.regular">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">regular</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">zord</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor for a regular polygon.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            x: :math:`x`-coordinate of the center.</span>
+<span class="sd">            y: :math:`y`-coordinate of the center.</span>
+<span class="sd">            r: Radius of the polygon (distance from the center to a vertex).</span>
+<span class="sd">            n: Number of sides.</span>
+<span class="sd">            zord: Rendering priority.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An instance of the `Polygon` class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ps</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">tau</span> <span class="o">/</span> <span class="n">n</span><span class="p">),</span> <span class="n">y</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">tau</span> <span class="o">/</span> <span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">ps</span><span class="p">,</span> <span class="n">zord</span><span class="o">=</span><span class="n">zord</span><span class="p">)</span></div>
 
@@ -175,6 +196,17 @@
 <a class="viewcode-back" href="../../pythagoras.shape.html#pythagoras.shape.Polygon.triangle_from_lengths">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">triangle_from_lengths</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">zord</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct a triangle from the lengths of its sides.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            a: Length of the first side.</span>
+<span class="sd">            b: Length of the second side.</span>
+<span class="sd">            c: Length of the third side.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An instance of the `Polygon` class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The given lengths cannot form a valid triangle.&quot;</span><span class="p">)</span>
@@ -195,6 +227,17 @@
     <span class="n">step</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">zord</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a sequence of segments forming a grid.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        start: Leftmost bottom point of the grid.</span>
+<span class="sd">        end: Rightmost top point of the grid.</span>
+<span class="sd">        step: Increments in the :math:`x` and :math:`y` axes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An iterable of lines shaping a grid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">px</span> <span class="o">=</span> <span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">floor</span><span class="p">((</span><span class="n">end</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">py</span> <span class="o">=</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">floor</span><span class="p">((</span><span class="n">end</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">step</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">step</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>

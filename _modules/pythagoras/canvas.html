@@ -45,7 +45,7 @@
 <a class="viewcode-back" href="../../pythagoras.canvas.html#pythagoras.canvas.Canvas">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Canvas</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Container class for a collection of `PObject`&#39;s. Controls the SVG and TikZ output,</span>
+<span class="sd">    Container class for a collection of :class:`PObject &lt;pythagoras.pobject.PObject&gt;`&#39;s. Controls the SVG and TikZ output,</span>
 <span class="sd">    and resizes automatically when a new element is added.</span>
 
 <span class="sd">    Attributes:</span>
@@ -77,8 +77,8 @@
 <span class="sd">        Appends an element into the list of objects to be renderded.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            obj: `PObject` to be included into the scene.</span>
-<span class="sd">            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See `pythagoras.style` for</span>
+<span class="sd">            obj: :class:`PObject &lt;pythagoras.pobject.PObject&gt;` to be included into the scene.</span>
+<span class="sd">            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See :mod:`pythagoras.style` for</span>
 <span class="sd">                further information on styling.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">extrema</span><span class="p">():</span>
@@ -97,8 +97,8 @@
 <span class="sd">        Appends a collection of elements sharing common arguments into the list of objects to be renderded.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            objs: Sequence of `PObject`&#39;s to be included into the scene.</span>
-<span class="sd">            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See `pythagoras.style` for</span>
+<span class="sd">            objs: Sequence of :class:`PObject &lt;pythagoras.pobject.PObject&gt;`&#39;s to be included into the scene.</span>
+<span class="sd">            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See :mod:`pythagoras.style` for</span>
 <span class="sd">                further information on styling.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>

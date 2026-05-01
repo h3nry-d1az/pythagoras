@@ -39,12 +39,12 @@
 <dt class="sig sig-object py" id="pythagoras.canvas.Canvas">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pythagoras.canvas.</span></span><span class="sig-name descname"><span class="pre">Canvas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pythagoras/canvas.html#Canvas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.canvas.Canvas" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Container class for a collection of <cite>PObject</cite>’s. Controls the SVG and TikZ output,
+<p>Container class for a collection of <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.PObject" title="pythagoras.pobject.PObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject</span></code></a>’s. Controls the SVG and TikZ output,
 and resizes automatically when a new element is added.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>scale</strong> (<em>float</em>) – The scaling factor by which the canvas is stretched. When exporting to TikZ,
-this is compiled exactly into <cite>[scale={scale}]</cite>, and when using SVG, the
+this is compiled exactly into <code class="code docutils literal notranslate"><span class="pre">[scale={scale}]</span></code>, and when using SVG, the
 distances are muliplied by its value.</p>
 </dd>
 </dl>
@@ -55,8 +55,8 @@ distances are muliplied by its value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> – <cite>PObject</cite> to be included into the scene.</p></li>
-<li><p><strong>*args</strong> – Parameters of the object, i.e.: <cite>Fill(BLUE)</cite> or <cite>Stroke(RED)</cite>. See <cite>pythagoras.style</cite> for
+<li><p><strong>obj</strong> – <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.PObject" title="pythagoras.pobject.PObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject</span></code></a> to be included into the scene.</p></li>
+<li><p><strong>*args</strong> – Parameters of the object, i.e.: <code class="code docutils literal notranslate"><span class="pre">Fill(BLUE)</span></code> or <code class="code docutils literal notranslate"><span class="pre">Stroke(RED)</span></code>. See <a class="reference internal" href="pythagoras.style.html#module-pythagoras.style" title="pythagoras.style"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pythagoras.style</span></code></a> for
 further information on styling.</p></li>
 </ul>
 </dd>
@@ -70,8 +70,8 @@ further information on styling.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>objs</strong> – Sequence of <cite>PObject</cite>’s to be included into the scene.</p></li>
-<li><p><strong>*args</strong> – Parameters of the object, i.e.: <cite>Fill(BLUE)</cite> or <cite>Stroke(RED)</cite>. See <cite>pythagoras.style</cite> for
+<li><p><strong>objs</strong> – Sequence of <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.PObject" title="pythagoras.pobject.PObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject</span></code></a>’s to be included into the scene.</p></li>
+<li><p><strong>*args</strong> – Parameters of the object, i.e.: <code class="code docutils literal notranslate"><span class="pre">Fill(BLUE)</span></code> or <code class="code docutils literal notranslate"><span class="pre">Stroke(RED)</span></code>. See <a class="reference internal" href="pythagoras.style.html#module-pythagoras.style" title="pythagoras.style"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pythagoras.style</span></code></a> for
 further information on styling.</p></li>
 </ul>
 </dd>

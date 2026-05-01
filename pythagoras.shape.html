@@ -11,6 +11,7 @@
     <script src="_static/documentation_options.js?v=01f34227"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head><body>
@@ -43,7 +44,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – Points specified as <cite>(x, y)</cite> pairs defining the path.</p></li>
+<li><p><strong>*args</strong> – Points specified as <code class="code docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> pairs defining the path.</p></li>
 <li><p><strong>zord</strong> – Drawing order; higher values are drawn later.</p></li>
 </ul>
 </dd>
@@ -67,7 +68,17 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.shape.Path.rotate">
 <span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pythagoras/shape.html#Path.rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.shape.Path.rotate" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Rotates all the points of the <code class="code docutils literal notranslate"><span class="pre">Shape</span></code> object by a given angle around some point,
+and consequently the shape itself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> – Center of rotation.</p></li>
+<li><p><strong>theta</strong> – Angle of rotation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.shape.Path.svg">
@@ -104,7 +115,22 @@ the path (the first point is repeated for SVG output).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.shape.Polygon.regular">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">regular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/shape.html#Polygon.regular"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.shape.Polygon.regular" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Constructor for a regular polygon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – <span class="math notranslate nohighlight">\(x\)</span>-coordinate of the center.</p></li>
+<li><p><strong>y</strong> – <span class="math notranslate nohighlight">\(y\)</span>-coordinate of the center.</p></li>
+<li><p><strong>r</strong> – Radius of the polygon (distance from the center to a vertex).</p></li>
+<li><p><strong>n</strong> – Number of sides.</p></li>
+<li><p><strong>zord</strong> – Rendering priority.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the <code class="code docutils literal notranslate"><span class="pre">Polygon</span></code> class.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.shape.Polygon.svg">
@@ -131,14 +157,40 @@ the path (the first point is repeated for SVG output).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.shape.Polygon.triangle_from_lengths">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">triangle_from_lengths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/shape.html#Polygon.triangle_from_lengths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.shape.Polygon.triangle_from_lengths" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Construct a triangle from the lengths of its sides.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – Length of the first side.</p></li>
+<li><p><strong>b</strong> – Length of the second side.</p></li>
+<li><p><strong>c</strong> – Length of the third side.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the <code class="code docutils literal notranslate"><span class="pre">Polygon</span></code> class.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pythagoras.shape.grid">
 <span class="sig-prename descclassname"><span class="pre">pythagoras.shape.</span></span><span class="sig-name descname"><span class="pre">grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pythagoras.shape.Path" title="pythagoras.shape.Path"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pythagoras/shape.html#grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.shape.grid" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a sequence of segments forming a grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> – Leftmost bottom point of the grid.</p></li>
+<li><p><strong>end</strong> – Rightmost top point of the grid.</p></li>
+<li><p><strong>step</strong> – Increments in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> axes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An iterable of lines shaping a grid.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
