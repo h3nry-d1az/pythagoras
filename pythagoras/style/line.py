@@ -8,6 +8,16 @@ __all__ = ["Dashed"]
 
 @dataclass
 class Dashed(POProperty):
+    """
+    Dash pattern for stroked lines.
+
+    Attributes:
+        dash: Dash length.
+        gap: Gap length between dashes.
+        unit: Unit for dash/gap (default: 'pt').
+        round: Use rounded line caps when `True`.
+    """
+
     dash: float = 2
     gap: float = 2
     unit: str = "pt"

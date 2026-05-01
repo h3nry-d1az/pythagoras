@@ -7,6 +7,13 @@ __all__ = ["FillOpacity", "Opacity", "StrokeOpacity"]
 
 @dataclass
 class Opacity(POProperty):
+    """
+    Global opacity for an element.
+
+    Attributes:
+        opacity: Opacity value between 0 (transparent) and 1 (opaque).
+    """
+
     opacity: float
 
     def svg(self) -> str:
@@ -18,6 +25,13 @@ class Opacity(POProperty):
 
 @dataclass
 class FillOpacity(POProperty):
+    """
+    Opacity applied only to the fill of an element.
+
+    Attributes:
+        opacity: Fill opacity between 0 and 1.
+    """
+
     opacity: float
 
     def svg(self) -> str:
@@ -29,6 +43,13 @@ class FillOpacity(POProperty):
 
 @dataclass
 class StrokeOpacity(POProperty):
+    """
+    Opacity applied only to the stroke (outline) of an element.
+
+    Attributes:
+        opacity: Stroke opacity between 0 and 1.
+    """
+
     opacity: float
 
     def svg(self) -> str:

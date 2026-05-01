@@ -13,6 +13,14 @@ def cartesian_to_canvas(
 
 @dataclass
 class Phantom(PObject):
+    """
+    A zero-size placeholder element used for layout or reference.
+
+    Attributes:
+        x: $x$-coordinate in Cartesian space.
+        y: $y$-coordinate in Cartesian space.
+    """
+
     x: float
     y: float
 

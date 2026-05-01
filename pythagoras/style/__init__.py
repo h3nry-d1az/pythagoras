@@ -9,6 +9,14 @@ __all__ = ["CustomStyle", "color", "draw", "line", "opacity"]
 
 @dataclass
 class CustomStyle(__POProperty):
+    """
+    Generic custom style parameter.
+
+    Attributes:
+        param: Name of the style parameter.
+        value: Value associated with the parameter.
+    """
+
     param: str
     value: Any
 

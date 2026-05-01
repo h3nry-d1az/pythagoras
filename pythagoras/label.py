@@ -9,6 +9,17 @@ __all__ = ["Label"]
 
 
 class Label(PObject):
+    r"""
+    A text label rendered from $\LaTeX$.
+
+    Attributes:
+        x: $x$-coordinate in Cartesian space.
+        y: $y$-coordinate in Cartesian space.
+        tag: $\LaTeX$ string to render inside the label.
+        padding: Spacing around the label (default 0.05).
+        zord: Drawing order; higher values are drawn later.
+    """
+
     x: float
     y: float
     tag: str

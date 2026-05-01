@@ -7,6 +7,14 @@ __all__ = ["Vector"]
 
 @dataclass
 class Vector:
+    """
+    Two-dimensional vector with common operations.
+
+    Attributes:
+        x: $x$ component of the vector.
+        y: $y$ component of the vector.
+    """
+
     x: float
     y: float
 

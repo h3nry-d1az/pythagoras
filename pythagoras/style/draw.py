@@ -8,6 +8,13 @@ __all__ = ["Fill", "LineWidth", "Stroke"]
 
 @dataclass
 class Fill(POProperty):
+    """
+    Fill style for shapes.
+
+    Attributes:
+        color: Fill color. If `None`, the shape is not filled.
+    """
+
     color: Color | None
 
     def svg(self) -> str:
@@ -23,6 +30,13 @@ class Fill(POProperty):
 
 @dataclass
 class Stroke(POProperty):
+    """
+    Stroke (outline) style for shapes.
+
+    Attributes:
+        color: Stroke color. If `None`, no stroke is drawn.
+    """
+
     color: Color | None
 
     def svg(self) -> str:
@@ -38,6 +52,14 @@ class Stroke(POProperty):
 
 @dataclass
 class LineWidth(POProperty):
+    """
+    Line width specification for strokes.
+
+    Attributes:
+        width: Line width magnitude.
+        unit: Unit for the width (default: 'pt').
+    """
+
     width: int
     unit: str = "pt"
 
@@ -50,6 +72,14 @@ class LineWidth(POProperty):
 
 @dataclass
 class FontSize(POProperty):
+    """
+    Font size specifier.
+
+    Attributes:
+        size: Font size value.
+        unit: Unit for the font size (default: 'pt').
+    """
+
     size: float
     unit: str = "pt"
 

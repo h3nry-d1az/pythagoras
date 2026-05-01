@@ -43,6 +43,15 @@ __all__ = [
 
 @dataclass(repr=False)
 class Color:
+    """
+    RGB color container.
+
+    Attributes:
+        r: Red channel (0-255).
+        g: Green channel (0-255).
+        b: Blue channel (0-255).
+    """
+
     r: int
     g: int
     b: int

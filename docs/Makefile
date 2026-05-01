@@ -12,5 +12,5 @@ help:
 setup:
 	$(SPHINXAPIDOC) -e -o ./source/ ../pythagoras/
 
-%: Makefile setup
+%: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

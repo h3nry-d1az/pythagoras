@@ -12,6 +12,14 @@ __all__ = ["Path", "Polygon", "grid"]
 
 
 class Path(PObject):
+    """
+    A sequence of connected points forming an open path.
+
+    Attributes:
+        *args: Points specified as `(x, y)` pairs defining the path.
+        zord: Drawing order; higher values are drawn later.
+    """
+
     points: list[tuple[float, float]]
 
     def __init__(self, *args: tuple[float, float], zord: int = 0) -> None:
@@ -68,6 +76,14 @@ class Path(PObject):
 
 
 class Polygon(Path):
+    """
+    A closed polygonal shape.
+
+    Notes:
+        The polygon is drawn by connecting the provided points and closing
+        the path (the first point is repeated for SVG output).
+    """
+
     def tikz(self, *args: POProperty) -> str:
         return tikz_command(
             "draw",
