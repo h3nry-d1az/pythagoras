@@ -1,6 +1,3 @@
-# Generate documentation `.rst` files for each module by running
-# `sphinx-apidoc -e -o .\docs\source\ .\pythagoras\`
-# on the previous directory.
 import os
 import sys
 

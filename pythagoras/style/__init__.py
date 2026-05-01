@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from typing import Any
 
 from ..pobject import POProperty as __POProperty
-from . import color, draw, line
+from . import color, draw, line, opacity
 
-__all__ = ["CustomStyle", "color", "draw", "line"]
+__all__ = ["CustomStyle", "color", "draw", "line", "opacity"]
 
 
 @dataclass
