@@ -15,8 +15,8 @@ class Circle(PObject):
     Circle `PObject`. As its name suggests, renders into a cirlce when drawn.
 
     Attributes:
-        x: $x$-coordinate of the center.
-        y: $y$-coordinate of the center.
+        x: :math:`x`-coordinate of the center.
+        y: :math:`y`-coordinate of the center.
         radius: Radius.
     """
 
@@ -160,11 +160,11 @@ class Ellipse(PObject):
     An ellipse.
 
     Attributes:
-        x: $x$-coordinate of its center.
-        y: $y$-coordinate of its center.
-        rx: Length of the semi axis corresponding to the $x$ axis.
-        ry: Length of the semi axis corresponding to the $y$ axis.
-        theta: Angle of rotation with respect to the positive $x$ axis.
+        x: :math:`x`-coordinate of its center.
+        y: :math:`y`-coordinate of its center.
+        rx: Length of the semi axis corresponding to the :math:`x` axis.
+        ry: Length of the semi axis corresponding to the :math:`y` axis.
+        theta: Angle of rotation with respect to the positive :math:`x` axis.
     """
 
     x: float

@@ -1,10 +1,10 @@
 [project]
 name = "pythagoras"
-version = "0.0.2"
+version = "0.1.0"
 authors = [
   { name="Henry Díaz Bordón", email="henrydiazbordon@gmail.com" },
 ]
-description = "Package for making geometrical constructions. Exports to TikZ and SVG"
+description = "Python drawing package which exports to TikZ and SVG"
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [

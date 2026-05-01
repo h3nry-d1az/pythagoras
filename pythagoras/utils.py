@@ -17,8 +17,8 @@ class Phantom(PObject):
     A zero-size placeholder element used for layout or reference.
 
     Attributes:
-        x: $x$-coordinate in Cartesian space.
-        y: $y$-coordinate in Cartesian space.
+        x: :math:`x`-coordinate in Cartesian space.
+        y: :math:`y`-coordinate in Cartesian space.
     """
 
     x: float

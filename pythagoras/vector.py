@@ -11,8 +11,8 @@ class Vector:
     Two-dimensional vector with common operations.
 
     Attributes:
-        x: $x$ component of the vector.
-        y: $y$ component of the vector.
+        x: :math:`x` component of the vector.
+        y: :math:`y` component of the vector.
     """
 
     x: float
