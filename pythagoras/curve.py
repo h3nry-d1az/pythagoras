@@ -52,10 +52,10 @@ class Arc(PObject):
             p1: First point.
             p2: Second point.
             p3: Third point.
-            zord: Rendering priority (see `PObject._zord`).
+            zord: Rendering priority (see :attr:`PObject._zord <pythagoras.pobject.PObject._zord>`).
 
         Returns:
-            An instance of `Arc`.
+            An instance of :class:`Arc`.
         """
         x1, y1 = p1[0], p1[1]
         x2, y2 = p2[0], p2[1]
@@ -93,10 +93,10 @@ class Arc(PObject):
             p1: First point.
             p2: Second point.
             theta: Angle spanned.
-            zord: Rendering priority (see `PObject._zord`).
+            zord: Rendering priority (see :attr:`PObject._zord <pythagoras.pobject.PObject._zord>`).
 
         Returns:
-            An instance of `Arc`.
+            An instance of :class:`Arc`.
         """
         return cls(((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2), p1, theta, zord)
 

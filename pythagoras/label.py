@@ -10,12 +10,12 @@ __all__ = ["Label"]
 
 class Label(PObject):
     r"""
-    A text label rendered from :math:`\LaTeX`.
+    A text label rendered from :math:`{\rm \LaTeX}`.
 
     Attributes:
         x: :math:`x`-coordinate in Cartesian space.
         y: :math:`y`-coordinate in Cartesian space.
-        tag: :math:`\LaTeX` string to render inside the label.
+        tag: :math:`{\rm \LaTeX}` string to render inside the label.
         padding: Spacing around the label (default 0.05).
         zord: Drawing order; higher values are drawn later.
     """

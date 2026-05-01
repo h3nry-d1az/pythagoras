@@ -64,6 +64,14 @@ class Path(PObject):
         )
 
     def rotate(self, point: tuple[float, float], theta: float) -> None:
+        """
+        Rotates all the points of the `Shape` object by a given angle around some point,
+        and consequently the shape itself.
+
+        Parameters:
+            point: Center of rotation.
+            theta: Angle of rotation.
+        """
         px, py = point
         alpha = radians(theta)
         self.points = [
@@ -106,11 +114,35 @@ class Polygon(Path):
 
     @classmethod
     def regular(cls, x: float, y: float, r: float, n: int, zord: int = 0) -> Self:
+        """
+        Constructor for a regular polygon.
+
+        Parameters:
+            x: :math:`x`-coordinate of the center.
+            y: :math:`y`-coordinate of the center.
+            r: Radius of the polygon (distance from the center to a vertex).
+            n: Number of sides.
+            zord: Rendering priority.
+
+        Returns:
+            An instance of the `Polygon` class.
+        """
         ps = ((x + r * cos(i * tau / n), y + r * sin(i * tau / n)) for i in range(n))
         return cls(*ps, zord=zord)
 
     @classmethod
     def triangle_from_lengths(cls, a: float, b: float, c: float, zord: int = 0) -> Self:
+        """
+        Construct a triangle from the lengths of its sides.
+
+        Parameters:
+            a: Length of the first side.
+            b: Length of the second side.
+            c: Length of the third side.
+
+        Returns:
+            An instance of the `Polygon` class.
+        """
         a, b, c = sorted([a, b, c])
         if a + b <= c:
             raise ValueError("The given lengths cannot form a valid triangle.")
@@ -127,6 +159,17 @@ def grid(
     step: tuple[float, float],
     zord: int = 0,
 ) -> Iterator[Path]:
+    """
+    Creates a sequence of segments forming a grid.
+
+    Parameters:
+        start: Leftmost bottom point of the grid.
+        end: Rightmost top point of the grid.
+        step: Increments in the :math:`x` and :math:`y` axes.
+
+    Returns:
+        An iterable of lines shaping a grid.
+    """
     px = start[0] + floor((end[0] - start[0]) / step[0]) * step[0]
     py = start[1] + floor((end[1] - start[1]) / step[1]) * step[1]
     y = start[1]

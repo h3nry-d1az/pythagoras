@@ -6,7 +6,7 @@ drawings, which can then be exported into SVG and TikZ code.
 
 It was built in order to write the diagrams within the problems I post in
 `my blog <https://h3nry-d1az.github.io/blog/>`_, without having to write
-any SVG directly, and in such a way that transitioning into :math:`\LaTeX` is
+any SVG directly, and in such a way that transitioning into :math:`{\rm \LaTeX}` is
 fairly straightforward.
 
 Installation

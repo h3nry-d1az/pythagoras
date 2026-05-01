@@ -11,9 +11,9 @@ def tikz_command(name: str, body: str, *args: POProperty) -> str:
     Put together a TikZ command from its components.
 
     Parameters:
-        name: Name of the command, that is, `\{name}`.
+        name: Name of the command, that is, `\\{name}`.
         body: What goes between the command arguments and the final semicolon.
-        *args: Arguments of the command -- i.e., `\{name}[args]` -- as `POProperty`'s.
+        *args: Arguments of the command -- i.e., `\\{name}[args]` -- as :class:`POProperty<pythagoras.pobject.POProperty>`'s.
 
     Returns:
         A valid TikZ command.
@@ -29,7 +29,7 @@ def svg_command(name: str, *args: POProperty) -> str:
     Parameters:
         name: Name of the command, that is, `<{name}>`.
         *args: Parameters of the command, which correspond to key-value pairs
-            when compiled, but are given as `POProperty`'s.
+            when compiled, but are given as :class:`POProperty<pythagoras.pobject.POProperty>`'s.
 
     Returns:
         A valid SVG command.
@@ -72,7 +72,7 @@ def fill_default_args(
     args: Iterable[POProperty], *defaults: tuple[type, POProperty]
 ) -> list[POProperty]:
     """
-    Complete a list of `POProperty`'s with default values for the types that are missing.
+    Complete a list of :class:`POProperty<pythagoras.pobject.POProperty>`'s with default values for the types that are missing.
 
     Parameters:
         args: Initial set of properties.

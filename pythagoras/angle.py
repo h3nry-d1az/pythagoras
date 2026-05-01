@@ -145,7 +145,7 @@ class Angle(PObject):
 
 class RAngle(Angle):
     """
-    A special type of `Angle` instance, where the shape is drawn with straight lines instead of an arc.
+    A special type of :class:`Angle` instance, where the shape is drawn with straight lines instead of an arc.
     This results in a square whenever the angle measures 90 degrees, and a rhombus otherwise.
     """
 

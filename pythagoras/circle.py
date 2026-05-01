@@ -12,7 +12,7 @@ __all__ = ["Circle", "Ellipse", "Point"]
 
 class Circle(PObject):
     """
-    Circle `PObject`. As its name suggests, renders into a cirlce when drawn.
+    Circle :class:`PObject <pythagoras.pobject.PObject>`. As its name suggests, renders into a cirlce when drawn.
 
     Attributes:
         x: :math:`x`-coordinate of the center.

@@ -19,6 +19,9 @@ extensions = [
 
 autosummary_generate = True
 napoleon_use_ivar = True
+napoleon_use_param = True
+napoleon_preprocess_types = True
+default_role = "code"
 
 templates_path = ["_templates"]
 exclude_patterns = []

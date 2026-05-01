@@ -81,7 +81,7 @@ __all__ = [
 ]
 
 
-@dataclass(repr=False)
+@dataclass
 class Color:
     """
     RGB color container.
@@ -97,9 +97,21 @@ class Color:
     b: int
 
     def tikz(self) -> str:
+        """
+        Translates the color into TikZ format.
+
+        Returns:
+            TikZ-formatted color.
+        """
         return f"{{rgb,255: red,{self.r}; green,{self.g}; blue,{self.b}}}"
 
     def svg(self) -> str:
+        """
+        Translates the color into SVG format.
+
+        Returns:
+            SVG-formatted color.
+        """
         return f"rgb({self.r}, {self.g}, {self.b})"
 
     def __add__(self, other: Self) -> Self:

@@ -20,6 +20,16 @@ class Vector:
 
     @classmethod
     def from_two_points(cls, p1: tuple[float, float], p2: tuple[float, float]) -> Self:
+        """
+        Constructor for the vector that joins two points.
+
+        Parameters:
+            p1: Initial point.
+            p2: End point.
+
+        Returns:
+            The vector that goes from `p1` to `p2`.
+        """
         return cls(p2[0] - p1[0], p2[1] - p1[1])
 
     def __call__(self) -> tuple[float, float]:
@@ -98,4 +108,7 @@ class Vector:
 
     @property
     def perp(self) -> Self:
+        r"""
+        Orthogonal complement (the vector after the map :math:`(x, y) \mapsto (-y, x)`).
+        """
         return self.__class__(-self.y, self.x)

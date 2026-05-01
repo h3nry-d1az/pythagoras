@@ -7,7 +7,7 @@ __all__ = ["Canvas"]
 
 class Canvas:
     """
-    Container class for a collection of `PObject`'s. Controls the SVG and TikZ output,
+    Container class for a collection of :class:`PObject <pythagoras.pobject.PObject>`'s. Controls the SVG and TikZ output,
     and resizes automatically when a new element is added.
 
     Attributes:
@@ -37,8 +37,8 @@ class Canvas:
         Appends an element into the list of objects to be renderded.
 
         Parameters:
-            obj: `PObject` to be included into the scene.
-            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See `pythagoras.style` for
+            obj: :class:`PObject <pythagoras.pobject.PObject>` to be included into the scene.
+            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See :mod:`pythagoras.style` for
                 further information on styling.
         """
         for p in obj.extrema():
@@ -54,8 +54,8 @@ class Canvas:
         Appends a collection of elements sharing common arguments into the list of objects to be renderded.
 
         Parameters:
-            objs: Sequence of `PObject`'s to be included into the scene.
-            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See `pythagoras.style` for
+            objs: Sequence of :class:`PObject <pythagoras.pobject.PObject>`'s to be included into the scene.
+            *args: Parameters of the object, i.e.: `Fill(BLUE)` or `Stroke(RED)`. See :mod:`pythagoras.style` for
                 further information on styling.
         """
         for obj in objs:
