@@ -1,3 +1,43 @@
+"""
+`Color` RGB container and predefined color constants. Included colors:
+
+- ``BLACK``: (0, 0, 0).
+- ``WHITE``: (255, 255, 255).
+- ``RED``: (255, 0, 0).
+- ``LIME``: (0, 255, 0).
+- ``BLUE``: (0, 0, 255).
+- ``YELLOW``: (255, 255, 0).
+- ``CYAN``: (0, 255, 255).
+- ``MAGENTA``: (255, 0, 255).
+- ``SILVER``: (192, 192, 192).
+- ``GRAY``: (128, 128, 128).
+- ``MAROON``: (128, 0, 0).
+- ``OLIVE``: (128, 128, 0).
+- ``GREEN``: (0, 128, 0).
+- ``PURPLE``: (128, 0, 128).
+- ``TEAL``: (0, 128, 128).
+- ``NAVY``: (0, 0, 128).
+- ``ORANGE``: (255, 165, 0).
+- ``PINK``: (255, 192, 203).
+- ``BROWN``: (165, 42, 42).
+- ``GOLD``: (255, 215, 0).
+- ``INDIGO``: (75, 0, 130).
+- ``VIOLET``: (238, 130, 238).
+- ``BEIGE``: (245, 245, 220).
+- ``TURQUOISE``: (64, 224, 208).
+- ``CORAL``: (255, 127, 80).
+- ``LIGHT_RED``: (255, 128, 128).
+- ``LIGHT_BLUE``: (173, 216, 230).
+- ``LIGHT_GREEN``: (144, 238, 144).
+- ``LIGHT_CYAN``: (224, 255, 255).
+- ``LIGHT_YELLOW``: (255, 255, 224).
+- ``LIGHT_GRAY``: (211, 211, 211).
+- ``LIGHT_PINK``: (255, 182, 193).
+- ``LIGHT_PURPLE``: (204, 153, 255).
+- ``LIGHT_ORANGE``: (255, 200, 120).
+- ``LIGHT_BROWN``: (210, 180, 140).
+"""
+
 from dataclasses import dataclass
 from typing import Self
 
