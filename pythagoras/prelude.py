@@ -6,9 +6,10 @@ from .label import *
 from .pobject import *
 from .r3.camera import *
 from .r3.canvas import *
-from .r3.cube import *
+from .r3.mesh import *
 from .r3.pobject import *
 from .r3.rendering import *
+from .r3.sphere import *
 from .r3.vector import *
 from .shape import *
 from .style.color import *

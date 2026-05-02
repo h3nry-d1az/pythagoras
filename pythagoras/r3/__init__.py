@@ -1,3 +1,3 @@
-from . import camera, canvas, cube, pobject, rendering, vector
+from . import camera, canvas, mesh, pobject, rendering, sphere, vector
 
-__all__ = ["camera", "canvas", "cube", "pobject", "rendering", "vector"]
+__all__ = ["camera", "canvas", "mesh", "pobject", "rendering", "sphere", "vector"]

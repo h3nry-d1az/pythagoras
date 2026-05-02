@@ -5,6 +5,10 @@ __all__ = ["POProperty", "PObject"]
 
 
 class POProperty(ABC):
+    """
+    Abstract base class for a property of a :class:`PObject`.
+    """
+
     @abstractmethod
     def tikz(self) -> str:
         """
@@ -27,6 +31,10 @@ class POProperty(ABC):
 
 
 class PObject(ABC):
+    """
+    Abstract base class for renderable objects.
+    """
+
     _zord: int
 
     def __lt__(self, other: Self) -> bool:

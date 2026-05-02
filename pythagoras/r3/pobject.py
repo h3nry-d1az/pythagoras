@@ -4,8 +4,15 @@ from typing import Self
 from ..pobject import POProperty
 from .camera import Camera3D
 
+__all__ = ["PObject3D"]
+
 
 class PObject3D(ABC):
+    """
+    Abstract base class for a three-dimensional, renderable object. Behaves in an
+    analogous fashion to a :class:`PObject <pythagoras.pobject.PObject>`.
+    """
+
     _zord: int
 
     def __lt__(self, other: Self) -> bool:

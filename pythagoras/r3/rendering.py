@@ -24,7 +24,7 @@ def project_point(
     w = Vector3D(*camera.direction)
     u = Vector3D(1, 0, 0) if w() == (0, 1, 0) else Vector3D(0, 1, 0) ^ w
     u /= abs(u)
-    v = u ^ w
+    v = w ^ u
     u, v = (
         cos(camera.theta) * u + sin(camera.theta) * v,
         -sin(camera.theta) * u + cos(camera.theta) * v,
