@@ -4,7 +4,13 @@ from .circle import *
 from .curve import *
 from .label import *
 from .pobject import *
+from .r3.camera import *
+from .r3.canvas import *
+from .r3.pobject import *
 from .shape import *
-from .style import *
+from .style.color import *
+from .style.draw import *
+from .style.line import *
+from .style.opacity import *
 from .utils import *
 from .vector import *
