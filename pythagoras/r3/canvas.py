@@ -39,7 +39,7 @@ class Canvas3D(PObject):
     ) -> None:
         self.dimensions = dimensions
         self.origin = origin
-        self.camera = camera if camera else Camera3D(0, 0, 1)
+        self.camera = camera if camera else Camera3D((0, 0, 0))
         self.scale = scale
         self.frustum = frustum
         self.__elements = []

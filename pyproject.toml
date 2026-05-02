@@ -1,6 +1,6 @@
 [project]
 name = "pythagoras"
-version = "0.1.0"
+version = "0.2.0"
 authors = [
   { name="Henry Díaz Bordón", email="henrydiazbordon@gmail.com" },
 ]
