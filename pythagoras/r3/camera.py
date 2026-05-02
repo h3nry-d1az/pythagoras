@@ -29,7 +29,7 @@ class Camera3D:
 
     def __init__(
         self,
-        c: tuple[float, float, float],
+        c: tuple[float, float, float] = (0, 0, 0),
         p: tuple[float, float, float] = (0, 0, 1),
         theta: float = 0,
     ) -> None:

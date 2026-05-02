@@ -88,8 +88,8 @@ class Canvas3D(PObject):
         *args: POProperty,
     ) -> str:
         cx, cy = cartesian_to_canvas(
-            self.origin[0] - scale * self.dimensions[0] / 2,
-            self.origin[1] + scale * self.dimensions[1] / 2,
+            self.origin[0] - self.dimensions[0] / 2,
+            self.origin[1] + self.dimensions[1] / 2,
             width,
             height,
             scale,
@@ -97,7 +97,14 @@ class Canvas3D(PObject):
         return (
             f'<svg x="{cx}" y="{cy}" width="{self.dimensions[0] * scale}" height="{self.dimensions[1] * scale}" viewBox="0 0 {self.dimensions[0]} {self.dimensions[1]}">\n'
             + "\n".join(
-                e[0].svg(self.camera, self.frustum, *self.dimensions, self.scale, *e[1])
+                e[0].svg(
+                    self.camera,
+                    self.frustum,
+                    *self.dimensions,
+                    self.scale,
+                    *e[1],
+                    *args,
+                )
                 for e in sorted(self.__elements)
             )
             + "\n</svg>"
@@ -107,9 +114,9 @@ class Canvas3D(PObject):
         return "\n".join(
             [
                 rf"\begin{{scope}}[shift={{({self.origin[0] - self.dimensions[0] / 2}, {self.origin[1] - self.dimensions[1] / 2})}}, scale={self.scale:.4f}]",
-                rf"\clip (0, 0) rectangle ({self.dimensions[0]}, {self.dimensions[1]});",
+                rf"\clip ({-self.dimensions[0] / 2}, {-self.dimensions[1] / 2}) rectangle ({self.dimensions[0] / 2}, {self.dimensions[1] / 2});",
                 *(
-                    e[0].tikz(self.camera, self.frustum, *e[1])
+                    e[0].tikz(self.camera, self.frustum, *e[1], *args)
                     for e in sorted(self.__elements)
                 ),
                 r"\end{scope}",

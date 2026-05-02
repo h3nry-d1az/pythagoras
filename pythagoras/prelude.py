@@ -6,6 +6,7 @@ from .label import *
 from .pobject import *
 from .r3.camera import *
 from .r3.canvas import *
+from .r3.cube import *
 from .r3.pobject import *
 from .r3.rendering import *
 from .r3.vector import *
