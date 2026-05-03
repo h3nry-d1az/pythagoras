@@ -22,7 +22,9 @@ def project_point(
         The projected point or `None` if it is behind the camera.
     """
     w = Vector3D(*camera.direction)
-    u = Vector3D(1, 0, 0) if w() == (0, 1, 0) else Vector3D(0, 1, 0) ^ w
+    u = Vector3D(0, 1, 0) ^ w
+    if abs(u) < 1e-6:
+        u = Vector3D(1, 0, 0)
     u /= abs(u)
     v = w ^ u
     u, v = (

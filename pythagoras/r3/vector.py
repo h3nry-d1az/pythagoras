@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from math import hypot
 from typing import Self
 
-__all__ = ["Vector3D"]
+__all__ = ["Vector3D", "dist3"]
 
 
 @dataclass
@@ -100,3 +100,7 @@ class Vector3D:
 
     def __abs__(self) -> float:
         return hypot(self.x, self.y, self.z)
+
+
+def dist3(p1: tuple[float, float, float], p2: tuple[float, float, float]) -> float:
+    return hypot(p1[0] - p2[0], p1[1] - p2[1], p1[2] - p2[2])

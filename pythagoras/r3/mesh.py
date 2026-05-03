@@ -2,14 +2,15 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from typing import Self, cast
 
-from ..backend import svg_path, tikz_command
+from ..backend import fill_default_args, svg_path, tikz_command
 from ..pobject import POProperty
-from ..style.draw import Fill
+from ..style.color import BLACK
+from ..style.draw import Fill, LineWidth, Stroke
 from ..utils import cartesian_to_canvas
 from .camera import Camera3D
 from .pobject import PObject3D
 from .rendering import project_point
-from .vector import Vector3D
+from .vector import Vector3D, dist3
 
 __all__ = ["Face", "Mesh"]
 
@@ -36,13 +37,17 @@ class Face(PObject3D):
         v1: tuple[float, float, float],
         v2: tuple[float, float, float],
         v3: tuple[float, float, float],
-        n: Vector3D | None = None,
+        shaded: bool = True,
         zord: int = 0,
     ) -> None:
         self.v1 = v1
         self.v2 = v2
         self.v3 = v3
-        self.n = n
+        if shaded:
+            self.n = Vector3D.from_two_points(v1, v2) ^ Vector3D.from_two_points(v1, v3)
+            self.n /= abs(self.n)
+        else:
+            self.n = None
         self._zord = zord
 
     @property
@@ -66,7 +71,7 @@ class Face(PObject3D):
             else:
                 fargs.append(arg)
         if color:
-            color *= Vector3D(*camera.direction) @ self.n
+            color = color * (Vector3D(*camera.direction) @ self.n) ** 2
             fargs.append(Fill(color))
         return fargs
 
@@ -88,7 +93,17 @@ class Face(PObject3D):
             return ""
         ps = (cartesian_to_canvas(*p, width, height, scale) for p in ps if p)
         return svg_path(
-            ps, (0, 0), width, height, scale, *self._apply_lighting(camera, args)
+            ps,
+            (0, 0),
+            width,
+            height,
+            scale,
+            *fill_default_args(
+                self._apply_lighting(camera, args),
+                (Fill, Fill(None)),
+                (Stroke, Stroke(BLACK)),
+                (LineWidth, LineWidth(0.01)),
+            ),
         )
 
     def tikz(self, camera: Camera3D, frustum: float, *args: POProperty) -> str:
@@ -128,6 +143,7 @@ class Mesh(PObject3D):
         zord: int = 0,
     ) -> None:
         self.triangles = tuple(triangles)
+        self._zord = zord
         if vertices:
             self._vertices = set(vertices)
             return
@@ -136,46 +152,61 @@ class Mesh(PObject3D):
             self._vertices.add(pair[0].v1)
             self._vertices.add(pair[0].v2)
             self._vertices.add(pair[0].v3)
-        self._zord = zord
 
-    @classmethod
-    def cube(
-        cls, center: tuple[float, float, float], side: float, *args: POProperty
-    ) -> Self:
-        vs = (
-            (center[0] + side / 2, center[1] + side / 2, center[2] + side / 2),
-            (center[0] + side / 2, center[1] + side / 2, center[2] - side / 2),
-            (center[0] + side / 2, center[1] - side / 2, center[2] + side / 2),
-            (center[0] + side / 2, center[1] - side / 2, center[2] - side / 2),
-            (center[0] - side / 2, center[1] + side / 2, center[2] + side / 2),
-            (center[0] - side / 2, center[1] + side / 2, center[2] - side / 2),
-            (center[0] - side / 2, center[1] - side / 2, center[2] + side / 2),
-            (center[0] - side / 2, center[1] - side / 2, center[2] - side / 2),
-        )
-        # return cls(MTriangle(vs[0], vs[1], vs[2],))
+    # @classmethod
+    # def cube(
+    #     cls, center: tuple[float, float, float], side: float, *args: POProperty
+    # ) -> Self:
+    #     vs = (
+    #         (center[0] + side / 2, center[1] + side / 2, center[2] + side / 2),
+    #         (center[0] + side / 2, center[1] + side / 2, center[2] - side / 2),
+    #         (center[0] + side / 2, center[1] - side / 2, center[2] + side / 2),
+    #         (center[0] + side / 2, center[1] - side / 2, center[2] - side / 2),
+    #         (center[0] - side / 2, center[1] + side / 2, center[2] + side / 2),
+    #         (center[0] - side / 2, center[1] + side / 2, center[2] - side / 2),
+    #         (center[0] - side / 2, center[1] - side / 2, center[2] + side / 2),
+    #         (center[0] - side / 2, center[1] - side / 2, center[2] - side / 2),
+    #     )
+    #     # return cls(MTriangle(vs[0], vs[1], vs[2],))
 
     @classmethod
     def from_obj(
-        cls, obj_file: str, lighting: bool = True, zord: int = 0, *args: POProperty
+        cls, obj: str, shaded: bool = True, zord: int = 0, *args: POProperty
     ) -> Self:
+        """
+        Constructs a mesh from Wavefront OBJ-formatted string.
+        It only supports the `v` and `f` commands, the remaining ones are ignored.
+
+        Parameters:
+            obj: 3D OBJ model.
+            shaded: Whether to calculate face normals for shading.
+            zord: Rendering priority within a :class:`Canvas3D <pythagoras.r3.canvas.Canvas3D>` context.
+            args: Properties to apply globally to the mesh.
+
+        Returns:
+            A :class:`Mesh` instance.
+        """
         vs: list[tuple[float, float, float]] = []
         fs: list[Face] = []
-        for line in obj_file.splitlines():
+        for line in obj.splitlines():
             line = line.strip()
             if len(line) == 0:
                 continue
             cmd = [w.lower() for w in line.split()]
             match cmd[0]:
                 case "v":
-                    vs.append((float(cmd[1]), float(cmd[2]), float(cmd[3])))
+                    params = [float(t.split("/")[0]) for t in cmd[1:]]
+                    vs.append((params[0], params[1], params[2]))
                 case "f":
-                    v1 = vs[i1 - 1 if (i1 := int(cmd[1])) > 0 else i1]
-                    for i in range(2, len(cmd) - 1):
+                    params = [int(t.split("/")[0]) for t in cmd[1:]]
+                    v1 = vs[i1 - 1 if (i1 := params[0]) > 0 else i1]
+                    for i in range(1, len(params) - 1):
                         fs.append(
                             Face(
                                 v1,
-                                vs[i1 - 1 if (i1 := int(cmd[i])) > 0 else i1],
-                                vs[i1 - 1 if (i1 := int(cmd[i + 1])) > 0 else i1],
+                                vs[i1 - 1 if (i1 := params[i]) > 0 else i1],
+                                vs[i2 - 1 if (i2 := params[i + 1]) > 0 else i2],
+                                shaded,
                             )
                         )
                 case _:
@@ -201,9 +232,7 @@ class Mesh(PObject3D):
                 p[0].svg(camera, frustum, width, height, scale, *p[1], *args)
                 for p in sorted(
                     self.triangles,
-                    key=lambda p: abs(
-                        Vector3D.from_two_points(p[0].centroid, camera.position)
-                    ),
+                    key=lambda p: dist3(p[0].centroid, camera.position),
                     reverse=True,
                 )
             )
@@ -215,9 +244,7 @@ class Mesh(PObject3D):
             p[0].tikz(camera, frustum, *p[1], *args)
             for p in sorted(
                 self.triangles,
-                key=lambda p: abs(
-                    Vector3D.from_two_points(p[0].centroid, camera.position)
-                ),
+                key=lambda p: dist3(p[0].centroid, camera.position),
                 reverse=True,
             )
         )
