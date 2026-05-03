@@ -131,10 +131,11 @@ class Mesh(PObject3D):
 
     Attributes:
         triangles: Triangles that make up the mesh, together with their properties.
+        vertices: Vertices of the mesh.
     """
 
     triangles: tuple[tuple[Face, tuple[POProperty, ...]], ...]
-    _vertices: set[tuple[float, float, float]]
+    vertices: set[tuple[float, float, float]]
 
     def __init__(
         self,
@@ -145,29 +146,13 @@ class Mesh(PObject3D):
         self.triangles = tuple(triangles)
         self._zord = zord
         if vertices:
-            self._vertices = set(vertices)
+            self.vertices = set(vertices)
             return
-        self._vertices = set()
+        self.vertices = set()
         for pair in self.triangles:
-            self._vertices.add(pair[0].v1)
-            self._vertices.add(pair[0].v2)
-            self._vertices.add(pair[0].v3)
-
-    # @classmethod
-    # def cube(
-    #     cls, center: tuple[float, float, float], side: float, *args: POProperty
-    # ) -> Self:
-    #     vs = (
-    #         (center[0] + side / 2, center[1] + side / 2, center[2] + side / 2),
-    #         (center[0] + side / 2, center[1] + side / 2, center[2] - side / 2),
-    #         (center[0] + side / 2, center[1] - side / 2, center[2] + side / 2),
-    #         (center[0] + side / 2, center[1] - side / 2, center[2] - side / 2),
-    #         (center[0] - side / 2, center[1] + side / 2, center[2] + side / 2),
-    #         (center[0] - side / 2, center[1] + side / 2, center[2] - side / 2),
-    #         (center[0] - side / 2, center[1] - side / 2, center[2] + side / 2),
-    #         (center[0] - side / 2, center[1] - side / 2, center[2] - side / 2),
-    #     )
-    #     # return cls(MTriangle(vs[0], vs[1], vs[2],))
+            self.vertices.add(pair[0].v1)
+            self.vertices.add(pair[0].v2)
+            self.vertices.add(pair[0].v3)
 
     @classmethod
     def from_obj(
@@ -175,7 +160,7 @@ class Mesh(PObject3D):
     ) -> Self:
         """
         Constructs a mesh from Wavefront OBJ-formatted string.
-        It only supports the `v` and `f` commands, the remaining ones are ignored.
+        It only supports the `v` and `f` commands, the remaining ones are ignored when encountered.
 
         Parameters:
             obj: 3D OBJ model.
@@ -213,9 +198,38 @@ class Mesh(PObject3D):
                     continue
         return cls(((fi, args) for fi in fs), vs, zord)
 
-    @property
-    def vertices(self) -> Iterable[tuple[float, float, float]]:
-        return self._vertices
+    def translate(self, translation: tuple[float, float, float]) -> None:
+        """
+        Translates the mesh in some direction in space.
+
+        Parameters:
+            translation: Coordinates of the translation vector.
+        """
+        self.vertices = {
+            (v[0] + translation[0], v[1] + translation[1], v[2] + translation[2])
+            for v in self.vertices
+        }
+        for i in range(len(self.triangles)):
+            v1, v2, v3 = (
+                self.triangles[i][0].v1,
+                self.triangles[i][0].v2,
+                self.triangles[i][0].v3,
+            )
+            self.triangles[i][0].v1 = (
+                v1[0] + translation[0],
+                v1[1] + translation[1],
+                v1[2] + translation[2],
+            )
+            self.triangles[i][0].v2 = (
+                v2[0] + translation[0],
+                v2[1] + translation[1],
+                v2[2] + translation[2],
+            )
+            self.triangles[i][0].v3 = (
+                v3[0] + translation[0],
+                v3[1] + translation[1],
+                v3[2] + translation[2],
+            )
 
     def svg(
         self,
