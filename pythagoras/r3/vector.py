@@ -103,4 +103,11 @@ class Vector3D:
 
 
 def dist3(p1: tuple[float, float, float], p2: tuple[float, float, float]) -> float:
+    r"""
+    Computes the Euclidean distance between two points in :math:`\mathbf R^3`.
+
+    Parameters:
+        p1: First point.
+        p2: Second point.
+    """
     return hypot(p1[0] - p2[0], p1[1] - p2[1], p1[2] - p2[2])
