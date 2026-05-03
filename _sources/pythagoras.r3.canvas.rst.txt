@@ -1,0 +1,7 @@
+pythagoras.r3.canvas module
+===========================
+
+.. automodule:: pythagoras.r3.canvas
+   :members:
+   :show-inheritance:
+   :undoc-members:

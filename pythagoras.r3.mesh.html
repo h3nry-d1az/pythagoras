@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pythagoras.r3.mesh module &#8212; Pythagoras 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8e8a900e" />
+    <link rel="stylesheet" type="text/css" href="_static/traditional.css?v=f6356284" />
+    <script src="_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.mesh module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pythagoras.r3.mesh">
+<span id="pythagoras-r3-mesh-module"></span><h1>pythagoras.r3.mesh module<a class="headerlink" href="#module-pythagoras.r3.mesh" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pythagoras.r3.mesh.</span></span><span class="sig-name descname"><span class="pre">Face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaded</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Face" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pythagoras.r3.pobject.html#pythagoras.r3.pobject.PObject3D" title="pythagoras.r3.pobject.PObject3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject3D</span></code></a></p>
+<p>Triangle in <span class="math notranslate nohighlight">\(\mathbf R^3\)</span> which is meant to belong to a mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v1</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – First vertex.</p></li>
+<li><p><strong>v2</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Second vertex.</p></li>
+<li><p><strong>v3</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Third vertex.</p></li>
+<li><p><strong>n</strong> (<a class="reference internal" href="pythagoras.r3.vector.html#pythagoras.r3.vector.Vector3D" title="pythagoras.r3.vector.Vector3D"><em>pythagoras.r3.vector.Vector3D</em></a><em> | </em><em>None</em>) – Normal vector for lighting.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face.centroid">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">centroid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.mesh.Face.centroid" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face.n">
+<span class="sig-name descname"><span class="pre">n</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pythagoras.r3.vector.html#pythagoras.r3.vector.Vector3D" title="pythagoras.r3.vector.Vector3D"><span class="pre">Vector3D</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#pythagoras.r3.mesh.Face.n" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face.svg">
+<span class="sig-name descname"><span class="pre">svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><span class="pre">Camera3D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frustum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Face.svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Face.svg" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the 3D object into SVG commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding SVG code.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face.tikz">
+<span class="sig-name descname"><span class="pre">tikz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><span class="pre">Camera3D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frustum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Face.tikz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Face.tikz" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the 3D object into a sequence of TikZ instructions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resulting TikZ code.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face.v1">
+<span class="sig-name descname"><span class="pre">v1</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.mesh.Face.v1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face.v2">
+<span class="sig-name descname"><span class="pre">v2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.mesh.Face.v2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Face.v3">
+<span class="sig-name descname"><span class="pre">v3</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.mesh.Face.v3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Mesh">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pythagoras.r3.mesh.</span></span><span class="sig-name descname"><span class="pre">Mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pythagoras.r3.mesh.Face" title="pythagoras.r3.mesh.Face"><span class="pre">Face</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Mesh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pythagoras.r3.pobject.html#pythagoras.r3.pobject.PObject3D" title="pythagoras.r3.pobject.PObject3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject3D</span></code></a></p>
+<p>Three-dimensional mesh, represented as a collection of triangles. Vertices are also
+stored for efficient retrieval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triangles</strong> (<em>tuple</em><em>[</em><em>tuple</em><em>[</em><a class="reference internal" href="#pythagoras.r3.mesh.Face" title="pythagoras.r3.mesh.Face"><em>pythagoras.r3.mesh.Face</em></a><em>, </em><em>tuple</em><em>[</em><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><em>pythagoras.pobject.POProperty</em></a><em>, </em><em>...</em><em>]</em><em>]</em><em>, </em><em>...</em><em>]</em>) – Triangles that make up the mesh, together with their properties.</p></li>
+<li><p><strong>vertices</strong> (<em>set</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – Vertices of the mesh.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Mesh.from_obj">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shaded</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Mesh.from_obj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Mesh.from_obj" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs a mesh from Wavefront OBJ-formatted string.
+It only supports the <code class="code docutils literal notranslate"><span class="pre">v</span></code> and <code class="code docutils literal notranslate"><span class="pre">f</span></code> commands, the remaining ones are ignored when encountered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – 3D OBJ model.</p></li>
+<li><p><strong>shaded</strong> – Whether to calculate face normals for shading.</p></li>
+<li><p><strong>zord</strong> – Rendering priority within a <a class="reference internal" href="pythagoras.r3.canvas.html#pythagoras.r3.canvas.Canvas3D" title="pythagoras.r3.canvas.Canvas3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas3D</span></code></a> context.</p></li>
+<li><p><strong>args</strong> – Properties to apply globally to the mesh.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference internal" href="#pythagoras.r3.mesh.Mesh" title="pythagoras.r3.mesh.Mesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mesh</span></code></a> instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Mesh.svg">
+<span class="sig-name descname"><span class="pre">svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><span class="pre">Camera3D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frustum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Mesh.svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Mesh.svg" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the 3D object into SVG commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding SVG code.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Mesh.tikz">
+<span class="sig-name descname"><span class="pre">tikz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><span class="pre">Camera3D</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frustum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Mesh.tikz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Mesh.tikz" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the 3D object into a sequence of TikZ instructions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resulting TikZ code.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Mesh.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/mesh.html#Mesh.translate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.mesh.Mesh.translate" title="Link to this definition">¶</a></dt>
+<dd><p>Translates the mesh in some direction in space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>translation</strong> – Coordinates of the translation vector.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Mesh.triangles">
+<span class="sig-name descname"><span class="pre">triangles</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pythagoras.r3.mesh.Face" title="pythagoras.r3.mesh.Face"><span class="pre">Face</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.mesh.Mesh.triangles" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.mesh.Mesh.vertices">
+<span class="sig-name descname"><span class="pre">vertices</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.mesh.Mesh.vertices" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">pythagoras.r3.mesh module</a><ul>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face"><code class="docutils literal notranslate"><span class="pre">Face</span></code></a><ul>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face.centroid"><code class="docutils literal notranslate"><span class="pre">Face.centroid</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face.n"><code class="docutils literal notranslate"><span class="pre">Face.n</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face.svg"><code class="docutils literal notranslate"><span class="pre">Face.svg()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face.tikz"><code class="docutils literal notranslate"><span class="pre">Face.tikz()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face.v1"><code class="docutils literal notranslate"><span class="pre">Face.v1</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face.v2"><code class="docutils literal notranslate"><span class="pre">Face.v2</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Face.v3"><code class="docutils literal notranslate"><span class="pre">Face.v3</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Mesh"><code class="docutils literal notranslate"><span class="pre">Mesh</span></code></a><ul>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Mesh.from_obj"><code class="docutils literal notranslate"><span class="pre">Mesh.from_obj()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Mesh.svg"><code class="docutils literal notranslate"><span class="pre">Mesh.svg()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Mesh.tikz"><code class="docutils literal notranslate"><span class="pre">Mesh.tikz()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Mesh.translate"><code class="docutils literal notranslate"><span class="pre">Mesh.translate()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Mesh.triangles"><code class="docutils literal notranslate"><span class="pre">Mesh.triangles</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.mesh.Mesh.vertices"><code class="docutils literal notranslate"><span class="pre">Mesh.vertices</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pythagoras.r3.mesh.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.mesh module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, Henry Díaz Bordón.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    </div>
+  </body>
+</html>

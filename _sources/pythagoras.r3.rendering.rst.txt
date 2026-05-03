@@ -1,0 +1,7 @@
+pythagoras.r3.rendering module
+==============================
+
+.. automodule:: pythagoras.r3.rendering
+   :members:
+   :show-inheritance:
+   :undoc-members:

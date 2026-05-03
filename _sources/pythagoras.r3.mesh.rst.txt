@@ -1,0 +1,7 @@
+pythagoras.r3.mesh module
+=========================
+
+.. automodule:: pythagoras.r3.mesh
+   :members:
+   :show-inheritance:
+   :undoc-members:

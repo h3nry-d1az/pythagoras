@@ -1,0 +1,24 @@
+pythagoras.r3 package
+=====================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pythagoras.r3.camera
+   pythagoras.r3.canvas
+   pythagoras.r3.mesh
+   pythagoras.r3.pobject
+   pythagoras.r3.rendering
+   pythagoras.r3.sphere
+   pythagoras.r3.vector
+
+Module contents
+---------------
+
+.. automodule:: pythagoras.r3
+   :members:
+   :show-inheritance:
+   :undoc-members:

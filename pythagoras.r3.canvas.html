@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pythagoras.r3.canvas module &#8212; Pythagoras 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8e8a900e" />
+    <link rel="stylesheet" type="text/css" href="_static/traditional.css?v=f6356284" />
+    <script src="_static/documentation_options.js?v=938c9ccc"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.canvas module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pythagoras.r3.canvas">
+<span id="pythagoras-r3-canvas-module"></span><h1>pythagoras.r3.canvas module<a class="headerlink" href="#module-pythagoras.r3.canvas" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pythagoras.r3.canvas.</span></span><span class="sig-name descname"><span class="pre">Canvas3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><span class="pre">Camera3D</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frustum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pythagoras/r3/canvas.html#Canvas3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.PObject" title="pythagoras.pobject.PObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject</span></code></a></p>
+<p>Container for a collection of <a class="reference internal" href="pythagoras.r3.pobject.html#pythagoras.r3.pobject.PObject3D" title="pythagoras.r3.pobject.PObject3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject3D</span></code></a>’s.
+Controls the SVG and TikZ output for the entire 3D scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dimensions</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – Width and height of the canvas.</p></li>
+<li><p><strong>camera</strong> (<a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><em>pythagoras.r3.camera.Camera3D</em></a>) – <a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Camera3D</span></code></a> object encoding the position
+and pointing direction of the rendering camera.</p></li>
+<li><p><strong>origin</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – Point in 2D space to which the origin of the frame of reference corresponds.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – The scaling factor by which the canvas is stretched.</p></li>
+<li><p><strong>frustum</strong> (<em>float</em>) – Field of view within the scene.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.r3.pobject.html#pythagoras.r3.pobject.PObject3D" title="pythagoras.r3.pobject.PObject3D"><span class="pre">PObject3D</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/canvas.html#Canvas3D.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.add" title="Link to this definition">¶</a></dt>
+<dd><p>Appends a 3D object together with its properties into the list of elements to be renderded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – <a class="reference internal" href="pythagoras.r3.pobject.html#pythagoras.r3.pobject.PObject3D" title="pythagoras.r3.pobject.PObject3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject3D</span></code></a> to be included into the scene.</p></li>
+<li><p><strong>*args</strong> – Parameters of the object, i.e.: <code class="code docutils literal notranslate"><span class="pre">Fill(BLUE)</span></code> or <code class="code docutils literal notranslate"><span class="pre">Stroke(RED)</span></code>. See <a class="reference internal" href="pythagoras.style.html#module-pythagoras.style" title="pythagoras.style"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pythagoras.style</span></code></a> for
+further information on styling.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.add_many">
+<span class="sig-name descname"><span class="pre">add_many</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pythagoras.r3.pobject.html#pythagoras.r3.pobject.PObject3D" title="pythagoras.r3.pobject.PObject3D"><span class="pre">PObject3D</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/canvas.html#Canvas3D.add_many"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.add_many" title="Link to this definition">¶</a></dt>
+<dd><p>Appends a collection of 3D objects sharing common arguments into the list of elements to be renderded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>objs</strong> – Sequence of <a class="reference internal" href="pythagoras.r3.pobject.html#pythagoras.r3.pobject.PObject3D" title="pythagoras.r3.pobject.PObject3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject3D</span></code></a>’s to be included into the scene.</p></li>
+<li><p><strong>*args</strong> – Parameters of the object, i.e.: <code class="code docutils literal notranslate"><span class="pre">Fill(BLUE)</span></code> or <code class="code docutils literal notranslate"><span class="pre">Stroke(RED)</span></code>. See <a class="reference internal" href="pythagoras.style.html#module-pythagoras.style" title="pythagoras.style"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pythagoras.style</span></code></a> for
+further information on styling.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.camera">
+<span class="sig-name descname"><span class="pre">camera</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pythagoras.r3.camera.html#pythagoras.r3.camera.Camera3D" title="pythagoras.r3.camera.Camera3D"><span class="pre">Camera3D</span></a></span><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.camera" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.dimensions">
+<span class="sig-name descname"><span class="pre">dimensions</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.dimensions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.extrema">
+<span class="sig-name descname"><span class="pre">extrema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pythagoras/r3/canvas.html#Canvas3D.extrema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.extrema" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the furthermost points of the figure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list with the bounding points of the object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.frustum">
+<span class="sig-name descname"><span class="pre">frustum</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.frustum" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.origin">
+<span class="sig-name descname"><span class="pre">origin</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.origin" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.scale" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.svg">
+<span class="sig-name descname"><span class="pre">svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/canvas.html#Canvas3D.svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.svg" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the object into SVG commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding SVG code.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.canvas.Canvas3D.tikz">
+<span class="sig-name descname"><span class="pre">tikz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/canvas.html#Canvas3D.tikz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.canvas.Canvas3D.tikz" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the object into a sequence of TikZ instructions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The resulting TikZ code.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">pythagoras.r3.canvas module</a><ul>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D"><code class="docutils literal notranslate"><span class="pre">Canvas3D</span></code></a><ul>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.add"><code class="docutils literal notranslate"><span class="pre">Canvas3D.add()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.add_many"><code class="docutils literal notranslate"><span class="pre">Canvas3D.add_many()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.camera"><code class="docutils literal notranslate"><span class="pre">Canvas3D.camera</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.dimensions"><code class="docutils literal notranslate"><span class="pre">Canvas3D.dimensions</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.extrema"><code class="docutils literal notranslate"><span class="pre">Canvas3D.extrema()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.frustum"><code class="docutils literal notranslate"><span class="pre">Canvas3D.frustum</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.origin"><code class="docutils literal notranslate"><span class="pre">Canvas3D.origin</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.scale"><code class="docutils literal notranslate"><span class="pre">Canvas3D.scale</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.svg"><code class="docutils literal notranslate"><span class="pre">Canvas3D.svg()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.canvas.Canvas3D.tikz"><code class="docutils literal notranslate"><span class="pre">Canvas3D.tikz()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pythagoras.r3.canvas.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.canvas module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2026, Henry Díaz Bordón.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    </div>
+  </body>
+</html>
