@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from math import cos, hypot, sin
 from typing import Self
 
-__all__ = ["Vector"]
+__all__ = ["Vector", "dist"]
 
 
 @dataclass
@@ -112,3 +112,7 @@ class Vector:
         Orthogonal complement (the vector after the map :math:`(x, y) \mapsto (-y, x)`).
         """
         return self.__class__(-self.y, self.x)
+
+
+def dist(p1: tuple[float, float], p2: tuple[float, float]) -> float:
+    return hypot(p1[0] - p2[0], p1[1] - p2[1])

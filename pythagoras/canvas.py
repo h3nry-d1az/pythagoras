@@ -21,7 +21,6 @@ class Canvas:
     _xmax: float
     _ymin: float
     _ymax: float
-    _yrange: list[float]
     __elements: list[tuple[PObject, tuple[POProperty, ...]]]
 
     def __init__(self, scale: float = 1) -> None:

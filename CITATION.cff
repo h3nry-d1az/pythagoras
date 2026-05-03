@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: Pythagoras
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - email: henrydiazbordon@gmail.com
+    family-names: Díaz Bordón
+    given-names: Henry
+repository-code: 'https://github.com/h3nry-d1az/pythagoras'
+url: 'https://h3nry-d1az.github.io/pythagoras/'
+abstract: Python drawing package which exports to TikZ and SVG.
+keywords:
+  - Geometry
+  - SVG
+  - TikZ
+license: MIT
+commit: ' '
+version: 0.2.0
+date-released: '2026-05-03'

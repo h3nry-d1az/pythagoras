@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from .pobject import POProperty
 from .style import CustomStyle
 
-__all__ = ["svg_command", "svg_path", "tikz_command"]
+__all__ = ["fill_default_args", "svg_command", "svg_path", "tikz_command"]
 
 
 def tikz_command(name: str, body: str, *args: POProperty) -> str:

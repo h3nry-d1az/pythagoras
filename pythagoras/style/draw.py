@@ -60,11 +60,11 @@ class LineWidth(POProperty):
         unit: Unit for the width (default: 'pt').
     """
 
-    width: int
+    width: float
     unit: str = "pt"
 
     def svg(self) -> str:
-        return f'stroke-width="{self.width}{self.unit}"'
+        return f'stroke-width="{self.width:.4f}{self.unit}"'
 
     def tikz(self) -> str:
         return f"line width={self.width}{self.unit}"
@@ -84,7 +84,7 @@ class FontSize(POProperty):
     unit: str = "pt"
 
     def svg(self) -> str:
-        return f'font-size="{self.size}"'
+        return f'font-size="{self.size:.4f}"'
 
     def tikz(self) -> str:
-        return rf"font=\fontsize{{{self.size}{self.unit}}}{{{self.size * 1.2:.4f}{self.unit}}}\selectfont"
+        return rf"font=\fontsize{{{self.size}{self.unit}}}{{{self.size * 1.2}{self.unit}}}\selectfont"
