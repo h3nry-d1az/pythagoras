@@ -4,7 +4,7 @@ from math import atan, pi
 from typing import Self, cast
 
 from ..backend import fill_default_args, svg_path, tikz_command
-from ..pobject import POProperty
+from ..pobject import POProperty, RenderingContext
 from ..style.color import BLACK
 from ..style.draw import Fill, LineWidth, Stroke
 from ..utils import cartesian_to_canvas
@@ -104,12 +104,10 @@ class Face(PObject3D):
         )
         if not all(ps):
             return ""
-        ps = (cartesian_to_canvas(*p, width, height, scale, (0, 0)) for p in ps if p)
+        ctx = RenderingContext.from_dimensions(scale, width, height)
+        ps = (cartesian_to_canvas(p, ctx) for p in ps if p)
         return svg_path(
             ps,
-            width,
-            height,
-            scale,
             *fill_default_args(
                 self._apply_lighting(camera, frustum, lights, args),
                 (Fill, Fill(None)),

@@ -2,7 +2,7 @@ from math import atan2, cos, degrees, hypot, radians, sin, sqrt
 from typing import Self
 
 from .backend import fill_default_args, svg_command, tikz_command
-from .pobject import PObject, POProperty
+from .pobject import PObject, POProperty, RenderingContext
 from .style import CustomStyle, color
 from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
@@ -38,23 +38,16 @@ class Circle(PObject):
             (self.x - self.radius, self.y - self.radius),
         ]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         cmd = "filldraw" if any(isinstance(x, Fill) for x in args) else "draw"
         return tikz_command(cmd, f"({self.x}, {self.y}) circle ({self.radius})", *args)
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
-        cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale, origin)
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
+        cx, cy = cartesian_to_canvas((self.x, self.y), ctx)
         args = (
             CustomStyle("cx", cx),
             CustomStyle("cy", cy),
-            CustomStyle("r", self.radius * scale),
+            CustomStyle("r", self.radius * ctx.scale),
             *args,
         )
         return svg_command(
@@ -193,7 +186,7 @@ class Ellipse(PObject):
             (self.x - dx, self.y - dy),
         ]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         cmd = "filldraw" if any(isinstance(x, Fill) for x in args) else "draw"
         return tikz_command(
             cmd,
@@ -201,20 +194,13 @@ class Ellipse(PObject):
             *args,
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
-        cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale, origin)
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
+        cx, cy = cartesian_to_canvas((self.x, self.y), ctx)
         args = (
             CustomStyle("cx", cx),
             CustomStyle("cy", cy),
-            CustomStyle("rx", self.rx * scale),
-            CustomStyle("ry", self.ry * scale),
+            CustomStyle("rx", self.rx * ctx.scale),
+            CustomStyle("ry", self.ry * ctx.scale),
             CustomStyle("transform", f"rotate({-self.theta:.4f}, {cx:.4f}, {cy:.4f})"),
             *args,
         )
@@ -260,26 +246,17 @@ class Point(Circle):
     def __init__(self, x: float, y: float, radius: float = 1, zord: int = 0) -> None:
         super().__init__(x, y, radius, zord)
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         return super().tikz(
+            ctx,
             *fill_default_args(
                 args, (Fill, Fill(color.WHITE)), (Stroke, Stroke(color.BLACK))
-            )
+            ),
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
         return super().svg(
-            origin,
-            width,
-            height,
-            scale,
+            ctx,
             *fill_default_args(
                 args, (Fill, Fill(color.WHITE)), (Stroke, Stroke(color.BLACK))
             ),

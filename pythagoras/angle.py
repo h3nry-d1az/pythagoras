@@ -1,7 +1,7 @@
 from math import atan2, ceil, cos, degrees, floor, hypot, pi, radians, sin
 
 from .backend import fill_default_args, svg_command, svg_path, tikz_command
-from .pobject import PObject, POProperty
+from .pobject import PObject, POProperty, RenderingContext
 from .style import CustomStyle, color
 from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
@@ -75,7 +75,7 @@ class Angle(PObject):
 
         return extrema
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         v1x, v1y = self.p1[0] - self.p2[0], self.p1[1] - self.p2[1]
         v2x, v2y = self.p3[0] - self.p2[0], self.p3[1] - self.p2[1]
 
@@ -93,17 +93,10 @@ class Angle(PObject):
             "draw", f"({start_x}, {start_y}) arc ({deg1}:{deg2}:{self.radius})", *args
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
-        ax_c, ay_c = cartesian_to_canvas(*self.p1, width, height, scale, origin)
-        bx_c, by_c = cartesian_to_canvas(*self.p2, width, height, scale, origin)
-        cx_c, cy_c = cartesian_to_canvas(*self.p3, width, height, scale, origin)
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
+        ax_c, ay_c = cartesian_to_canvas(self.p1, ctx)
+        bx_c, by_c = cartesian_to_canvas(self.p2, ctx)
+        cx_c, cy_c = cartesian_to_canvas(self.p3, ctx)
 
         v1 = (ax_c - bx_c, ay_c - by_c)
         v2 = (cx_c - bx_c, cy_c - by_c)
@@ -114,11 +107,11 @@ class Angle(PObject):
         if mag1 == 0 or mag2 == 0:
             raise ValueError("Invalid angle.")
 
-        start_x = bx_c + self.radius * scale * (v1[0] / mag1)
-        start_y = by_c + self.radius * scale * (v1[1] / mag1)
+        start_x = bx_c + self.radius * ctx.scale * (v1[0] / mag1)
+        start_y = by_c + self.radius * ctx.scale * (v1[1] / mag1)
 
-        end_x = bx_c + self.radius * scale * (v2[0] / mag2)
-        end_y = by_c + self.radius * scale * (v2[1] / mag2)
+        end_x = bx_c + self.radius * ctx.scale * (v2[0] / mag2)
+        end_y = by_c + self.radius * ctx.scale * (v2[1] / mag2)
 
         sweep_angle = (
             atan2(self.p3[1] - self.p2[1], self.p3[0] - self.p2[0])
@@ -127,7 +120,7 @@ class Angle(PObject):
         large_arc_flag = 1 if sweep_angle > pi else 0
         sweep_flag = 0
 
-        d = f"M {start_x:.4f} {start_y:.4f} A {self.radius * scale:.4f} {self.radius * scale:.4f} 0 {large_arc_flag} {sweep_flag} {end_x:.4f} {end_y:.4f}"
+        d = f"M {start_x:.4f} {start_y:.4f} A {self.radius * ctx.scale:.4f} {self.radius * ctx.scale:.4f} 0 {large_arc_flag} {sweep_flag} {end_x:.4f} {end_y:.4f}"
         return svg_command(
             "path",
             CustomStyle("d", d),
@@ -159,27 +152,17 @@ class RAngle(Angle):
             (self.p2[0] + u2[0] * rn, self.p2[1] + u2[1] * rn),
         ]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         points = self.extrema()
         points.append(points[0])
         return tikz_command(
             "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in points), *args
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
         points = self.extrema()
         points.append(points[0])
         return svg_path(
-            (cartesian_to_canvas(*p, width, height, scale, origin) for p in points),
-            width,
-            height,
-            scale,
+            (cartesian_to_canvas(p, ctx) for p in points),
             *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )

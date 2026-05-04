@@ -38,22 +38,12 @@ def svg_command(name: str, *args: POProperty) -> str:
     return rf"<{name} {params} />"
 
 
-def svg_path(
-    points: Iterable[tuple[float, float]],
-    width: float,
-    height: float,
-    scale: float,
-    *args: POProperty,
-) -> str:
+def svg_path(points: Iterable[tuple[float, float]], *args: POProperty) -> str:
     """
     Construct an SVG path from its points.
 
     Parameters:
         points: The sequence of points (in the SVG coordinate system) that make up the path.
-        width: Width of the figure.
-        height: Height of the figure.
-        scale: Scaling factor of the figure.
-        *args: Additional properties of the path.
 
     Returns:
         Final `<path d="...">` tag.

@@ -1,7 +1,7 @@
 from latex2mathml.converter import convert
 
 from .backend import tikz_command
-from .pobject import PObject, POProperty
+from .pobject import PObject, POProperty, RenderingContext
 from .style.draw import FontSize
 from .utils import cartesian_to_canvas
 
@@ -42,21 +42,14 @@ class Label(PObject):
             (self.x + self.padding * len(self.tag), self.y - self.padding),
         ]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         return tikz_command(
             "node", f"at ({self.x}, {self.y}) {{{f'${self.tag}$'}}}", *args
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
-        x, y = cartesian_to_canvas(self.x, self.y, width, height, scale, origin)
-        w, h = min(width - x, x), min(height - y, y)
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
+        x, y = cartesian_to_canvas((self.x, self.y), ctx)
+        w, h = min(ctx.width - x, x), min(ctx.height - y, y)
         px, py = x - w, y - h
         fs = None
         for p in args:

@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from typing import Any
 
-from ..pobject import POProperty as __POProperty
+from ..pobject import POProperty
 from . import color, draw, line, opacity
 
 __all__ = ["CustomStyle", "color", "draw", "line", "opacity"]
 
 
 @dataclass
-class CustomStyle(__POProperty):
+class CustomStyle(POProperty):
     """
     Generic custom style parameter.
 
@@ -32,7 +32,7 @@ class CustomStyle(__POProperty):
 
 
 @dataclass
-class CustomProperty(__POProperty):
+class CustomProperty(POProperty):
     """
     Generic style with no associated value.
 

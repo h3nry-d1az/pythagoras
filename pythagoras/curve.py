@@ -3,7 +3,7 @@ from math import atan2, cos, degrees, hypot, inf, pi, sin, tau
 from typing import Self
 
 from .backend import fill_default_args, svg_command, svg_path, tikz_command
-from .pobject import PObject, POProperty
+from .pobject import PObject, POProperty, RenderingContext
 from .style import CustomStyle, color
 from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
@@ -60,16 +60,16 @@ class Arc(PObject):
         x1, y1 = p1[0], p1[1]
         x2, y2 = p2[0], p2[1]
         x3, y3 = p3[0], p3[1]
-        D = 2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))
+        d = 2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))
 
-        if abs(D) < 1e-10:
+        if abs(d) < 1e-10:
             raise ValueError("The three points are collinear. No arc can be formed.")
 
         sq1 = x1**2 + y1**2
         sq2 = x2**2 + y2**2
         sq3 = x3**2 + y3**2
-        cx = (sq1 * (y2 - y3) + sq2 * (y3 - y1) + sq3 * (y1 - y2)) / D
-        cy = (sq1 * (x3 - x2) + sq2 * (x1 - x3) + sq3 * (x2 - x1)) / D
+        cx = (sq1 * (y2 - y3) + sq2 * (y3 - y1) + sq3 * (y1 - y2)) / d
+        cy = (sq1 * (x3 - x2) + sq2 * (x1 - x3) + sq3 * (x2 - x1)) / d
         ang1 = atan2(y1 - cy, x1 - cx)
         ang2 = atan2(y2 - cy, x2 - cx)
         ang3 = atan2(y3 - cy, x3 - cx)
@@ -150,7 +150,7 @@ class Arc(PObject):
             y_min = self.o[1] - r
         return [(x_min, y_min), (x_max, y_max)]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         x, y = self.p[0] - self.o[0], self.p[1] - self.o[1]
         alpha = atan2(y, x)
         beta = alpha + self.theta
@@ -160,17 +160,10 @@ class Arc(PObject):
             *args,
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
-        r = self.radius * scale
-        px, py = cartesian_to_canvas(*self.p, width, height, scale, origin)
-        ex, ey = cartesian_to_canvas(*self.end_point, width, height, scale, origin)
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
+        r = self.radius * ctx.scale
+        px, py = cartesian_to_canvas(self.p, ctx)
+        ex, ey = cartesian_to_canvas(self.end_point, ctx)
         return svg_command(
             "path",
             CustomStyle(
@@ -238,26 +231,13 @@ class Parametric(PObject):
                 mxy = p[1]
         return [(mnx, mny), (mxx, mxy)]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         return tikz_command(
             "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in self.make_points()), *args
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
         return svg_path(
-            (
-                cartesian_to_canvas(*p, width, height, scale, origin)
-                for p in self.make_points()
-            ),
-            width,
-            height,
-            scale,
+            (cartesian_to_canvas(p, ctx) for p in self.make_points()),
             *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )

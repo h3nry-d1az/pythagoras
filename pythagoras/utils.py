@@ -1,33 +1,28 @@
 from dataclasses import dataclass
 
-from .pobject import PObject, POProperty
+from .pobject import PObject, POProperty, RenderingContext
 
 __all__ = ["Phantom", "cartesian_to_canvas"]
 
 
 def cartesian_to_canvas(
-    x: float,
-    y: float,
-    width: float,
-    height: float,
-    scale: float,
-    origin: tuple[float, float],
+    p: tuple[float, float], ctx: RenderingContext
 ) -> tuple[float, float]:
     """
     Converts a point in Cartesian coordinates into the canvas coordinate system.
 
     Parameters:
-        x: :math:`x`-coordinate of the point.
-        y: :math:`y`-coordinate of the point.
-        width: Width of the canvas.
-        height: Height of the canvas.
-        scale: Scaling factor of the canvas.
-        origin: Center of the figure in canvas coordinates.
+        p: Point to be converted.
+        ctx: Properties associated to the canvas.
 
     Returns:
         The point in canvas coordinates.
     """
-    return (width / 2 + x * scale - origin[0], height / 2 - y * scale + origin[1])
+    origin = ctx.origin
+    return (
+        ctx.width / 2 + (p[0] - origin[0]) * ctx.scale,
+        ctx.height / 2 - (p[1] - origin[1]) * ctx.scale,
+    )
 
 
 @dataclass(init=False)
@@ -51,15 +46,8 @@ class Phantom(PObject):
     def extrema(self) -> list[tuple[float, float]]:
         return [(self.x, self.y)]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         return f"% Phantom element at ({self.x}, {self.y})"
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
         return f"<!-- Phantom element at ({self.x}, {self.y} -->"

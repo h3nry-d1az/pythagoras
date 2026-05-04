@@ -1,6 +1,6 @@
 from collections.abc import Iterable
 
-from ..pobject import PObject, POProperty
+from ..pobject import PObject, POProperty, RenderingContext
 from ..utils import cartesian_to_canvas
 from .camera import Camera3D
 from .pobject import PObject3D
@@ -111,24 +111,17 @@ class Canvas3D(PObject):
             ),
         ]
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
         cx, cy = cartesian_to_canvas(
-            self.origin[0] - self.dimensions[0] / 2,
-            self.origin[1] + self.dimensions[1] / 2,
-            width,
-            height,
-            scale,
-            origin,
+            (
+                self.origin[0] - self.dimensions[0] / 2,
+                self.origin[1] + self.dimensions[1] / 2,
+            ),
+            ctx,
         )
         return (
-            f'<svg x="{cx}" y="{cy}" width="{self.dimensions[0] * scale}" height="{self.dimensions[1] * scale}" viewBox="0 0 {self.dimensions[0]} {self.dimensions[1]}">\n'
+            f'<svg x="{cx}" y="{cy}" width="{self.dimensions[0] * ctx.scale}" height="{self.dimensions[1] * ctx.scale}" '
+            f'viewBox="0 0 {self.dimensions[0]} {self.dimensions[1]}">\n'
             + "\n".join(
                 e[0].svg(
                     self.camera,
@@ -146,7 +139,7 @@ class Canvas3D(PObject):
             + "\n</svg>"
         )
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         return "\n".join(
             [
                 rf"\begin{{scope}}[shift={{({self.origin[0] - self.dimensions[0] / 2}, {self.origin[1] - self.dimensions[1] / 2})}}, scale={self.scale:.4f}]",

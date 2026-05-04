@@ -1,34 +1,25 @@
 from collections.abc import Iterable
 
-from .pobject import PObject, POProperty
+from .pobject import PObject, POProperty, RenderingContext
 
 __all__ = ["Canvas"]
 
 
 class Canvas:
     """
-    Container class for a collection of :class:`PObject <pythagoras.pobject.PObject>`'s. Controls the SVG and TikZ output,
-    and resizes automatically when a new element is added.
+    Container class for a collection of :class:`PObject <pythagoras.pobject.PObject>`'s.
+    Controls the SVG and TikZ output, and resizes automatically when a new element is added.
 
     Attributes:
-        scale: The scaling factor by which the canvas is stretched. When exporting to TikZ,
-               this is compiled exactly into `[scale={scale}]`, and when using SVG, the
-               distances are muliplied by its value.
+        context: State of the canvas; groups its scaling, its bounding box, and so forth. It
+            can be queried to retrieve its current height, origin, etc.
     """
 
-    scale: float
-    _xmin: float
-    _xmax: float
-    _ymin: float
-    _ymax: float
+    context: RenderingContext
     __elements: list[tuple[PObject, tuple[POProperty, ...]]]
 
     def __init__(self, scale: float = 1) -> None:
-        self.scale = scale
-        self._xmin = 0
-        self._xmax = 0
-        self._ymin = 0
-        self._ymax = 0
+        self.context = RenderingContext(scale, 0, 0, 0, 0)
         self.__elements = []
 
     def add(self, obj: PObject, *args: POProperty) -> None:
@@ -41,11 +32,10 @@ class Canvas:
                 further information on styling.
         """
         for p in obj.extrema():
-            p = (p[0] * self.scale, p[1] * self.scale)
-            self._xmin = min(p[0], self._xmin)
-            self._xmax = max(p[0], self._xmax)
-            self._ymin = min(p[1], self._ymin)
-            self._ymax = max(p[1], self._ymax)
+            self.context.xmin = min(p[0], self.context.xmin)
+            self.context.xmax = max(p[0], self.context.xmax)
+            self.context.ymin = min(p[1], self.context.ymin)
+            self.context.ymax = max(p[1], self.context.ymax)
         self.__elements.append((obj, args))
 
     def add_many(self, objs: Iterable[PObject], *args: POProperty) -> None:
@@ -73,8 +63,8 @@ class Canvas:
                 r"\usetikzlibrary{arrows.meta}"
                 r"\begin{document}",
                 r"\begin{tikzpicture}"
-                + (f"[scale={self.scale}]" if self.scale != 1 else ""),
-                "\n".join(e.tikz(*a) for e, a in sorted(self.__elements)),
+                + (f"[scale={self.context.scale}]" if self.context.scale != 1 else ""),
+                "\n".join(e.tikz(self.context, *a) for e, a in sorted(self.__elements)),
                 r"\end{tikzpicture}",
                 r"\end{document}",
             )
@@ -87,16 +77,25 @@ class Canvas:
         Returns:
             The final SVG picture.
         """
-        width = self._xmax - self._xmin + 5
-        height = self._ymax - self._ymin + 5
-        origin = ((self._xmax + self._xmin) / 2, (self._ymax + self._ymin) / 2)
         return "\n".join(
             (
-                f'<svg width="{width:.4f}" height="{height:.4f}" xmlns="http://www.w3.org/2000/svg">',
-                "\n".join(
-                    e.svg(origin, width, height, self.scale, *a)
-                    for e, a in sorted(self.__elements)
-                ),
+                f'<svg width="{self.context.width:.4f}" height="{self.context.height:.4f}" '
+                'xmlns="http://www.w3.org/2000/svg">',
+                "\n".join(e.svg(self.context, *a) for e, a in sorted(self.__elements)),
                 "</svg>",
             )
         )
+
+    @property
+    def scale(self) -> float:
+        """
+        Scaling factor stored in the `context` attribute.
+        """
+        return self.context.scale
+
+    @scale.setter
+    def scale(self, scale: float) -> None:
+        """
+        Gives a value to the scaling factor in `context`.
+        """
+        self.context.scale = scale

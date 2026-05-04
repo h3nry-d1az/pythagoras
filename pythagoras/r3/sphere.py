@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ..backend import fill_default_args, svg_command, tikz_command
-from ..pobject import POProperty
+from ..pobject import POProperty, RenderingContext
 from ..style import CustomStyle
 from ..style.color import BLACK
 from ..style.draw import Fill, LineWidth, Stroke
@@ -55,7 +55,9 @@ class FakeSphere(PObject3D):
         _pc = project_point(camera, frustum, self.center)
         if not _pc:
             return ""
-        cx, cy = cartesian_to_canvas(*_pc, width, height, scale, (0, 0))
+        cx, cy = cartesian_to_canvas(
+            _pc, RenderingContext.from_dimensions(scale, width, height)
+        )
         vr = self.visible_radius(camera, frustum) * scale
         args = (
             CustomStyle("cx", cx),

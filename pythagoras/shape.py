@@ -3,7 +3,7 @@ from math import cos, floor, inf, radians, sin, sqrt, tau
 from typing import Self
 
 from .backend import fill_default_args, svg_path, tikz_command
-from .pobject import PObject, POProperty
+from .pobject import PObject, POProperty, RenderingContext
 from .style import color
 from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
@@ -41,27 +41,14 @@ class Path(PObject):
                 mxy = p[1]
         return [(mnx, mny), (mxx, mxy)]
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         return tikz_command(
             "draw", " -- ".join(f"({p[0]}, {p[1]})" for p in self.points), *args
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
         return svg_path(
-            (
-                cartesian_to_canvas(*p, width, height, scale, origin)
-                for p in self.points
-            ),
-            width,
-            height,
-            scale,
+            (cartesian_to_canvas(p, ctx) for p in self.points),
             *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )
 
@@ -94,23 +81,16 @@ class Polygon(Path):
         the path (the first point is repeated for SVG output).
     """
 
-    def tikz(self, *args: POProperty) -> str:
+    def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:
         return tikz_command(
             "draw",
             " -- ".join(f"({p[0]}, {p[1]})" for p in self.points) + " -- cycle",
             *args,
         )
 
-    def svg(
-        self,
-        origin: tuple[float, float],
-        width: float,
-        height: float,
-        scale: float,
-        *args: POProperty,
-    ) -> str:
+    def svg(self, ctx: RenderingContext, *args: POProperty) -> str:
         self.points.append(self.points[0])
-        code = super().svg(origin, width, height, scale, *args)
+        code = super().svg(ctx, *args)
         self.points.pop()
         return code
 
