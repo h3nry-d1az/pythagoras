@@ -104,9 +104,10 @@ class Arrow(PObject):
 
     def tikz(self, *args: POProperty) -> str:
         return tikz_command(
-            r"\draw",
+            "draw",
             f"{self.start} -- {self.end}",
             CustomProperty(
-                f"-{{Straight Barb[angle={degrees(self.angle)}, length={self.size}bp]}}"
+                f"-{{Straight Barb[length={self.size * cos(self.angle)}bp, width={2 * self.size * sin(self.angle)}bp]}}"
             ),
+            *args,
         )
