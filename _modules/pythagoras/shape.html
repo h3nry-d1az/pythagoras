@@ -101,8 +101,10 @@
         <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">svg_path</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">),</span>
-            <span class="n">origin</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span>
+            <span class="p">),</span>
             <span class="n">width</span><span class="p">,</span>
             <span class="n">height</span><span class="p">,</span>
             <span class="n">scale</span><span class="p">,</span>
