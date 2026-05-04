@@ -39,13 +39,12 @@
 <dt class="sig sig-object py" id="pythagoras.canvas.Canvas">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pythagoras.canvas.</span></span><span class="sig-name descname"><span class="pre">Canvas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pythagoras/canvas.html#Canvas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.canvas.Canvas" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Container class for a collection of <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.PObject" title="pythagoras.pobject.PObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject</span></code></a>’s. Controls the SVG and TikZ output,
-and resizes automatically when a new element is added.</p>
+<p>Container class for a collection of <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.PObject" title="pythagoras.pobject.PObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">PObject</span></code></a>’s.
+Controls the SVG and TikZ output, and resizes automatically when a new element is added.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>scale</strong> (<em>float</em>) – The scaling factor by which the canvas is stretched. When exporting to TikZ,
-this is compiled exactly into <code class="code docutils literal notranslate"><span class="pre">[scale={scale}]</span></code>, and when using SVG, the
-distances are muliplied by its value.</p>
+<dd class="field-odd"><p><strong>context</strong> (<a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.RenderingContext" title="pythagoras.pobject.RenderingContext"><em>pythagoras.pobject.RenderingContext</em></a>) – State of the canvas; groups its scaling, its bounding box, and so forth. It
+can be queried to retrieve its current height, origin, etc.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -79,9 +78,15 @@ further information on styling.</p></li>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="pythagoras.canvas.Canvas.scale">
-<span class="sig-name descname"><span class="pre">scale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#pythagoras.canvas.Canvas.scale" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pythagoras.canvas.Canvas.context">
+<span class="sig-name descname"><span class="pre">context</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.RenderingContext" title="pythagoras.pobject.RenderingContext"><span class="pre">RenderingContext</span></a></span><a class="headerlink" href="#pythagoras.canvas.Canvas.context" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pythagoras.canvas.Canvas.scale">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">scale</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#pythagoras.canvas.Canvas.scale" title="Link to this definition">¶</a></dt>
+<dd><p>Scaling factor stored in the <code class="code docutils literal notranslate"><span class="pre">context</span></code> attribute.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.canvas.Canvas.svg">
@@ -123,6 +128,7 @@ further information on styling.</p></li>
 <li><a class="reference internal" href="#pythagoras.canvas.Canvas"><code class="docutils literal notranslate"><span class="pre">Canvas</span></code></a><ul>
 <li><a class="reference internal" href="#pythagoras.canvas.Canvas.add"><code class="docutils literal notranslate"><span class="pre">Canvas.add()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.canvas.Canvas.add_many"><code class="docutils literal notranslate"><span class="pre">Canvas.add_many()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.canvas.Canvas.context"><code class="docutils literal notranslate"><span class="pre">Canvas.context</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.canvas.Canvas.scale"><code class="docutils literal notranslate"><span class="pre">Canvas.scale</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.canvas.Canvas.svg"><code class="docutils literal notranslate"><span class="pre">Canvas.svg()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.canvas.Canvas.tikz"><code class="docutils literal notranslate"><span class="pre">Canvas.tikz()</span></code></a></li>

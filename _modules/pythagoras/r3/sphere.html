@@ -37,7 +37,7 @@
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">fill_default_args</span><span class="p">,</span> <span class="n">svg_command</span><span class="p">,</span> <span class="n">tikz_command</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">POProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..style</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomStyle</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..style.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">BLACK</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..style.draw</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fill</span><span class="p">,</span> <span class="n">LineWidth</span><span class="p">,</span> <span class="n">Stroke</span>
@@ -98,7 +98,9 @@
         <span class="n">_pc</span> <span class="o">=</span> <span class="n">project_point</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">frustum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">_pc</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="o">*</span><span class="n">_pc</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">cartesian_to_canvas</span><span class="p">(</span>
+            <span class="n">_pc</span><span class="p">,</span> <span class="n">RenderingContext</span><span class="o">.</span><span class="n">from_dimensions</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">vr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visible_radius</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">frustum</span><span class="p">)</span> <span class="o">*</span> <span class="n">scale</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;cx&quot;</span><span class="p">,</span> <span class="n">cx</span><span class="p">),</span>

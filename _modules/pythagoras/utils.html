@@ -36,7 +36,7 @@
   <h1>Source code for pythagoras.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Phantom&quot;</span><span class="p">,</span> <span class="s2">&quot;cartesian_to_canvas&quot;</span><span class="p">]</span>
 
@@ -44,28 +44,23 @@
 <div class="viewcode-block" id="cartesian_to_canvas">
 <a class="viewcode-back" href="../../pythagoras.utils.html#pythagoras.utils.cartesian_to_canvas">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">cartesian_to_canvas</span><span class="p">(</span>
-    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">p</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts a point in Cartesian coordinates into the canvas coordinate system.</span>
 
 <span class="sd">    Parameters:</span>
-<span class="sd">        x: :math:`x`-coordinate of the point.</span>
-<span class="sd">        y: :math:`y`-coordinate of the point.</span>
-<span class="sd">        width: Width of the canvas.</span>
-<span class="sd">        height: Height of the canvas.</span>
-<span class="sd">        scale: Scaling factor of the canvas.</span>
-<span class="sd">        origin: Center of the figure in canvas coordinates.</span>
+<span class="sd">        p: Point to be converted.</span>
+<span class="sd">        ctx: Properties associated to the canvas.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The point in canvas coordinates.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">x</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">height</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">y</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+    <span class="n">origin</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">origin</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 
@@ -97,20 +92,13 @@
 
 <div class="viewcode-block" id="Phantom.tikz">
 <a class="viewcode-back" href="../../pythagoras.utils.html#pythagoras.utils.Phantom.tikz">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;% Phantom element at (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
 <div class="viewcode-block" id="Phantom.svg">
 <a class="viewcode-back" href="../../pythagoras.utils.html#pythagoras.utils.Phantom.svg">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
-        <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;!-- Phantom element at (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2"> --&gt;&quot;</span></div>
 </div>
 

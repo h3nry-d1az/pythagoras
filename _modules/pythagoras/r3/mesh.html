@@ -40,7 +40,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">fill_default_args</span><span class="p">,</span> <span class="n">svg_path</span><span class="p">,</span> <span class="n">tikz_command</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">POProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..style.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">BLACK</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..style.draw</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fill</span><span class="p">,</span> <span class="n">LineWidth</span><span class="p">,</span> <span class="n">Stroke</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian_to_canvas</span>
@@ -144,12 +144,10 @@
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">ps</span><span class="p">):</span>
             <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">ps</span> <span class="o">=</span> <span class="p">(</span><span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span> <span class="k">if</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">RenderingContext</span><span class="o">.</span><span class="n">from_dimensions</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="p">(</span><span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span> <span class="k">if</span> <span class="n">p</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">svg_path</span><span class="p">(</span>
             <span class="n">ps</span><span class="p">,</span>
-            <span class="n">width</span><span class="p">,</span>
-            <span class="n">height</span><span class="p">,</span>
-            <span class="n">scale</span><span class="p">,</span>
             <span class="o">*</span><span class="n">fill_default_args</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_apply_lighting</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">frustum</span><span class="p">,</span> <span class="n">lights</span><span class="p">,</span> <span class="n">args</span><span class="p">),</span>
                 <span class="p">(</span><span class="n">Fill</span><span class="p">,</span> <span class="n">Fill</span><span class="p">(</span><span class="kc">None</span><span class="p">)),</span>

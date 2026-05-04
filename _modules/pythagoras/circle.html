@@ -38,7 +38,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">fill_default_args</span><span class="p">,</span> <span class="n">svg_command</span><span class="p">,</span> <span class="n">tikz_command</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.style</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomStyle</span><span class="p">,</span> <span class="n">color</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.style.draw</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fill</span><span class="p">,</span> <span class="n">Stroke</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian_to_canvas</span>
@@ -81,26 +81,19 @@
 
 <div class="viewcode-block" id="Circle.tikz">
 <a class="viewcode-back" href="../../pythagoras.circle.html#pythagoras.circle.Circle.tikz">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;filldraw&quot;</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Fill</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;draw&quot;</span>
         <span class="k">return</span> <span class="n">tikz_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">) circle (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Circle.svg">
 <a class="viewcode-back" href="../../pythagoras.circle.html#pythagoras.circle.Circle.svg">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
-        <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">cartesian_to_canvas</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="n">ctx</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;cx&quot;</span><span class="p">,</span> <span class="n">cx</span><span class="p">),</span>
             <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;cy&quot;</span><span class="p">,</span> <span class="n">cy</span><span class="p">),</span>
-            <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">scale</span><span class="p">),</span>
+            <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">svg_command</span><span class="p">(</span>
@@ -254,7 +247,7 @@
 
 <div class="viewcode-block" id="Ellipse.tikz">
 <a class="viewcode-back" href="../../pythagoras.circle.html#pythagoras.circle.Ellipse.tikz">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;filldraw&quot;</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Fill</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;draw&quot;</span>
         <span class="k">return</span> <span class="n">tikz_command</span><span class="p">(</span>
             <span class="n">cmd</span><span class="p">,</span>
@@ -265,20 +258,13 @@
 
 <div class="viewcode-block" id="Ellipse.svg">
 <a class="viewcode-back" href="../../pythagoras.circle.html#pythagoras.circle.Ellipse.svg">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
-        <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">cartesian_to_canvas</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="n">ctx</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;cx&quot;</span><span class="p">,</span> <span class="n">cx</span><span class="p">),</span>
             <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;cy&quot;</span><span class="p">,</span> <span class="n">cy</span><span class="p">),</span>
-            <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="o">*</span> <span class="n">scale</span><span class="p">),</span>
-            <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ry</span> <span class="o">*</span> <span class="n">scale</span><span class="p">),</span>
+            <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="o">*</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span>
+            <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ry</span> <span class="o">*</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span>
             <span class="n">CustomStyle</span><span class="p">(</span><span class="s2">&quot;transform&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;rotate(</span><span class="si">{</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">cx</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">cy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">),</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
         <span class="p">)</span>
@@ -333,29 +319,20 @@
 
 <div class="viewcode-block" id="Point.tikz">
 <a class="viewcode-back" href="../../pythagoras.circle.html#pythagoras.circle.Point.tikz">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">tikz</span><span class="p">(</span>
+            <span class="n">ctx</span><span class="p">,</span>
             <span class="o">*</span><span class="n">fill_default_args</span><span class="p">(</span>
                 <span class="n">args</span><span class="p">,</span> <span class="p">(</span><span class="n">Fill</span><span class="p">,</span> <span class="n">Fill</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">)),</span> <span class="p">(</span><span class="n">Stroke</span><span class="p">,</span> <span class="n">Stroke</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">))</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Point.svg">
 <a class="viewcode-back" href="../../pythagoras.circle.html#pythagoras.circle.Point.svg">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
-        <span class="n">width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RenderingContext</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">svg</span><span class="p">(</span>
-            <span class="n">origin</span><span class="p">,</span>
-            <span class="n">width</span><span class="p">,</span>
-            <span class="n">height</span><span class="p">,</span>
-            <span class="n">scale</span><span class="p">,</span>
+            <span class="n">ctx</span><span class="p">,</span>
             <span class="o">*</span><span class="n">fill_default_args</span><span class="p">(</span>
                 <span class="n">args</span><span class="p">,</span> <span class="p">(</span><span class="n">Fill</span><span class="p">,</span> <span class="n">Fill</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">WHITE</span><span class="p">)),</span> <span class="p">(</span><span class="n">Stroke</span><span class="p">,</span> <span class="n">Stroke</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">))</span>
             <span class="p">),</span>
