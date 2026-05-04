@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from math import hypot
+from math import cos, hypot, sin
 from typing import Self
 
 __all__ = ["Vector3D", "dist3"]
@@ -35,6 +35,40 @@ class Vector3D:
             The vector that goes from `p1` to `p2`.
         """
         return cls(p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2])
+
+    @classmethod
+    def cylindrical(cls, r: float, theta: float, z: float) -> Self:
+        """
+        Constructs a vector expressed in cylindrical coordinates.
+
+        Parameters:
+            r: Magnitude of the projection of the vector onto the :math:`xy` plane.
+            theta: Angle of the projection onto the :math:`xy` plane with respect to
+                the positive :math:`x`-axis.
+            z: :math:`z` component of the vector.
+
+        Returns:
+            The corresponding vector.
+        """
+        return cls(r * cos(theta), r * sin(theta), z)
+
+    @classmethod
+    def spherical(cls, rho: float, phi: float, theta: float) -> Self:
+        """
+        Constructs a vector expressed in spherical coordinates.
+
+        Parameters:
+            rho: Magnitude of the vector.
+            phi: Angle formed with the positive :math:`z` axis.
+            theta: Angle of the projection onto the :math:`xy` plane with respect to
+                the positive :math:`x`-axis.
+
+        Returns:
+            The corresponding vector.
+        """
+        return cls(
+            rho * sin(phi) * cos(theta), rho * sin(phi) * sin(theta), rho * cos(theta)
+        )
 
     def __call__(self) -> tuple[float, float, float]:
         return (self.x, self.y, self.z)

@@ -32,6 +32,20 @@ class Vector:
         """
         return cls(p2[0] - p1[0], p2[1] - p1[1])
 
+    @classmethod
+    def polar(cls, r: float, theta: float) -> Self:
+        """
+        Constructs a vector expressed in polar coordinates.
+
+        Parameters:
+            r: Magnitude of the vector.
+            theta: Angle with respect to the positive :math:`x`-axis.
+
+        Returns:
+            The corresponding vector.
+        """
+        return cls(r * cos(theta), r * sin(theta))
+
     def __call__(self) -> tuple[float, float]:
         return (self.x, self.y)
 

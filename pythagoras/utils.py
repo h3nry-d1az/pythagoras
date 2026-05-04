@@ -24,7 +24,7 @@ def cartesian_to_canvas(
     return (width / 2 + x * scale, height / 2 - y * scale)
 
 
-@dataclass
+@dataclass(init=False)
 class Phantom(PObject):
     """
     A zero-size placeholder element used for layout or reference.
@@ -36,6 +36,11 @@ class Phantom(PObject):
 
     x: float
     y: float
+
+    def __init__(self, x: float, y: float, zord: int = 0) -> None:
+        self.x = x
+        self.y = y
+        self._zord = zord
 
     def extrema(self) -> list[tuple[float, float]]:
         return [(self.x, self.y)]
@@ -51,4 +56,4 @@ class Phantom(PObject):
         scale: float,
         *args: POProperty,
     ) -> str:
-        return f"<!-- Phantom element at ({self.x}, {self.y} --"
+        return f"<!-- Phantom element at ({self.x}, {self.y} -->"

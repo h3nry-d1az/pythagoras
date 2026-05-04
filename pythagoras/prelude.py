@@ -1,4 +1,14 @@
+"""
+This module brings all the names of the package into the global namespace.
+This way, it is easier to import specific objects by writing
+
+.. code-block:: python
+
+   from pythagoras.prelude import Fill, BLACK, ...
+"""
+
 from .angle import *
+from .arrow import *
 from .canvas import *
 from .circle import *
 from .curve import *

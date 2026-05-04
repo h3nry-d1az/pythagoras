@@ -67,19 +67,17 @@ class Canvas:
         Returns:
             The compiled TikZ document.
         """
-        return (
-            r"\documentclass[crop,tikz]{standalone}"
-            + "\n"
-            + r"\begin{document}"
-            + "\n"
-            + r"\begin{tikzpicture}"
-            + (f"[scale={self.scale}]" if self.scale != 1 else "")
-            + "\n"
-            + "\n".join(e.tikz(*a) for e, a in sorted(self.__elements))
-            + "\n"
-            + r"\end{tikzpicture}"
-            + "\n"
-            + r"\end{document}"
+        return "\n".join(
+            (
+                r"\documentclass[crop,tikz]{standalone}",
+                r"\usetikzlibrary{arrows.meta}"
+                r"\begin{document}",
+                r"\begin{tikzpicture}"
+                + (f"[scale={self.scale}]" if self.scale != 1 else ""),
+                "\n".join(e.tikz(*a) for e, a in sorted(self.__elements)),
+                r"\end{tikzpicture}",
+                r"\end{document}",
+            )
         )
 
     def svg(self) -> str:
@@ -92,12 +90,13 @@ class Canvas:
         width = self._xmax - self._xmin + 5
         height = self._ymax - self._ymin + 5
         O = ((self._xmax + self._xmin) / 2, (self._ymax + self._ymin) / 2)
-        return (
-            f'<svg width="{width:.4f}" height="{height:.4f}" xmlns="http://www.w3.org/2000/svg">\n'
-            + "\n".join(
-                e.svg(O, width, height, self.scale, *a)
-                for e, a in sorted(self.__elements)
+        return "\n".join(
+            (
+                f'<svg width="{width:.4f}" height="{height:.4f}" xmlns="http://www.w3.org/2000/svg">',
+                "\n".join(
+                    e.svg(O, width, height, self.scale, *a)
+                    for e, a in sorted(self.__elements)
+                ),
+                "</svg>",
             )
-            + "\n"
-            + "</svg>"
         )

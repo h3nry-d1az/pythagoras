@@ -1,5 +1,6 @@
 from . import (
     angle,
+    arrow,
     backend,
     canvas,
     circle,
@@ -16,6 +17,7 @@ from . import (
 
 __all__ = [
     "angle",
+    "arrow",
     "backend",
     "canvas",
     "circle",
