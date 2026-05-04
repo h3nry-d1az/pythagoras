@@ -104,10 +104,9 @@ class Face(PObject3D):
         )
         if not all(ps):
             return ""
-        ps = (cartesian_to_canvas(*p, width, height, scale) for p in ps if p)
+        ps = (cartesian_to_canvas(*p, width, height, scale, (0, 0)) for p in ps if p)
         return svg_path(
             ps,
-            (0, 0),
             width,
             height,
             scale,

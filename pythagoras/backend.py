@@ -40,7 +40,6 @@ def svg_command(name: str, *args: POProperty) -> str:
 
 def svg_path(
     points: Iterable[tuple[float, float]],
-    origin: tuple[float, float],
     width: float,
     height: float,
     scale: float,
@@ -51,7 +50,6 @@ def svg_path(
 
     Parameters:
         points: The sequence of points (in the SVG coordinate system) that make up the path.
-        origin: Origin of the frame of reference.
         width: Width of the figure.
         height: Height of the figure.
         scale: Scaling factor of the figure.
@@ -62,9 +60,9 @@ def svg_path(
     """
     iterator = iter(points)
     p0 = next(iterator)
-    path = f"M {p0[0] - origin[0]:.4f} {p0[1] + origin[1]:.4f}"
+    path = f"M {p0[0]:.4f} {p0[1]:.4f}"
     for p in iterator:
-        path += f" L {p[0] - origin[0]:.4f} {p[1] + origin[1]:.4f}"
+        path += f" L {p[0]:.4f} {p[1]:.4f}"
     return svg_command("path", CustomStyle("d", path), *args)
 
 

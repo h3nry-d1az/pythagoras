@@ -55,8 +55,10 @@ class Path(PObject):
         *args: POProperty,
     ) -> str:
         return svg_path(
-            (cartesian_to_canvas(*p, width, height, scale) for p in self.points),
-            origin,
+            (
+                cartesian_to_canvas(*p, width, height, scale, origin)
+                for p in self.points
+            ),
             width,
             height,
             scale,

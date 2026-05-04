@@ -1,4 +1,4 @@
-from math import atan2, cos, degrees, pi, sin
+from math import atan2, cos, pi, sin
 
 from .backend import fill_default_args, svg_command, tikz_command
 from .pobject import PObject, POProperty
@@ -69,19 +69,11 @@ class Arrow(PObject):
         scale: float,
         *args: POProperty,
     ) -> str:
-        x1, y1 = cartesian_to_canvas(*self.start, width, height, scale)
-        x2, y2 = cartesian_to_canvas(*self.end, width, height, scale)
+        x1, y1 = cartesian_to_canvas(*self.start, width, height, scale, origin)
+        x2, y2 = cartesian_to_canvas(*self.end, width, height, scale, origin)
         left, right = self.make_arrowhead()
-        lx, ly = cartesian_to_canvas(*left, width, height, scale)
-        rx, ry = cartesian_to_canvas(*right, width, height, scale)
-        x1 -= origin[0]
-        y1 += origin[1]
-        x2 -= origin[0]
-        y2 += origin[1]
-        lx -= origin[0]
-        ly += origin[1]
-        rx -= origin[0]
-        ry += origin[1]
+        lx, ly = cartesian_to_canvas(*left, width, height, scale, origin)
+        rx, ry = cartesian_to_canvas(*right, width, height, scale, origin)
         return "\n".join(
             (
                 svg_command(
@@ -107,7 +99,7 @@ class Arrow(PObject):
             "draw",
             f"{self.start} -- {self.end}",
             CustomProperty(
-                f"-{{Straight Barb[length={self.size * cos(self.angle)}bp, width={2 * self.size * sin(self.angle)}bp]}}"
+                f"-{{Straight Barb[length={self.size * cos(self.angle)}pc, width={2 * self.size * sin(self.angle)}pc]}}"
             ),
             *args,
         )

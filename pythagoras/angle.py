@@ -101,17 +101,9 @@ class Angle(PObject):
         scale: float,
         *args: POProperty,
     ) -> str:
-        ax_c, ay_c = cartesian_to_canvas(*self.p1, width, height, scale)
-        bx_c, by_c = cartesian_to_canvas(*self.p2, width, height, scale)
-        cx_c, cy_c = cartesian_to_canvas(*self.p3, width, height, scale)
-
-        ax_c -= origin[0]
-        bx_c -= origin[0]
-        cx_c -= origin[0]
-
-        ay_c += origin[1]
-        by_c += origin[1]
-        cy_c += origin[1]
+        ax_c, ay_c = cartesian_to_canvas(*self.p1, width, height, scale, origin)
+        bx_c, by_c = cartesian_to_canvas(*self.p2, width, height, scale, origin)
+        cx_c, cy_c = cartesian_to_canvas(*self.p3, width, height, scale, origin)
 
         v1 = (ax_c - bx_c, ay_c - by_c)
         v2 = (cx_c - bx_c, cy_c - by_c)
@@ -185,8 +177,7 @@ class RAngle(Angle):
         points = self.extrema()
         points.append(points[0])
         return svg_path(
-            (cartesian_to_canvas(*p, width, height, scale) for p in points),
-            origin,
+            (cartesian_to_canvas(*p, width, height, scale, origin) for p in points),
             width,
             height,
             scale,

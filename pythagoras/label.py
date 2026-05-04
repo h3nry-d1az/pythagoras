@@ -55,9 +55,7 @@ class Label(PObject):
         scale: float,
         *args: POProperty,
     ) -> str:
-        x, y = cartesian_to_canvas(self.x, self.y, width, height, scale)
-        x -= origin[0]
-        y += origin[1]
+        x, y = cartesian_to_canvas(self.x, self.y, width, height, scale, origin)
         w, h = min(width - x, x), min(height - y, y)
         px, py = x - w, y - h
         fs = None

@@ -50,9 +50,7 @@ class Circle(PObject):
         scale: float,
         *args: POProperty,
     ) -> str:
-        cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
-        cx -= origin[0]
-        cy += origin[1]
+        cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale, origin)
         args = (
             CustomStyle("cx", cx),
             CustomStyle("cy", cy),
@@ -211,9 +209,7 @@ class Ellipse(PObject):
         scale: float,
         *args: POProperty,
     ) -> str:
-        cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale)
-        cx -= origin[0]
-        cy += origin[1]
+        cx, cy = cartesian_to_canvas(self.x, self.y, width, height, scale, origin)
         args = (
             CustomStyle("cx", cx),
             CustomStyle("cy", cy),

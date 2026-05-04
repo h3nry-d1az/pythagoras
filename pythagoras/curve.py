@@ -169,12 +169,8 @@ class Arc(PObject):
         *args: POProperty,
     ) -> str:
         r = self.radius * scale
-        px, py = cartesian_to_canvas(*self.p, width, height, scale)
-        ex, ey = cartesian_to_canvas(*self.end_point, width, height, scale)
-        px -= origin[0]
-        py += origin[1]
-        ex -= origin[0]
-        ey += origin[1]
+        px, py = cartesian_to_canvas(*self.p, width, height, scale, origin)
+        ex, ey = cartesian_to_canvas(*self.end_point, width, height, scale, origin)
         return svg_command(
             "path",
             CustomStyle(
@@ -256,8 +252,10 @@ class Parametric(PObject):
         *args: POProperty,
     ) -> str:
         return svg_path(
-            (cartesian_to_canvas(*p, width, height, scale) for p in self.make_points()),
-            origin,
+            (
+                cartesian_to_canvas(*p, width, height, scale, origin)
+                for p in self.make_points()
+            ),
             width,
             height,
             scale,

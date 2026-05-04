@@ -6,7 +6,12 @@ __all__ = ["Phantom", "cartesian_to_canvas"]
 
 
 def cartesian_to_canvas(
-    x: float, y: float, width: float, height: float, scale: float
+    x: float,
+    y: float,
+    width: float,
+    height: float,
+    scale: float,
+    origin: tuple[float, float],
 ) -> tuple[float, float]:
     """
     Converts a point in Cartesian coordinates into the canvas coordinate system.
@@ -17,11 +22,12 @@ def cartesian_to_canvas(
         width: Width of the canvas.
         height: Height of the canvas.
         scale: Scaling factor of the canvas.
+        origin: Center of the figure in canvas coordinates.
 
     Returns:
         The point in canvas coordinates.
     """
-    return (width / 2 + x * scale, height / 2 - y * scale)
+    return (width / 2 + x * scale - origin[0], height / 2 - y * scale + origin[1])
 
 
 @dataclass(init=False)

@@ -55,7 +55,7 @@ class FakeSphere(PObject3D):
         _pc = project_point(camera, frustum, self.center)
         if not _pc:
             return ""
-        cx, cy = cartesian_to_canvas(*_pc, width, height, scale)
+        cx, cy = cartesian_to_canvas(*_pc, width, height, scale, (0, 0))
         vr = self.visible_radius(camera, frustum) * scale
         args = (
             CustomStyle("cx", cx),

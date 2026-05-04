@@ -89,12 +89,12 @@ class Canvas:
         """
         width = self._xmax - self._xmin + 5
         height = self._ymax - self._ymin + 5
-        O = ((self._xmax + self._xmin) / 2, (self._ymax + self._ymin) / 2)
+        origin = ((self._xmax + self._xmin) / 2, (self._ymax + self._ymin) / 2)
         return "\n".join(
             (
                 f'<svg width="{width:.4f}" height="{height:.4f}" xmlns="http://www.w3.org/2000/svg">',
                 "\n".join(
-                    e.svg(O, width, height, self.scale, *a)
+                    e.svg(origin, width, height, self.scale, *a)
                     for e, a in sorted(self.__elements)
                 ),
                 "</svg>",

@@ -125,6 +125,7 @@ class Canvas3D(PObject):
             width,
             height,
             scale,
+            origin,
         )
         return (
             f'<svg x="{cx}" y="{cy}" width="{self.dimensions[0] * scale}" height="{self.dimensions[1] * scale}" viewBox="0 0 {self.dimensions[0]} {self.dimensions[1]}">\n'
