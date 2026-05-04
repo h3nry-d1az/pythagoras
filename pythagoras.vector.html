@@ -72,6 +72,23 @@
 <dd><p>Orthogonal complement (the vector after the map <span class="math notranslate nohighlight">\((x, y) \mapsto (-y, x)\)</span>).</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.vector.Vector.polar">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">polar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/vector.html#Vector.polar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.vector.Vector.polar" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs a vector expressed in polar coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – Magnitude of the vector.</p></li>
+<li><p><strong>theta</strong> – Angle with respect to the positive <span class="math notranslate nohighlight">\(x\)</span>-axis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding vector.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="pythagoras.vector.Vector.unitary">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">unitary</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Self</span></span><a class="headerlink" href="#pythagoras.vector.Vector.unitary" title="Link to this definition">¶</a></dt>
@@ -120,6 +137,7 @@
 <li><a class="reference internal" href="#pythagoras.vector.Vector"><code class="docutils literal notranslate"><span class="pre">Vector</span></code></a><ul>
 <li><a class="reference internal" href="#pythagoras.vector.Vector.from_two_points"><code class="docutils literal notranslate"><span class="pre">Vector.from_two_points()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.vector.Vector.perp"><code class="docutils literal notranslate"><span class="pre">Vector.perp</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.vector.Vector.polar"><code class="docutils literal notranslate"><span class="pre">Vector.polar()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.vector.Vector.unitary"><code class="docutils literal notranslate"><span class="pre">Vector.unitary</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.vector.Vector.x"><code class="docutils literal notranslate"><span class="pre">Vector.x</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.vector.Vector.y"><code class="docutils literal notranslate"><span class="pre">Vector.y</span></code></a></li>

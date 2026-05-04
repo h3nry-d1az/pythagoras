@@ -51,6 +51,25 @@
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.vector.Vector3D.cylindrical">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">cylindrical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/vector.html#Vector3D.cylindrical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.vector.Vector3D.cylindrical" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs a vector expressed in cylindrical coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – Magnitude of the projection of the vector onto the <span class="math notranslate nohighlight">\(xy\)</span> plane.</p></li>
+<li><p><strong>theta</strong> – Angle of the projection onto the <span class="math notranslate nohighlight">\(xy\)</span> plane with respect to
+the positive <span class="math notranslate nohighlight">\(x\)</span>-axis.</p></li>
+<li><p><strong>z</strong> – <span class="math notranslate nohighlight">\(z\)</span> component of the vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding vector.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.r3.vector.Vector3D.from_two_points">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_two_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/vector.html#Vector3D.from_two_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.vector.Vector3D.from_two_points" title="Link to this definition">¶</a></dt>
 <dd><p>Constructor for the vector that joins two points.</p>
@@ -63,6 +82,25 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The vector that goes from <code class="code docutils literal notranslate"><span class="pre">p1</span></code> to <code class="code docutils literal notranslate"><span class="pre">p2</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.r3.vector.Vector3D.spherical">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">spherical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/r3/vector.html#Vector3D.spherical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.r3.vector.Vector3D.spherical" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs a vector expressed in spherical coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rho</strong> – Magnitude of the vector.</p></li>
+<li><p><strong>phi</strong> – Angle formed with the positive <span class="math notranslate nohighlight">\(z\)</span> axis.</p></li>
+<li><p><strong>theta</strong> – Angle of the projection onto the <span class="math notranslate nohighlight">\(xy\)</span> plane with respect to
+the positive <span class="math notranslate nohighlight">\(x\)</span>-axis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding vector.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -118,7 +156,9 @@
     <ul>
 <li><a class="reference internal" href="#">pythagoras.r3.vector module</a><ul>
 <li><a class="reference internal" href="#pythagoras.r3.vector.Vector3D"><code class="docutils literal notranslate"><span class="pre">Vector3D</span></code></a><ul>
+<li><a class="reference internal" href="#pythagoras.r3.vector.Vector3D.cylindrical"><code class="docutils literal notranslate"><span class="pre">Vector3D.cylindrical()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.r3.vector.Vector3D.from_two_points"><code class="docutils literal notranslate"><span class="pre">Vector3D.from_two_points()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.r3.vector.Vector3D.spherical"><code class="docutils literal notranslate"><span class="pre">Vector3D.spherical()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.r3.vector.Vector3D.unitary"><code class="docutils literal notranslate"><span class="pre">Vector3D.unitary</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.r3.vector.Vector3D.x"><code class="docutils literal notranslate"><span class="pre">Vector3D.x</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.r3.vector.Vector3D.y"><code class="docutils literal notranslate"><span class="pre">Vector3D.y</span></code></a></li>

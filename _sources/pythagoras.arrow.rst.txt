@@ -1,0 +1,7 @@
+pythagoras.arrow module
+=======================
+
+.. automodule:: pythagoras.arrow
+   :members:
+   :show-inheritance:
+   :undoc-members:

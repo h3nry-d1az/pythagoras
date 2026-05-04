@@ -17,6 +17,7 @@ Submodules
    :maxdepth: 4
 
    pythagoras.angle
+   pythagoras.arrow
    pythagoras.backend
    pythagoras.canvas
    pythagoras.circle
