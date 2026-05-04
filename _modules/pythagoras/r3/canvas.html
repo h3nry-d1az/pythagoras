@@ -53,27 +53,29 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        dimensions: Width and height of the canvas.</span>
+<span class="sd">        origin: Point in 2D space to which the origin of the frame of reference corresponds.</span>
 <span class="sd">        camera: :class:`Camera3D &lt;pythagoras.r3.camera.Camera3D&gt;` object encoding the position</span>
 <span class="sd">            and pointing direction of the rendering camera.</span>
-<span class="sd">        origin: Point in 2D space to which the origin of the frame of reference corresponds.</span>
-<span class="sd">        scale: The scaling factor by which the canvas is stretched.</span>
 <span class="sd">        frustum: Field of view within the scene.</span>
+<span class="sd">        scale: The scaling factor by which the canvas is stretched.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">dimensions</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
     <span class="n">origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
     <span class="n">camera</span><span class="p">:</span> <span class="n">Camera3D</span>
-    <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">frustum</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">__elements</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">PObject3D</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">POProperty</span><span class="p">,</span> <span class="o">...</span><span class="p">]]]</span>
+    <span class="n">__light_sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span>
+    <span class="n">__camera_light</span><span class="p">:</span> <span class="nb">bool</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">dimensions</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
         <span class="n">origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
         <span class="n">camera</span><span class="p">:</span> <span class="n">Camera3D</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">frustum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="n">dimensions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span>
@@ -81,6 +83,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frustum</span> <span class="o">=</span> <span class="n">frustum</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__light_sources</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__camera_light</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="Canvas3D.add">
 <a class="viewcode-back" href="../../../pythagoras.r3.canvas.html#pythagoras.r3.canvas.Canvas3D.add">[docs]</a>
@@ -110,6 +114,37 @@
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="Canvas3D.add_light_source">
+<a class="viewcode-back" href="../../../pythagoras.r3.canvas.html#pythagoras.r3.canvas.Canvas3D.add_light_source">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_light_source</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Includes a light source into the scene.</span>
+<span class="sd">        By default, the camera emmits light with an intensity equal to the frustum;</span>
+<span class="sd">        this behavior may be changed through the :meth:`camera_as_light_source` property.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            position: Position of the light source.</span>
+<span class="sd">            intensity: Its brightness.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__light_sources</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">position</span><span class="p">,</span> <span class="n">intensity</span><span class="p">))</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">camera_as_light_source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns `True` if the camera is acting as a light source, `False` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__camera_light</span>
+
+    <span class="nd">@camera_as_light_source</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">camera_as_light_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Changes whether the camera should act as a light source.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__camera_light</span> <span class="o">=</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="Canvas3D.extrema">
 <a class="viewcode-back" href="../../../pythagoras.r3.canvas.html#pythagoras.r3.canvas.Canvas3D.extrema">[docs]</a>
@@ -151,6 +186,9 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">frustum</span><span class="p">,</span>
                     <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>
+                    <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">__light_sources</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frustum</span><span class="p">)]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_as_light_source</span>
+                    <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__light_sources</span><span class="p">,</span>
                     <span class="o">*</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                 <span class="p">)</span>
@@ -168,7 +206,15 @@
                 <span class="sa">rf</span><span class="s2">&quot;\begin</span><span class="se">{{</span><span class="s2">scope</span><span class="se">}}</span><span class="s2">[shift=</span><span class="se">{{</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">)</span><span class="se">}}</span><span class="s2">, scale=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
                 <span class="sa">rf</span><span class="s2">&quot;\clip (</span><span class="si">{</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">) rectangle (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">);&quot;</span><span class="p">,</span>
                 <span class="o">*</span><span class="p">(</span>
-                    <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tikz</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frustum</span><span class="p">,</span> <span class="o">*</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+                    <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tikz</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">frustum</span><span class="p">,</span>
+                        <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">__light_sources</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frustum</span><span class="p">)]</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_as_light_source</span>
+                        <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">__light_sources</span><span class="p">,</span>
+                        <span class="o">*</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                    <span class="p">)</span>
                     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">)</span>
                 <span class="p">),</span>
                 <span class="sa">r</span><span class="s2">&quot;\end</span><span class="si">{scope}</span><span class="s2">&quot;</span><span class="p">,</span>
