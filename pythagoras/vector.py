@@ -113,6 +113,13 @@ class Vector:
         """
         return self.__class__(-self.y, self.x)
 
+    @property
+    def unitary(self) -> Self:
+        """
+        Vector normalized to have unit norm.
+        """
+        return self / abs(self)
+
 
 def dist(p1: tuple[float, float], p2: tuple[float, float]) -> float:
     r"""

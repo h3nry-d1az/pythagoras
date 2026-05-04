@@ -101,6 +101,13 @@ class Vector3D:
     def __abs__(self) -> float:
         return hypot(self.x, self.y, self.z)
 
+    @property
+    def unitary(self) -> Self:
+        """
+        Vector normalized to have unit norm.
+        """
+        return self / abs(self)
+
 
 def dist3(p1: tuple[float, float, float], p2: tuple[float, float, float]) -> float:
     r"""

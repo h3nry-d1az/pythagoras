@@ -1,5 +1,6 @@
 from collections.abc import Iterable
 from dataclasses import dataclass
+from math import atan, pi
 from typing import Self, cast
 
 from ..backend import fill_default_args, svg_path, tikz_command
@@ -59,7 +60,11 @@ class Face(PObject3D):
         )
 
     def _apply_lighting(
-        self, camera: Camera3D, args: Iterable[POProperty]
+        self,
+        camera: Camera3D,
+        frustum: float,
+        light_sources: list[tuple[tuple[float, float, float], float]],
+        args: Iterable[POProperty],
     ) -> Iterable[POProperty]:
         if not self.n:
             return args
@@ -71,7 +76,14 @@ class Face(PObject3D):
             else:
                 fargs.append(arg)
         if color:
-            color = color * (Vector3D(*camera.direction) @ self.n) ** 2
+            light_factor = 0
+            for p, i in light_sources:
+                dist = Vector3D.from_two_points(p, self.centroid)
+                light_factor = max(
+                    light_factor,
+                    (dist.unitary @ self.n) ** 2 * (2 * atan(i / abs(dist)) / pi),
+                )
+            color = color * light_factor
             fargs.append(Fill(color))
         return fargs
 
@@ -82,6 +94,7 @@ class Face(PObject3D):
         width: float,
         height: float,
         scale: float,
+        lights: list[tuple[tuple[float, float, float], float]],
         *args: POProperty,
     ) -> str:
         ps = (
@@ -99,14 +112,20 @@ class Face(PObject3D):
             height,
             scale,
             *fill_default_args(
-                self._apply_lighting(camera, args),
+                self._apply_lighting(camera, frustum, lights, args),
                 (Fill, Fill(None)),
                 (Stroke, Stroke(BLACK)),
                 (LineWidth, LineWidth(0.01)),
             ),
         )
 
-    def tikz(self, camera: Camera3D, frustum: float, *args: POProperty) -> str:
+    def tikz(
+        self,
+        camera: Camera3D,
+        frustum: float,
+        lights: list[tuple[tuple[float, float, float], float]],
+        *args: POProperty,
+    ) -> str:
         ps = (
             project_point(camera, frustum, self.v1),
             project_point(camera, frustum, self.v2),
@@ -120,7 +139,7 @@ class Face(PObject3D):
         return tikz_command(
             "draw",
             " -- ".join(f"({p[0]}, {p[1]})" for p in ps),
-            *self._apply_lighting(camera, args),
+            *self._apply_lighting(camera, frustum, lights, args),
         )
 
 
@@ -238,12 +257,13 @@ class Mesh(PObject3D):
         width: float,
         height: float,
         scale: float,
+        lights: list[tuple[tuple[float, float, float], float]],
         *args: POProperty,
     ) -> str:
         return (
             "<g>"
             + "\n".join(
-                p[0].svg(camera, frustum, width, height, scale, *p[1], *args)
+                p[0].svg(camera, frustum, width, height, scale, lights, *p[1], *args)
                 for p in sorted(
                     self.triangles,
                     key=lambda p: dist3(p[0].centroid, camera.position),
@@ -253,9 +273,15 @@ class Mesh(PObject3D):
             + "\n</g>"
         )
 
-    def tikz(self, camera: Camera3D, frustum: float, *args: POProperty) -> str:
+    def tikz(
+        self,
+        camera: Camera3D,
+        frustum: float,
+        lights: list[tuple[tuple[float, float, float], float]],
+        *args: POProperty,
+    ) -> str:
         return "\n".join(
-            p[0].tikz(camera, frustum, *p[1], *args)
+            p[0].tikz(camera, frustum, lights, *p[1], *args)
             for p in sorted(
                 self.triangles,
                 key=lambda p: dist3(p[0].centroid, camera.position),

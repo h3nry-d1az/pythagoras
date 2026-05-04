@@ -19,7 +19,13 @@ class PObject3D(ABC):
         return self._zord < other._zord
 
     @abstractmethod
-    def tikz(self, camera: Camera3D, frustum: float, *args: POProperty) -> str:
+    def tikz(
+        self,
+        camera: Camera3D,
+        frustum: float,
+        lights: list[tuple[tuple[float, float, float], float]],
+        *args: POProperty,
+    ) -> str:
         """
         Compiles the 3D object into a sequence of TikZ instructions.
 
@@ -36,6 +42,7 @@ class PObject3D(ABC):
         width: float,
         height: float,
         scale: float,
+        lights: list[tuple[tuple[float, float, float], float]],
         *args: POProperty,
     ) -> str:
         """

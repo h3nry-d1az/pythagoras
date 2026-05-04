@@ -49,6 +49,7 @@ class FakeSphere(PObject3D):
         width: float,
         height: float,
         scale: float,
+        lights: list[tuple[tuple[float, float, float], float]],
         *args: POProperty,
     ) -> str:
         _pc = project_point(camera, frustum, self.center)
@@ -72,7 +73,13 @@ class FakeSphere(PObject3D):
             ),
         )
 
-    def tikz(self, camera: Camera3D, frustum: float, *args: POProperty) -> str:
+    def tikz(
+        self,
+        camera: Camera3D,
+        frustum: float,
+        lights: list[tuple[tuple[float, float, float], float]],
+        *args: POProperty,
+    ) -> str:
         p = project_point(camera, frustum, self.center)
         if not p:
             return ""
