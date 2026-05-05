@@ -81,7 +81,7 @@ class Face(PObject3D):
                 dist = Vector3D.from_two_points(p, self.centroid)
                 light_factor = max(
                     light_factor,
-                    (dist.unitary @ self.n) ** 2 * (2 * atan(i / abs(dist)) / pi),
+                    (dist.unitary @ self.n) ** 2 * (2 * atan(i / abs(dist) ** 2) / pi),
                 )
             color = color * light_factor
             fargs.append(Fill(color))

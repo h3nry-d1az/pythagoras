@@ -1,6 +1,8 @@
-from typing import Self
+from math import sqrt
+from typing import Any, Self, cast
 
 from .backend import fill_default_args, svg_command, tikz_command
+from .circle import Circle
 from .pobject import PObject, POProperty, RenderingContext
 from .style import CustomStyle, color
 from .style.draw import Stroke
@@ -48,9 +50,7 @@ class Line(PObject):
     def from_implicit(cls, a: float, b: float, c: float, zord: int = 0) -> Self:
         r"""
         Creates a line from its implicit equation, where it is given as
-        ..math::
-
-            \ell : ax + by = c.
+        :math:`\ell : ax + by = c.`
 
         Returns:
             The line with that implicit equation.
@@ -127,3 +127,37 @@ class Line(PObject):
         """
         a, b, c = self.implicit
         return a * point[0] + b * point[1] == c
+
+    def __and__(self, other: Self | Circle) -> Any:
+        """
+        Find the intersection between the line and another figure.
+
+        Raises:
+            ValueError: If the right operand is not a :class:`Line` or
+                a :class:`Circle <pythagoras.circle.Circle>`.
+        """
+        if isinstance(other, self.__class__):
+            if self.direction | other.direction:
+                return (
+                    self
+                    if self.point == other.point
+                    or Vector.from_two_points(self.point, other.point) | self.direction
+                    else None
+                )
+            a1, b1, c1 = self.implicit
+            a2, b2, c2 = other.implicit
+            d = a1 * b2 - b1 * a2
+            return ((c1 * b2 - c2 * b1) / d, (c2 * a1 - c1 * a2) / d)
+        if isinstance(other, Circle):
+            a, b, c = self.implicit
+            c1, c2, r = other.x, other.y, other.radius
+            q = 1 + a**2 / b**2
+            t = -2 * (c1 + a * c / (b**2) - a * c2 / b)
+            s = c1**2 + (c / b - c2) ** 2 - r**2
+            if (delta := t**2 - 4 * q * s) < 0:
+                return None
+            x1 = (-t + sqrt(delta)) / (2 * q)
+            x2 = (-t - sqrt(delta)) / (2 * q)
+            if abs(x1 - x2) < 1e-9:
+                return (x1, -a * x1 / b + c / b)
+            return ((x1, -a * x1 / b + c / b), (x2, -a * x2 / b + c / b))
