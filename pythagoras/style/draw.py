@@ -61,13 +61,13 @@ class LineWidth(POProperty):
     """
 
     width: float
-    unit: str = "pt"
+    unit: str | None = "pt"
 
     def svg(self) -> str:
-        return f'stroke-width="{self.width:.4f}{self.unit}"'
+        return f'stroke-width="{self.width:.4f}{self.unit if self.unit else ""}"'
 
     def tikz(self) -> str:
-        return f"line width={self.width}{self.unit}"
+        return f"line width={self.width}{self.unit if self.unit else ''}"
 
 
 @dataclass
@@ -81,10 +81,13 @@ class FontSize(POProperty):
     """
 
     size: float
-    unit: str = "pt"
+    unit: str | None = "pt"
 
     def svg(self) -> str:
         return f'font-size="{self.size:.4f}"'
 
     def tikz(self) -> str:
-        return rf"font=\fontsize{{{self.size}{self.unit}}}{{{self.size * 1.2}{self.unit}}}\selectfont"
+        return (
+            rf"font=\fontsize{{{self.size}{self.unit if self.unit else ''}}}"
+            rf"{{{self.size * 1.2}{self.unit if self.unit else ''}}}\selectfont"
+        )

@@ -108,6 +108,16 @@ class PObject(ABC):
     def __lt__(self, other: Self) -> bool:
         return self._zord < other._zord
 
+    def set_rendering_priority(self, order: int) -> None:
+        """
+        Modify the `_zord` attribute after the instantiation.
+        The higher the order, the later it will be rendered.
+
+        Parameters:
+            order: Rendering priority.
+        """
+        self._zord = order
+
     @abstractmethod
     def extrema(self) -> list[tuple[float, float]]:
         """

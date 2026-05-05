@@ -47,6 +47,7 @@ class Vector:
         return cls(r * cos(theta), r * sin(theta))
 
     def __call__(self) -> tuple[float, float]:
+        """Converts the coordinates of the vector to a point."""
         return (self.x, self.y)
 
     def __add__(self, other: Self) -> Self:
@@ -85,24 +86,28 @@ class Vector:
         return self
 
     def __matmul__(self, other: Self) -> float:
+        """Standard inner product."""
         return self.x * other.x + self.y * other.y
 
     def __neg__(self) -> Self:
         return self.__class__(-self.x, -self.y)
 
     def __abs__(self) -> float:
+        """Magnitude of the vector."""
         return hypot(self.x, self.y)
 
     def __complex__(self) -> complex:
         return complex(self.x, self.y)
 
     def __lshift__(self, angle: float) -> Self:
+        """Rotates counterclockwise by `angle` radians."""
         return self.__class__(
             self.x * cos(angle) - self.y * sin(angle),
             self.x * sin(angle) + self.y * cos(angle),
         )
 
     def __rshift__(self, angle: float) -> Self:
+        """Rotates clockwise by `angle` radians."""
         return self.__class__(
             self.x * cos(angle) + self.y * sin(angle),
             -self.x * sin(angle) + self.y * cos(angle),
@@ -119,6 +124,25 @@ class Vector:
         self.x = x * cos(angle) - y * sin(angle)
         self.y = -x * sin(angle) + y * cos(angle)
         return self
+
+    def __or__(self: Self, other: Self) -> bool:
+        """Check whether two vectors are parallel."""
+        if self() == (0, 0) or other() == (0, 0):
+            return False
+        if self.x == 0:
+            return other.x == 0
+        if self.y == 0:
+            return other.y == 0
+        return self.x / other.x == self.y / other.y
+
+    def __xor__(self, other: Self) -> float:
+        r"""
+        Norm of the cross product between two vectors.
+        Although the cross product is not defined for :math:`\mathbf R^2`,
+        one may embed the vectors in :math:`\mathbf R^3` and perform the
+        operation there.
+        """
+        return self.x * other.y - self.y * other.x
 
     @property
     def perp(self) -> Self:

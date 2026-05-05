@@ -71,6 +71,7 @@ class Vector3D:
         )
 
     def __call__(self) -> tuple[float, float, float]:
+        """Converts the coordinates of the vector to a point."""
         return (self.x, self.y, self.z)
 
     def __add__(self, other: Self) -> Self:
@@ -113,9 +114,11 @@ class Vector3D:
         return self
 
     def __matmul__(self, other: Self) -> float:
+        """Standard inner product."""
         return self.x * other.x + self.y * other.y + self.z * other.z
 
     def __xor__(self, other: Self) -> Self:
+        """Cross product."""
         return self.__class__(
             self.y * other.z - self.z * other.y,
             self.z * other.x - self.x * other.z,
@@ -133,7 +136,25 @@ class Vector3D:
         return self.__class__(-self.x, -self.y, -self.z)
 
     def __abs__(self) -> float:
+        """Magnitude of the vector."""
         return hypot(self.x, self.y, self.z)
+
+    def __or__(self: Self, other: Self) -> bool:
+        """Check whether two vectors are parallel."""
+        if self() == (0, 0) or other() == (0, 0):
+            return False
+        if self.x == 0 and other.x != 0:
+            return False
+        if self.y == 0 and other.y != 0:
+            return False
+        if self.z == 0 and other.z != 0:
+            return False
+        qs = [
+            o / s
+            for s, o in ((self.x, other.x), (self.y, other.y), (self.z, other.z))
+            if s != 0
+        ]
+        return all(qi == qs[0] for qi in qs)
 
     @property
     def unitary(self) -> Self:

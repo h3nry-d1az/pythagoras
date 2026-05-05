@@ -13,6 +13,7 @@ from .canvas import *
 from .circle import *
 from .curve import *
 from .label import *
+from .line import *
 from .pobject import *
 from .r3.camera import *
 from .r3.canvas import *
