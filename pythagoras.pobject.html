@@ -82,6 +82,18 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.pobject.PObject.set_rendering_priority">
+<span class="sig-name descname"><span class="pre">set_rendering_priority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pythagoras/pobject.html#PObject.set_rendering_priority"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.pobject.PObject.set_rendering_priority" title="Link to this definition">¶</a></dt>
+<dd><p>Modify the <code class="code docutils literal notranslate"><span class="pre">_zord</span></code> attribute after the instantiation.
+The higher the order, the later it will be rendered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>order</strong> – Rendering priority.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.pobject.PObject.svg">
 <span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pythagoras.pobject.RenderingContext" title="pythagoras.pobject.RenderingContext"><span class="pre">RenderingContext</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><span class="pre">POProperty</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/pobject.html#PObject.svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.pobject.PObject.svg" title="Link to this definition">¶</a></dt>
 <dd><p>Compiles the object into SVG commands.</p>
@@ -213,6 +225,7 @@ distance is muliplied by its value.</p></li>
 </li>
 <li><a class="reference internal" href="#pythagoras.pobject.PObject"><code class="docutils literal notranslate"><span class="pre">PObject</span></code></a><ul>
 <li><a class="reference internal" href="#pythagoras.pobject.PObject.extrema"><code class="docutils literal notranslate"><span class="pre">PObject.extrema()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.pobject.PObject.set_rendering_priority"><code class="docutils literal notranslate"><span class="pre">PObject.set_rendering_priority()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.pobject.PObject.svg"><code class="docutils literal notranslate"><span class="pre">PObject.svg()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.pobject.PObject.tikz"><code class="docutils literal notranslate"><span class="pre">PObject.tikz()</span></code></a></li>
 </ul>

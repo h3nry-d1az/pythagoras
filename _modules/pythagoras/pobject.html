@@ -161,6 +161,19 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_zord</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">_zord</span>
 
+<div class="viewcode-block" id="PObject.set_rendering_priority">
+<a class="viewcode-back" href="../../pythagoras.pobject.html#pythagoras.pobject.PObject.set_rendering_priority">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_rendering_priority</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Modify the `_zord` attribute after the instantiation.</span>
+<span class="sd">        The higher the order, the later it will be rendered.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            order: Rendering priority.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_zord</span> <span class="o">=</span> <span class="n">order</span></div>
+
+
 <div class="viewcode-block" id="PObject.extrema">
 <a class="viewcode-back" href="../../pythagoras.pobject.html#pythagoras.pobject.PObject.extrema">[docs]</a>
     <span class="nd">@abstractmethod</span>

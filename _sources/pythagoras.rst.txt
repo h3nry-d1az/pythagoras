@@ -23,6 +23,7 @@ Submodules
    pythagoras.circle
    pythagoras.curve
    pythagoras.label
+   pythagoras.line
    pythagoras.pobject
    pythagoras.prelude
    pythagoras.shape
