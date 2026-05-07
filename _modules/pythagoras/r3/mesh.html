@@ -34,9 +34,10 @@
           <div class="body" role="main">
             
   <h1>Source code for pythagoras.r3.mesh</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">atan</span><span class="p">,</span> <span class="n">pi</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">atan</span><span class="p">,</span> <span class="n">floor</span><span class="p">,</span> <span class="n">pi</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">fill_default_args</span><span class="p">,</span> <span class="n">svg_path</span><span class="p">,</span> <span class="n">tikz_command</span>
@@ -84,7 +85,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">v3</span> <span class="o">=</span> <span class="n">v3</span>
         <span class="k">if</span> <span class="n">shaded</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">Vector3D</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">^</span> <span class="n">Vector3D</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v3</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">/=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mg</span> <span class="o">:=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">/=</span> <span class="n">mg</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_zord</span> <span class="o">=</span> <span class="n">zord</span>
@@ -262,6 +264,73 @@
                 <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
                     <span class="k">continue</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(((</span><span class="n">fi</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="k">for</span> <span class="n">fi</span> <span class="ow">in</span> <span class="n">fs</span><span class="p">),</span> <span class="n">vs</span><span class="p">,</span> <span class="n">zord</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Mesh.parametric">
+<a class="viewcode-back" href="../../../pythagoras.r3.mesh.html#pythagoras.r3.mesh.Mesh.parametric">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parametric</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">phi</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+        <span class="n">u_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">v_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">dp</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">shaded</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">zord</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">POProperty</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs a mesh from a parametric surface, described by a function</span>
+<span class="sd">        :math:`\phi: \mathbf R^2 \longrightarrow \mathbf R^3`.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            phi: Function that parametrizes the curve.</span>
+<span class="sd">            u_range: Domain of the first variable.</span>
+<span class="sd">            v_range: Domain of the second variable.</span>
+<span class="sd">            dp: Increments in both directions. If any of the entries is less than or equal</span>
+<span class="sd">                to zero, its domain is divided into 100 subintervals.</span>
+<span class="sd">            shaded: Whether to apply shading to the surface.</span>
+<span class="sd">            zord: Rendering priority.</span>
+<span class="sd">            args: Attributes for all the triangles.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A :class:`Mesh` instance with the shape given by :math:`\phi`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="n">u_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">u_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="n">v_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">v_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">nu</span><span class="p">,</span> <span class="n">nv</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">floor</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="p">(</span><span class="n">u_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">u_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="n">floor</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="p">(</span><span class="n">v_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">v_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="p">)</span>
+        <span class="n">vs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">phi</span><span class="p">(</span><span class="n">u_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nu</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nv</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">fs1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">Face</span><span class="p">(</span><span class="n">vs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">j</span><span class="p">],</span> <span class="n">vs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">j</span><span class="p">],</span> <span class="n">vs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">nu</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">shaded</span><span class="p">),</span>
+                <span class="n">args</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nu</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">fs2</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">Face</span><span class="p">(</span>
+                    <span class="n">vs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">j</span><span class="p">],</span>
+                    <span class="n">vs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">nu</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span>
+                    <span class="n">vs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">nu</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span>
+                    <span class="n">shaded</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">args</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nu</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nv</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="n">fs1</span><span class="p">,</span> <span class="n">fs2</span><span class="p">),</span> <span class="n">vs</span><span class="p">,</span> <span class="n">zord</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Mesh.translate">
