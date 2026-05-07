@@ -182,7 +182,8 @@ class Parametric(PObject):
         f: The function which determines the shape.
         a: Start of the time domain.
         b: End of the time domain.
-        dt: Increment in time between each point.
+        dt: Increment in time between each point. If it is less than or equal
+            to zero, the time domain will be split into 100 intervals.
     """
 
     f: Callable[[float], tuple[float, float]]
