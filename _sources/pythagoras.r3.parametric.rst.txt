@@ -1,0 +1,7 @@
+pythagoras.r3.parametric module
+===============================
+
+.. automodule:: pythagoras.r3.parametric
+   :members:
+   :show-inheritance:
+   :undoc-members:

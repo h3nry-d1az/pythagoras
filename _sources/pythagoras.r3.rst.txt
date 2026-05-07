@@ -10,6 +10,7 @@ Submodules
    pythagoras.r3.camera
    pythagoras.r3.canvas
    pythagoras.r3.mesh
+   pythagoras.r3.parametric
    pythagoras.r3.pobject
    pythagoras.r3.rendering
    pythagoras.r3.sphere

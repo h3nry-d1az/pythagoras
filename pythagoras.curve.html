@@ -172,7 +172,8 @@
 <li><p><strong>f</strong> (<em>collections.abc.Callable</em><em>[</em><em>[</em><em>float</em><em>]</em><em>, </em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – The function which determines the shape.</p></li>
 <li><p><strong>a</strong> (<em>float</em>) – Start of the time domain.</p></li>
 <li><p><strong>b</strong> (<em>float</em>) – End of the time domain.</p></li>
-<li><p><strong>dt</strong> (<em>float</em>) – Increment in time between each point.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Increment in time between each point. If it is less than or equal
+to zero, the time domain will be split into 100 intervals.</p></li>
 </ul>
 </dd>
 </dl>

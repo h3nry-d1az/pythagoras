@@ -238,7 +238,8 @@
 <span class="sd">        f: The function which determines the shape.</span>
 <span class="sd">        a: Start of the time domain.</span>
 <span class="sd">        b: End of the time domain.</span>
-<span class="sd">        dt: Increment in time between each point.</span>
+<span class="sd">        dt: Increment in time between each point. If it is less than or equal</span>
+<span class="sd">            to zero, the time domain will be split into 100 intervals.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
