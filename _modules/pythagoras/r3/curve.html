@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pythagoras.r3.parametric &#8212; Pythagoras 0.2.0 documentation</title>
+    <title>pythagoras.r3.curve &#8212; Pythagoras 0.2.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8e8a900e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/traditional.css?v=f6356284" />
     <script src="../../../_static/documentation_options.js?v=938c9ccc"></script>
@@ -24,7 +24,7 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.parametric</a></li> 
+        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.curve</a></li> 
       </ul>
     </div>  
 
@@ -33,7 +33,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for pythagoras.r3.parametric</h1><div class="highlight"><pre>
+  <h1>Source code for pythagoras.r3.curve</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">fill_default_args</span><span class="p">,</span> <span class="n">svg_path</span><span class="p">,</span> <span class="n">tikz_command</span>
@@ -49,7 +49,7 @@
 
 
 <div class="viewcode-block" id="Trajectory">
-<a class="viewcode-back" href="../../../pythagoras.r3.parametric.html#pythagoras.r3.parametric.Trajectory">[docs]</a>
+<a class="viewcode-back" href="../../../pythagoras.r3.curve.html#pythagoras.r3.curve.Trajectory">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Trajectory</span><span class="p">(</span><span class="n">PObject3D</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Curve in :math:`\mathbf R^3` traced by a single-variable parametric function.</span>
@@ -82,7 +82,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_zord</span> <span class="o">=</span> <span class="n">zord</span>
 
 <div class="viewcode-block" id="Trajectory.make_points">
-<a class="viewcode-back" href="../../../pythagoras.r3.parametric.html#pythagoras.r3.parametric.Trajectory.make_points">[docs]</a>
+<a class="viewcode-back" href="../../../pythagoras.r3.curve.html#pythagoras.r3.curve.Trajectory.make_points">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">make_points</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the positions of each of the samples of the curve.</span>
@@ -99,7 +99,7 @@
 
 
 <div class="viewcode-block" id="Trajectory.svg">
-<a class="viewcode-back" href="../../../pythagoras.r3.parametric.html#pythagoras.r3.parametric.Trajectory.svg">[docs]</a>
+<a class="viewcode-back" href="../../../pythagoras.r3.curve.html#pythagoras.r3.curve.Trajectory.svg">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">svg</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">camera</span><span class="p">:</span> <span class="n">Camera3D</span><span class="p">,</span>
@@ -128,7 +128,7 @@
 
 
 <div class="viewcode-block" id="Trajectory.tikz">
-<a class="viewcode-back" href="../../../pythagoras.r3.parametric.html#pythagoras.r3.parametric.Trajectory.tikz">[docs]</a>
+<a class="viewcode-back" href="../../../pythagoras.r3.curve.html#pythagoras.r3.curve.Trajectory.tikz">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">camera</span><span class="p">:</span> <span class="n">Camera3D</span><span class="p">,</span>
@@ -177,7 +177,7 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">Pythagoras 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.parametric</a></li> 
+        <li class="nav-item nav-item-this"><a href="">pythagoras.r3.curve</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
