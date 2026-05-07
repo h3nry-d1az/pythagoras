@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 project = "Pythagoras"
 copyright = "2026, Henry Díaz Bordón"
 author = "Henry Díaz Bordón"
-release = "0.2.0"
+release = "0.3.0"
 
 
 extensions = [

@@ -1,6 +1,6 @@
 [project]
 name = "pythagoras"
-version = "0.2.0"
+version = "0.3.0"
 authors = [
   { name="Henry Díaz Bordón", email="henrydiazbordon@gmail.com" },
 ]
@@ -16,7 +16,7 @@ license = "MIT"
 license-files = ["LICEN[CS]E*"]
 
 [project.urls]
-Homepage = "https://github.com/h3nry-d1az/pythagoras"
+Homepage = "https://h3nry-d1az.github.io/pythagoras/"
 Issues = "https://github.com/h3nry-d1az/pythagoras/issues"
 
 [build-system]

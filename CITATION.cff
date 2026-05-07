@@ -16,6 +16,6 @@ keywords:
   - SVG
   - TikZ
 license: MIT
-commit: '6bc90dff59dcead338fe176dfb65a500f289d2c6'
-version: 0.2.0
-date-released: '2026-05-04'
+commit: 'c227473a52494de292068df5f1517c351e229b20'
+version: 0.3.0
+date-released: '2026-05-07'
