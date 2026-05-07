@@ -1,6 +1,7 @@
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from math import atan, pi
+from itertools import chain
+from math import atan, floor, pi
 from typing import Self, cast
 
 from ..backend import fill_default_args, svg_path, tikz_command
@@ -46,7 +47,8 @@ class Face(PObject3D):
         self.v3 = v3
         if shaded:
             self.n = Vector3D.from_two_points(v1, v2) ^ Vector3D.from_two_points(v1, v3)
-            self.n /= abs(self.n)
+            if mg := abs(self.n):
+                self.n /= mg
         else:
             self.n = None
         self._zord = zord
@@ -213,6 +215,70 @@ class Mesh(PObject3D):
                 case _:
                     continue
         return cls(((fi, args) for fi in fs), vs, zord)
+
+    @classmethod
+    def parametric(
+        cls,
+        phi: Callable[[float, float], tuple[float, float, float]],
+        u_range: tuple[float, float],
+        v_range: tuple[float, float],
+        dp: tuple[float, float] = (0, 0),
+        shaded: bool = False,
+        zord: int = 0,
+        *args: POProperty,
+    ) -> Self:
+        r"""
+        Constructs a mesh from a parametric surface, described by a function
+        :math:`\phi: \mathbf R^2 \longrightarrow \mathbf R^3`.
+
+        Parameters:
+            phi: Function that parametrizes the curve.
+            u_range: Domain of the first variable.
+            v_range: Domain of the second variable.
+            dp: Increments in both directions. If any of the entries is less than or equal
+                to zero, its domain is divided into 100 subintervals.
+            shaded: Whether to apply shading to the surface.
+            zord: Rendering priority.
+            args: Attributes for all the triangles.
+
+        Returns:
+            A :class:`Mesh` instance with the shape given by :math:`\phi`.
+        """
+        dp = (
+            dp[0] if dp[0] > 0 else (u_range[1] - u_range[0]) / 100,
+            dp[1] if dp[1] > 0 else (v_range[1] - v_range[0]) / 100,
+        )
+        nu, nv = (
+            floor(0.5 + (u_range[1] - u_range[0]) / dp[0]),
+            floor(0.5 + (v_range[1] - v_range[0]) / dp[1]),
+        )
+        vs: list[tuple[float, float, float]] = [
+            phi(u_range[0] + i * dp[0], v_range[0] + j * dp[1])
+            for i in range(nu)
+            for j in range(nv)
+        ]
+        fs1 = (
+            (
+                Face(vs[i + nu * j], vs[i + 1 + nu * j], vs[i + nu * (j + 1)], shaded),
+                args,
+            )
+            for i in range(nu - 1)
+            for j in range(nv - 1)
+        )
+        fs2 = (
+            (
+                Face(
+                    vs[i + 1 + nu * j],
+                    vs[i + nu * (j + 1)],
+                    vs[i + 1 + nu * (j + 1)],
+                    shaded,
+                ),
+                args,
+            )
+            for i in range(nu - 1)
+            for j in range(nv - 1)
+        )
+        return cls(chain(fs1, fs2), vs, zord)
 
     def translate(self, translation: tuple[float, float, float]) -> None:
         """
