@@ -1,10 +1,10 @@
-from . import camera, canvas, mesh, parametric, pobject, rendering, sphere, vector
+from . import camera, canvas, curve, mesh, pobject, rendering, sphere, vector
 
 __all__ = [
     "camera",
     "canvas",
+    "curve",
     "mesh",
-    "parametric",
     "pobject",
     "rendering",
     "sphere",

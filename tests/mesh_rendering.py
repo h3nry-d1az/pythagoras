@@ -7,7 +7,10 @@ ctx = Canvas(10)
 scene = Canvas3D((100, 100), camera=Camera3D((0, 10, -500)), frustum=1000)
 
 with open("tree.obj") as f:
-    scene.add(Mesh.from_obj(f.read(), True, 0, Fill(LIGHT_BLUE)))
+    scene.add(
+        Mesh.from_obj(f.read(), shaded=True, backface_culling=True, zord=0),
+        Fill(LIGHT_BLUE),
+    )
 
 scene.camera_as_light_source = False
 scene.add_light_source((20, 20, -20), 2000)

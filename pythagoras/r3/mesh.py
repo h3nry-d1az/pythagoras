@@ -26,13 +26,15 @@ class Face(PObject3D):
         v1: First vertex.
         v2: Second vertex.
         v3: Third vertex.
-        n: Normal vector for lighting.
+        n: Normal vector. It follows the orientation given by `v1`-`v2`-`v3`.
+        shaded: Whether to apply shading to the triangle.
     """
 
     v1: tuple[float, float, float]
     v2: tuple[float, float, float]
     v3: tuple[float, float, float]
-    n: Vector3D | None
+    n: Vector3D
+    shaded: bool
 
     def __init__(
         self,
@@ -45,12 +47,10 @@ class Face(PObject3D):
         self.v1 = v1
         self.v2 = v2
         self.v3 = v3
-        if shaded:
-            self.n = Vector3D.from_two_points(v1, v2) ^ Vector3D.from_two_points(v1, v3)
-            if mg := abs(self.n):
-                self.n /= mg
-        else:
-            self.n = None
+        self.n = Vector3D.from_two_points(v1, v2) ^ Vector3D.from_two_points(v1, v3)
+        if mg := abs(self.n):
+            self.n /= mg
+        self.shaded = shaded
         self._zord = zord
 
     @property
@@ -63,12 +63,10 @@ class Face(PObject3D):
 
     def _apply_lighting(
         self,
-        camera: Camera3D,
-        frustum: float,
         light_sources: list[tuple[tuple[float, float, float], float]],
         args: Iterable[POProperty],
     ) -> Iterable[POProperty]:
-        if not self.n:
+        if not self.shaded:
             return args
         fargs: list[POProperty] = []
         color = None
@@ -111,7 +109,7 @@ class Face(PObject3D):
         return svg_path(
             ps,
             *fill_default_args(
-                self._apply_lighting(camera, frustum, lights, args),
+                self._apply_lighting(lights, args),
                 (Fill, Fill(None)),
                 (Stroke, Stroke(BLACK)),
                 (LineWidth, LineWidth(0.01)),
@@ -138,7 +136,7 @@ class Face(PObject3D):
         return tikz_command(
             "draw",
             " -- ".join(f"({p[0]}, {p[1]})" for p in ps),
-            *self._apply_lighting(camera, frustum, lights, args),
+            *self._apply_lighting(lights, args),
         )
 
 
@@ -150,18 +148,25 @@ class Mesh(PObject3D):
     Attributes:
         triangles: Triangles that make up the mesh, together with their properties.
         vertices: Vertices of the mesh.
+        backface_culling: Whether to apply back-face culling to the mesh. When set to true, faces
+            with normal vectors that do not face the camera are not rendered. This is not recommended
+            for figures that are not closed, and in which its back can be seen. It is disabled by
+            default, unless you are importing your model from an OBJ file.
     """
 
     triangles: tuple[tuple[Face, tuple[POProperty, ...]], ...]
     vertices: set[tuple[float, float, float]]
+    backface_culling: bool
 
     def __init__(
         self,
         triangles: Iterable[tuple[Face, tuple[POProperty, ...]]],
         vertices: Iterable[tuple[float, float, float]] | None = None,
+        backface_culling: bool = False,
         zord: int = 0,
     ) -> None:
         self.triangles = tuple(triangles)
+        self.backface_culling = backface_culling
         self._zord = zord
         if vertices:
             self.vertices = set(vertices)
@@ -174,7 +179,12 @@ class Mesh(PObject3D):
 
     @classmethod
     def from_obj(
-        cls, obj: str, shaded: bool = True, zord: int = 0, *args: POProperty
+        cls,
+        obj: str,
+        shaded: bool = True,
+        backface_culling: bool = True,
+        zord: int = 0,
+        *args: POProperty,
     ) -> Self:
         """
         Constructs a mesh from Wavefront OBJ-formatted string.
@@ -183,6 +193,7 @@ class Mesh(PObject3D):
         Parameters:
             obj: 3D OBJ model.
             shaded: Whether to calculate face normals for shading.
+            backface_culling: Whether to apply back-face culling to the mesh. See :attr:`Mesh.backface_culling`.
             zord: Rendering priority within a :class:`Canvas3D <pythagoras.r3.canvas.Canvas3D>` context.
             args: Properties to apply globally to the mesh.
 
@@ -214,7 +225,7 @@ class Mesh(PObject3D):
                         )
                 case _:
                     continue
-        return cls(((fi, args) for fi in fs), vs, zord)
+        return cls(((fi, args) for fi in fs), vs, backface_culling, zord)
 
     @classmethod
     def parametric(
@@ -224,6 +235,7 @@ class Mesh(PObject3D):
         v_range: tuple[float, float],
         dp: tuple[float, float] = (0, 0),
         shaded: bool = False,
+        backface_culling: bool = False,
         zord: int = 0,
         *args: POProperty,
     ) -> Self:
@@ -238,6 +250,7 @@ class Mesh(PObject3D):
             dp: Increments in both directions. If any of the entries is less than or equal
                 to zero, its domain is divided into 100 subintervals.
             shaded: Whether to apply shading to the surface.
+            backface_culling: Whether to apply back-face culling to the mesh. See :attr:`Mesh.backface_culling`.
             zord: Rendering priority.
             args: Attributes for all the triangles.
 
@@ -268,8 +281,8 @@ class Mesh(PObject3D):
         fs2 = (
             (
                 Face(
-                    vs[i + 1 + nu * j],
                     vs[i + nu * (j + 1)],
+                    vs[i + 1 + nu * j],
                     vs[i + 1 + nu * (j + 1)],
                     shaded,
                 ),
@@ -278,7 +291,7 @@ class Mesh(PObject3D):
             for i in range(nu - 1)
             for j in range(nv - 1)
         )
-        return cls(chain(fs1, fs2), vs, zord)
+        return cls(chain(fs1, fs2), vs, backface_culling, zord)
 
     def translate(self, translation: tuple[float, float, float]) -> None:
         """
@@ -326,12 +339,13 @@ class Mesh(PObject3D):
         return (
             "<g>"
             + "\n".join(
-                p[0].svg(camera, frustum, width, height, scale, lights, *p[1], *args)
-                for p in sorted(
+                t.svg(camera, frustum, width, height, scale, lights, *ps, *args)
+                for t, ps in sorted(
                     self.triangles,
                     key=lambda p: dist3(p[0].centroid, camera.position),
                     reverse=True,
                 )
+                if not self.backface_culling or Vector3D(*camera.direction) @ t.n < 0
             )
             + "\n</g>"
         )
@@ -344,10 +358,11 @@ class Mesh(PObject3D):
         *args: POProperty,
     ) -> str:
         return "\n".join(
-            p[0].tikz(camera, frustum, lights, *p[1], *args)
-            for p in sorted(
+            t.tikz(camera, frustum, lights, *ps, *args)
+            for t, ps in sorted(
                 self.triangles,
                 key=lambda p: dist3(p[0].centroid, camera.position),
                 reverse=True,
             )
+            if not self.backface_culling or Vector3D(*camera.direction) @ t.n < 0
         )
