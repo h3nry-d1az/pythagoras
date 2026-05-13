@@ -1,5 +1,5 @@
 from collections.abc import Iterator
-from math import cos, floor, inf, radians, sin, sqrt, tau
+from math import cos, floor, inf, radians, sin, tau
 from typing import Self
 
 from .backend import fill_default_args, svg_path, tikz_command
@@ -111,28 +111,6 @@ class Polygon(Path):
         """
         ps = ((x + r * cos(i * tau / n), y + r * sin(i * tau / n)) for i in range(n))
         return cls(*ps, zord=zord)
-
-    @classmethod
-    def triangle_from_lengths(cls, a: float, b: float, c: float, zord: int = 0) -> Self:
-        """
-        Construct a triangle from the lengths of its sides.
-
-        Parameters:
-            a: Length of the first side.
-            b: Length of the second side.
-            c: Length of the third side.
-
-        Returns:
-            An instance of the `Polygon` class.
-        """
-        a, b, c = sorted([a, b, c])
-        if a + b <= c:
-            raise ValueError("The given lengths cannot form a valid triangle.")
-        x = (c**2 + b**2 - a**2) / (2 * c)
-        y = sqrt(abs(b**2 - x**2))
-        cx = (0 + c + x) / 3
-        cy = y / 3
-        return cls((-cx, -cy), (c - cx, -cy), (x - cx, y - cy), zord=zord)
 
 
 def grid(
