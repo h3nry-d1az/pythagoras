@@ -24,6 +24,11 @@ You may also fetch and install the package directly over the network by running:
 
 where ``[canonical-url]`` right now stands for https://github.com/h3nry-d1az/pythagoras.
 
+Tutorial
+--------
+
+I have uploaded `a YouTube video <https://youtu.be/UlX8bVKoGzg>`_ covering the fundamental
+aspects of the library; that is a good resource from which to learn.
 
 .. toctree::
    :maxdepth: 2

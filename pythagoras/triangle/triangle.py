@@ -187,6 +187,103 @@ class Triangle(PObject):
             *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(BLACK))),
         )
 
+    def __abs__(self) -> float:
+        """Computes the area of the triangle."""
+        xa, ya = self.__pa
+        xb, yb = self.__pb
+        xc, yc = self.__pc
+        return (xa * (yb - yc) + xb * (yc - ya) + xc * (ya - yb)) / 2
+
+    def barycentric(self, coords: tuple[float, float, float]) -> tuple[float, float]:
+        """
+        Converts a point from barycentric to Cartesian coordinates.
+
+        Parameters:
+            coords: Barycentric coordinates of the point.
+
+        Returns:
+            The point expressed in the Cartesian plane.
+        """
+        n = sum(coords)
+        u, v, w = (coords[0] / n, coords[1] / n, coords[2] / n)
+        return (
+            u * self.__pa[0] + v * self.__pb[0] + w * self.__pc[0],
+            u * self.__pa[1] + v * self.__pb[1] + w * self.__pc[1],
+        )
+
+    def to_barycentric(self, coords: tuple[float, float]) -> tuple[float, float, float]:
+        """
+        Computes the (normalized) barycentric coordinates of a point in the Cartesian plane.
+
+        Parameters:
+            coords: Point in Cartesian coordinates.
+
+        Returns:
+            The point expressed in normalized barycentric coordinates.
+        """
+        xa, ya = self.__pa
+        xb, yb = self.__pb
+        xc, yc = self.__pc
+        xp, yp = coords
+        d = (yb - yc) * (xa - xc) + (xc - xb) * (ya - yc)
+        u = ((yb - yc) * (xp - xc) + (xc - xb) * (yp - yc)) / d
+        v = ((yc - ya) * (xp - xc) + (xa - xc) * (yp - yc)) / d
+        return (u, v, 1 - u - v)
+
+    def trilinear(self, coords: tuple[float, float, float]) -> tuple[float, float]:
+        """
+        Converts a point from trilinear to Cartesian coordinates.
+
+        Parameters:
+            coords: Trilinear coordinates of the point.
+
+        Returns:
+            The point expressed in the Cartesian plane.
+        """
+        return self.barycentric(
+            (self.a * coords[0], self.b * coords[1], self.c * coords[2])
+        )
+
+    def to_trilinear(self, coords: tuple[float, float]) -> tuple[float, float, float]:
+        """
+        Computes the (normalized) trilinear coordinates of a point in the Cartesian plane.
+
+        Parameters:
+            coords: Point in Cartesian coordinates.
+
+        Returns:
+            The point expressed in normalized trilinear coordinates.
+        """
+        u, v, w = self.to_barycentric(coords)
+        area = 2 * abs(self)
+        return (area * u / self.a, area * v / self.b, area * w / self.c)
+
+    def isogonal_conjugate(self, point: tuple[float, float]) -> tuple[float, float]:
+        """
+        Calculates the isogonal conjugate of a point expressed in Cartesian coordinates.
+
+        Parameters:
+            point: The point in Cartesian coordinates.
+
+        Returns:
+            The isogonal conjugate of `point`.
+        """
+        u, v, w = self.to_barycentric(point)
+        return self.barycentric((self.a**2 / u, self.b**2 / v, self.c**2 / w))
+
+    def isotomic_conjugate(self, point: tuple[float, float]) -> tuple[float, float]:
+        """
+        Calculates the isotomic conjugate of a point expressed in Cartesian coordinates.
+
+        Parameters:
+            point: The point in Cartesian coordinates.
+
+        Returns:
+            The isotomic conjugate of `point`.
+        """
+        u, v, w = self.to_barycentric(point)
+        return self.barycentric((1 / u, 1 / v, 1 / w))
+
 
 GenericBarycentric = Callable[[Triangle], tuple[float, float, float]]
 GenericTrilinear = Callable[[Triangle], tuple[float, float, float]]
