@@ -1,5 +1,5 @@
 from collections.abc import Iterator
-from math import cos, floor, inf, radians, sin, tau
+from math import cos, floor, inf, sin, tau
 from typing import Self
 
 from .backend import fill_default_args, svg_path, tikz_command
@@ -62,11 +62,10 @@ class Path(PObject):
             theta: Angle of rotation.
         """
         px, py = point
-        alpha = radians(theta)
         self.points = [
             (
-                (x - px) * cos(alpha) - (y - py) * sin(alpha) + py,
-                (x - px) * sin(alpha) + (y - py) * cos(alpha),
+                (x - px) * cos(theta) - (y - py) * sin(theta) + py,
+                (x - px) * sin(theta) + (y - py) * cos(theta),
             )
             for x, y in self.points
         ]
