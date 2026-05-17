@@ -1,9 +1,10 @@
 from collections.abc import Callable
 from math import acos, cos, pi, sin, sqrt, tan
-from typing import Annotated, Self
+from typing import Annotated, Any, Self
 
 from ..backend import fill_default_args, svg_path, tikz_command
-from ..circle import Circle
+from ..circle import Circle, Ellipse
+from ..line import Line, _intersect_line_collection_of_segments
 from ..pobject import PObject, POProperty, RenderingContext
 from ..style.color import BLACK
 from ..style.draw import Fill, Stroke
@@ -119,9 +120,9 @@ class Triangle(PObject):
         s = self.s
         return (
             Circle(*self.excenter_B, self.exradius_B, self._zord),
-            self.barycentric((s - self.c, 0, s - self.a)),
-            self.barycentric((s, self.c - s, 0)),
+            self.barycentric((s - self.a, 0, s - self.c)),
             self.barycentric((0, self.a - s, s)),
+            self.barycentric((s, self.c - s, 0)),
         )
 
     def excircle_C(
@@ -131,9 +132,9 @@ class Triangle(PObject):
         s = self.s
         return (
             Circle(*self.excenter_C, self.exradius_C, self._zord),
-            self.barycentric((s - self.b, s - self.a, 0)),
-            self.barycentric((s, 0, self.b - s)),
+            self.barycentric((s - self.a, s - self.b, 0)),
             self.barycentric((0, s, self.a - s)),
+            self.barycentric((s, 0, self.b - s)),
         )
 
     def circumcircle(self) -> Circle:
@@ -142,6 +143,10 @@ class Triangle(PObject):
         Wrapper for :meth:`pythagoras.circle.Circle.triangle_circumcircle`.
         """
         return Circle.triangle_circumcircle(self.A, self.B, self.C, self._zord)
+
+    def nine_point_circle(self) -> Circle:
+        """Constructs the nine-point circle of the triangle."""
+        return Circle(*self.npcenter, self.npradius, zord=self._zord)
 
     @property
     def A(self) -> tuple[float, float]:
@@ -191,7 +196,7 @@ class Triangle(PObject):
     @property
     def s(self) -> float:
         r"""Semiperimeter of the triangle."""
-        return (self.a + self.b + self.c) / 3
+        return (self.a + self.b + self.c) / 2
 
     @property
     def alpha(self) -> float:
@@ -562,8 +567,8 @@ class Triangle(PObject):
         return self.barycentric((tan(self.alpha), tan(self.beta), tan(self.gamma)))
 
     @property
-    def npcircle(self) -> tuple[float, float]:
-        """Nine-point circle of the triangle (:math:`X_5`)."""
+    def npcenter(self) -> tuple[float, float]:
+        """Center of the nine-point circle of the triangle (:math:`X_5`)."""
         return self.barycentric(
             (
                 self.a * cos(self.beta - self.gamma),
@@ -571,6 +576,14 @@ class Triangle(PObject):
                 self.c * cos(self.alpha - self.beta),
             )
         )
+
+    @property
+    def npradius(self) -> float:
+        """
+        Radius of the nine-point circle of the triangle.
+        It is exactly half the radius of the circumcircle.
+        """
+        return self.circumradius / 2
 
     @property
     def lemoine(self) -> tuple[float, float]:
@@ -642,6 +655,28 @@ class Triangle(PObject):
             self.barycentric((u, v, 0)),
             zord=zord,
         )
+
+    def euler_line(self) -> Line:
+        """
+        Constructs the Euler line of the triangle (the line that joins the orthocenter,
+        circumcenter, and centroid).
+        """
+        return Line.from_two_points(self.orthocenter, self.centroid)
+
+    def __and__(self, other: Self | Line | Circle | Ellipse) -> Any:
+        if isinstance(other, self.__class__):
+            pass
+        if isinstance(other, Line):
+            return _intersect_line_collection_of_segments(
+                other, [self.__pa, self.__pb, self.__pc]
+            )
+        if isinstance(other, Circle):
+            pass
+        if isinstance(other, Ellipse):
+            pass
+
+    def __rand__(self, other: Self | Line | Circle | Ellipse) -> Any:
+        return self & other
 
 
 GenericBarycentric = Annotated[

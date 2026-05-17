@@ -1,4 +1,4 @@
-from math import atan2, cos, degrees, hypot, radians, sin, sqrt
+from math import atan2, cos, degrees, hypot, sin, sqrt
 from typing import Self
 
 from .backend import fill_default_args, svg_command, tikz_command
@@ -173,12 +173,8 @@ class Ellipse(PObject):
         self._zord = zord
 
     def extrema(self) -> list[tuple[float, float]]:
-        dx = hypot(
-            self.rx * cos(radians(self.theta)), self.ry * sin(radians(self.theta))
-        )
-        dy = hypot(
-            self.rx * sin(radians(self.theta)), self.ry * cos(radians(self.theta))
-        )
+        dx = hypot(self.rx * cos(self.theta), self.ry * sin(self.theta))
+        dy = hypot(self.rx * sin(self.theta), self.ry * cos(self.theta))
         return [
             (self.x + dx, self.y + dy),
             (self.x + dx, self.y - dy),
@@ -190,7 +186,7 @@ class Ellipse(PObject):
         cmd = "filldraw" if any(isinstance(x, Fill) for x in args) else "draw"
         return tikz_command(
             cmd,
-            f"({self.x}, {self.y}) ellipse [x radius={self.rx}, y radius={self.ry}, rotate={self.theta}]",
+            f"({self.x}, {self.y}) ellipse [x radius={self.rx}, y radius={self.ry}, rotate={degrees(self.theta)}]",
             *args,
         )
 
@@ -201,7 +197,9 @@ class Ellipse(PObject):
             CustomStyle("cy", cy),
             CustomStyle("rx", self.rx * ctx.scale),
             CustomStyle("ry", self.ry * ctx.scale),
-            CustomStyle("transform", f"rotate({-self.theta:.4f}, {cx:.4f}, {cy:.4f})"),
+            CustomStyle(
+                "transform", f"rotate({-degrees(self.theta):.4f}, {cx:.4f}, {cy:.4f})"
+            ),
             *args,
         )
         return svg_command(
@@ -234,7 +232,7 @@ class Ellipse(PObject):
         rx = (hypot(f1[0] - p[0], f1[1] - p[1]) + hypot(f2[0] - p[0], f2[1] - p[1])) / 2
         ry = sqrt(rx**2 - c**2) if rx > c else 0
         ell = cls(x, y, rx, ry, zord)
-        ell.theta = degrees(atan2(f2[1] - f1[1], f2[0] - f1[0]))
+        ell.theta = atan2(f2[1] - f1[1], f2[0] - f1[0])
         return ell
 
 
