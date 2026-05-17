@@ -1,11 +1,19 @@
 from collections.abc import Callable
+from itertools import combinations
 from math import acos, cos, pi, sin, sqrt, tan
-from typing import Annotated, Any, Self
+from typing import Annotated, Any, Self, cast
 
 from ..backend import fill_default_args, svg_path, tikz_command
 from ..circle import Circle, Ellipse
-from ..line import Line, _intersect_line_collection_of_segments
+from ..curve import Parametric
+from ..line import (
+    Line,
+    _intersect_line_and_path,  # pyright: ignore[reportPrivateUsage]
+    _unpack_simple_intersection,  # pyright: ignore[reportPrivateUsage]
+    intersect_segments,
+)
 from ..pobject import PObject, POProperty, RenderingContext
+from ..shape import Path
 from ..style.color import BLACK
 from ..style.draw import Fill, Stroke
 from ..utils import cartesian_to_canvas
@@ -663,19 +671,65 @@ class Triangle(PObject):
         """
         return Line.from_two_points(self.orthocenter, self.centroid)
 
-    def __and__(self, other: Self | Line | Circle | Ellipse) -> Any:
-        if isinstance(other, self.__class__):
-            pass
-        if isinstance(other, Line):
-            return _intersect_line_collection_of_segments(
-                other, [self.__pa, self.__pb, self.__pc]
+    def __and__(self, other: Self | Line | Circle | Ellipse | Path | Parametric) -> Any:
+        if isinstance(other, (self.__class__, Path, Parametric)):
+            iss = []
+            if isinstance(other, self.__class__):
+                iss = [
+                    intersect_segments(s1, s2, o1, o2)
+                    for s1, s2 in combinations((self.__pa, self.__pb, self.__pc), 2)
+                    for o1, o2 in combinations((other.A, other.B, other.C), 2)
+                ]
+            elif isinstance(other, Path):
+                iss = [
+                    intersect_segments(s1, s2, other.points[i], other.points[i + 1])
+                    for s1, s2 in combinations((self.__pa, self.__pb, self.__pc), 2)
+                    for i in range(len(other.points) - 1)
+                ]
+            elif isinstance(other, Parametric):
+                ps = other.make_points()
+                iss = [
+                    intersect_segments(s1, s2, ps[i], ps[i + 1])
+                    for s1, s2 in combinations((self.__pa, self.__pb, self.__pc), 2)
+                    for i in range(len(ps) - 1)
+                ]
+            return (
+                [
+                    (
+                        i
+                        if isinstance(i[0], float)
+                        else Path(
+                            *cast(tuple[tuple[float, float], tuple[float, float]], i)
+                        )
+                    )
+                    for i in iss
+                    if i
+                ]
+                if len(iss)
+                else None
             )
-        if isinstance(other, Circle):
-            pass
-        if isinstance(other, Ellipse):
-            pass
+        if isinstance(other, Line):
+            return _intersect_line_and_path(
+                other, [self.__pa, self.__pb, self.__pc, self.__pa]
+            )
+        if isinstance(other, (Circle, Ellipse)):
+            l1, l2, l3 = (
+                Line.from_two_points(self.__pa, self.__pb),
+                Line.from_two_points(self.__pb, self.__pc),
+                Line.from_two_points(self.__pc, self.__pa),
+            )
+            ps = (
+                _unpack_simple_intersection(l1 & other, self.__pa, self.__pb)
+                + _unpack_simple_intersection(l2 & other, self.__pb, self.__pc)
+                + _unpack_simple_intersection(l3 & other, self.__pc, self.__pa)
+            )
+            return ps if ps else None
+        else:
+            return NotImplemented
 
-    def __rand__(self, other: Self | Line | Circle | Ellipse) -> Any:
+    def __rand__(
+        self, other: Self | Line | Circle | Ellipse | Path | Parametric
+    ) -> Any:
         return self & other
 
 
