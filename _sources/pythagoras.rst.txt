@@ -9,6 +9,7 @@ Subpackages
 
    pythagoras.r3
    pythagoras.style
+   pythagoras.triangle
 
 Submodules
 ----------

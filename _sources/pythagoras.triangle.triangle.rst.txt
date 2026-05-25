@@ -1,0 +1,7 @@
+pythagoras.triangle.triangle module
+===================================
+
+.. automodule:: pythagoras.triangle.triangle
+   :members:
+   :show-inheritance:
+   :undoc-members:

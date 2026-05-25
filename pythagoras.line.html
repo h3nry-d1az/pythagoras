@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pythagoras.line module &#8212; Pythagoras 0.3.0 documentation</title>
+    <title>pythagoras.line module &#8212; Pythagoras 0.4.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8e8a900e" />
     <link rel="stylesheet" type="text/css" href="_static/traditional.css?v=f6356284" />
-    <script src="_static/documentation_options.js?v=e259d695"></script>
+    <script src="_static/documentation_options.js?v=6c02275b"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
@@ -24,7 +24,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.4.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">pythagoras.line module</a></li> 
       </ul>
     </div>  
@@ -147,6 +147,44 @@ are the coefficients of <span class="math notranslate nohighlight">\(x\)</span> 
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="pythagoras.line.intersect_segments">
+<span class="sig-prename descclassname"><span class="pre">pythagoras.line.</span></span><span class="sig-name descname"><span class="pre">intersect_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/pythagoras/line.html#intersect_segments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.line.intersect_segments" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the intersection between two segments, described by their endpoints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a1</strong> – First endpoint of the first segment.</p></li>
+<li><p><strong>b1</strong> – Second endpoint of the first segment.</p></li>
+<li><p><strong>a2</strong> – First endpoint of the second segment.</p></li>
+<li><p><strong>b2</strong> – Second endpoint of the second segment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="code docutils literal notranslate"><span class="pre">None</span></code> if the two segments do not intersect, two delimiting points if they
+intersect at another segment, or a point otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pythagoras.line.segment_contains">
+<span class="sig-prename descclassname"><span class="pre">pythagoras.line.</span></span><span class="sig-name descname"><span class="pre">segment_contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/pythagoras/line.html#segment_contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.line.segment_contains" title="Link to this definition">¶</a></dt>
+<dd><p>Checks whether a point lies in the segment that joins <span class="math notranslate nohighlight">\(\rm A\)</span> and <span class="math notranslate nohighlight">\(\rm B\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> – Point to analyze.</p></li>
+<li><p><strong>pa</strong> – First endpoint of the segment.</p></li>
+<li><p><strong>pb</strong> – Second endpoint of the segment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether <span class="math notranslate nohighlight">\(\rm P \in \overline{AB}\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -171,6 +209,8 @@ are the coefficients of <span class="math notranslate nohighlight">\(x\)</span> 
 <li><a class="reference internal" href="#pythagoras.line.Line.tikz"><code class="docutils literal notranslate"><span class="pre">Line.tikz()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#pythagoras.line.intersect_segments"><code class="docutils literal notranslate"><span class="pre">intersect_segments()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.line.segment_contains"><code class="docutils literal notranslate"><span class="pre">segment_contains()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -206,7 +246,7 @@ are the coefficients of <span class="math notranslate nohighlight">\(x\)</span> 
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.4.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">pythagoras.line module</a></li> 
       </ul>
     </div>

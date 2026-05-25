@@ -1,0 +1,18 @@
+pythagoras.triangle package
+===========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pythagoras.triangle.triangle
+
+Module contents
+---------------
+
+.. automodule:: pythagoras.triangle
+   :members:
+   :show-inheritance:
+   :undoc-members:

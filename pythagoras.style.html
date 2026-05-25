@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>pythagoras.style package &#8212; Pythagoras 0.3.0 documentation</title>
+    <title>pythagoras.style package &#8212; Pythagoras 0.4.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8e8a900e" />
     <link rel="stylesheet" type="text/css" href="_static/traditional.css?v=f6356284" />
-    <script src="_static/documentation_options.js?v=e259d695"></script>
+    <script src="_static/documentation_options.js?v=6c02275b"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -23,7 +23,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.4.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">pythagoras.style package</a></li> 
       </ul>
     </div>  
@@ -112,6 +112,45 @@
 <section id="module-pythagoras.style">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pythagoras.style" title="Link to this heading">¶</a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="pythagoras.style.CustomProperty">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pythagoras.style.</span></span><span class="sig-name descname"><span class="pre">CustomProperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pythagoras/style.html#CustomProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.style.CustomProperty" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">POProperty</span></code></a></p>
+<p>Generic style with no associated value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the property.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pythagoras.style.CustomProperty.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#pythagoras.style.CustomProperty.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.style.CustomProperty.svg">
+<span class="sig-name descname"><span class="pre">svg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/style.html#CustomProperty.svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.style.CustomProperty.svg" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the property into SVG syntax.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding SVG property.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.style.CustomProperty.tikz">
+<span class="sig-name descname"><span class="pre">tikz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/pythagoras/style.html#CustomProperty.tikz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.style.CustomProperty.tikz" title="Link to this definition">¶</a></dt>
+<dd><p>Compiles the property into TikZ syntax.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The corresponding TikZ property.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pythagoras.style.CustomStyle">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pythagoras.style.</span></span><span class="sig-name descname"><span class="pre">CustomStyle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pythagoras/style.html#CustomStyle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.style.CustomStyle" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pythagoras.pobject.html#pythagoras.pobject.POProperty" title="pythagoras.pobject.POProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">POProperty</span></code></a></p>
@@ -174,6 +213,12 @@
 <li><a class="reference internal" href="#">pythagoras.style package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-pythagoras.style">Module contents</a><ul>
+<li><a class="reference internal" href="#pythagoras.style.CustomProperty"><code class="docutils literal notranslate"><span class="pre">CustomProperty</span></code></a><ul>
+<li><a class="reference internal" href="#pythagoras.style.CustomProperty.name"><code class="docutils literal notranslate"><span class="pre">CustomProperty.name</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.style.CustomProperty.svg"><code class="docutils literal notranslate"><span class="pre">CustomProperty.svg()</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.style.CustomProperty.tikz"><code class="docutils literal notranslate"><span class="pre">CustomProperty.tikz()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#pythagoras.style.CustomStyle"><code class="docutils literal notranslate"><span class="pre">CustomStyle</span></code></a><ul>
 <li><a class="reference internal" href="#pythagoras.style.CustomStyle.param"><code class="docutils literal notranslate"><span class="pre">CustomStyle.param</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.style.CustomStyle.svg"><code class="docutils literal notranslate"><span class="pre">CustomStyle.svg()</span></code></a></li>
@@ -218,7 +263,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pythagoras 0.4.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">pythagoras.style package</a></li> 
       </ul>
     </div>
