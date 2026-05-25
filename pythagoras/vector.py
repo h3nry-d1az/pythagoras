@@ -129,11 +129,7 @@ class Vector:
         """Check whether two vectors are parallel."""
         if self() == (0, 0) or other() == (0, 0):
             return False
-        if self.x == 0:
-            return other.x == 0
-        if self.y == 0:
-            return other.y == 0
-        return self.x / other.x == self.y / other.y
+        return self ^ other == 0
 
     def __xor__(self, other: Self) -> float:
         r"""

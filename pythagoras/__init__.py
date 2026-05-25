@@ -12,6 +12,7 @@ from . import (
     r3,
     shape,
     style,
+    triangle,
     utils,
     vector,
 )
@@ -30,6 +31,7 @@ __all__ = [
     "r3",
     "shape",
     "style",
+    "triangle",
     "utils",
     "vector",
 ]

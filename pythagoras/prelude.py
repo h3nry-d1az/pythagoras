@@ -28,5 +28,6 @@ from .style.color import *
 from .style.draw import *
 from .style.line import *
 from .style.opacity import *
+from .triangle import *
 from .utils import *
 from .vector import *

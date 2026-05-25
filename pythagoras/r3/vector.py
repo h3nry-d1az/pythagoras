@@ -143,18 +143,7 @@ class Vector3D:
         """Check whether two vectors are parallel."""
         if self() == (0, 0) or other() == (0, 0):
             return False
-        if self.x == 0 and other.x != 0:
-            return False
-        if self.y == 0 and other.y != 0:
-            return False
-        if self.z == 0 and other.z != 0:
-            return False
-        qs = [
-            o / s
-            for s, o in ((self.x, other.x), (self.y, other.y), (self.z, other.z))
-            if s != 0
-        ]
-        return all(qi == qs[0] for qi in qs)
+        return abs(self ^ other) == 0
 
     @property
     def unitary(self) -> Self:

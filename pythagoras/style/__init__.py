@@ -4,7 +4,7 @@ from typing import Any
 from ..pobject import POProperty
 from . import color, draw, line, opacity
 
-__all__ = ["CustomStyle", "color", "draw", "line", "opacity"]
+__all__ = ["CustomProperty", "CustomStyle", "color", "draw", "line", "opacity"]
 
 
 @dataclass
