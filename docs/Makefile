@@ -10,7 +10,7 @@ help:
 .PHONY: help Makefile
 
 setup:
-	$(SPHINXAPIDOC) -e -o ./source/ ../pythagoras/  ../pythagoras/triangle/etc/
+	$(SPHINXAPIDOC) -e -o ./source/ ../pythagoras/
 
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
