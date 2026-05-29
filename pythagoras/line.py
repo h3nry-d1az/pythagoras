@@ -76,6 +76,69 @@ class Line(PObject):
             return cls((c / a, 0), Vector(0, 1), zord)
         return cls((0, c / b), Vector(b, -a))
 
+    @classmethod
+    def segment_bisector(
+        cls, p: tuple[float, float], q: tuple[float, float], zord: int = 0
+    ) -> Self:
+        r"""
+        Constructs the line that bisects the segment :math:`\rm PQ`.
+
+        Parameters:
+            p: First point of the segment, :math:`\rm P`.
+            q: Second point of the segment, :math:`\rm Q`.
+
+        Returns:
+            Segment bisector of :math:`\rm PQ`.
+
+        Raises:
+            ValueError: If the segment is degenerate; that is, if :math:`\rm P = Q`.
+        """
+        if p == q:
+            raise ValueError(
+                "The segment cannot be degenerate, its boundary points must be different"
+            )
+        return cls(
+            ((p[0] + q[0]) / 2, (p[1] + q[1]) / 2),
+            Vector.from_two_points(p, q).unitary.perp,
+            zord=zord,
+        )
+
+    @classmethod
+    def angle_bisector(
+        cls,
+        a: tuple[float, float],
+        b: tuple[float, float],
+        c: tuple[float, float],
+        zord: int = 0,
+    ) -> Self:
+        r"""
+        Constructs the line that bisects the angle :math:`\angle \rm ABC`.
+
+        Parameters:
+            a: First point of the angle, :math:`\rm A`.
+            b: Center of the angle, :math:`\rm B`.
+            c: Second point of the angle, :math:`\rm C`.
+
+        Returns:
+            Angle bisector of :math:`\angle\rm ABC`.
+
+        Raises:
+            ValueError: If the angle is degenerate, that is, if :math:`\rm A`,
+            :math:`\rm B` or :math:`\rm C` coincide.
+        """
+        if a in (b, c) or b == c:
+            raise ValueError(
+                "The angle cannot be degenerate; A, B and C must be different from each other"
+            )
+        return cls(
+            b,
+            (
+                Vector.from_two_points(b, a).unitary
+                + Vector.from_two_points(b, c).unitary
+            ),
+            zord=zord,
+        )
+
     @property
     def implicit(self) -> tuple[float, float, float]:
         """
