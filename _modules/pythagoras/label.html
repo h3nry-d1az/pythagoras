@@ -34,14 +34,35 @@
           <div class="body" role="main">
             
   <h1>Source code for pythagoras.label</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">latex2mathml.converter</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">latex2mathml.converter</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">tikz_command</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.style.draw</span><span class="w"> </span><span class="kn">import</span> <span class="n">FontSize</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian_to_canvas</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Label&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AnchoringDirection&quot;</span><span class="p">,</span> <span class="s2">&quot;Label&quot;</span><span class="p">]</span>
+
+<span class="n">_isqrt2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**-</span><span class="mf">0.5</span>
+
+
+<div class="viewcode-block" id="AnchoringDirection">
+<a class="viewcode-back" href="../../pythagoras.label.html#pythagoras.label.AnchoringDirection">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnchoringDirection</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Anchoring directions. To be used when calling :meth:`Label.anchored`.&quot;&quot;&quot;</span>
+
+    <span class="n">NORTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">SOUTH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">EAST</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">WEST</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">NORTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="n">_isqrt2</span><span class="p">,</span> <span class="n">_isqrt2</span><span class="p">)</span>
+    <span class="n">NORTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">_isqrt2</span><span class="p">,</span> <span class="n">_isqrt2</span><span class="p">)</span>
+    <span class="n">SOUTH_EAST</span> <span class="o">=</span> <span class="p">(</span><span class="n">_isqrt2</span><span class="p">,</span> <span class="o">-</span><span class="n">_isqrt2</span><span class="p">)</span>
+    <span class="n">SOUTH_WEST</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">_isqrt2</span><span class="p">,</span> <span class="o">-</span><span class="n">_isqrt2</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="Label">
@@ -71,6 +92,38 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="n">padding</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_zord</span> <span class="o">=</span> <span class="n">zord</span>
+
+<div class="viewcode-block" id="Label.anchored">
+<a class="viewcode-back" href="../../pythagoras.label.html#pythagoras.label.Label.anchored">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">anchored</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">point</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">direction</span><span class="p">:</span> <span class="n">AnchoringDirection</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">padding</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">zord</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a label anchored to a given point in :math:`\mathbf R^2`.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            point: Point to which the label is anchored.</span>
+<span class="sd">            direction: Anchoring direction (north, west...). See :class:`AnchoringDirection` for further information.</span>
+<span class="sd">            tag: :math:`{\rm \LaTeX}` string to render inside the label.</span>
+<span class="sd">            offset: Distance between the point to which the label is anchored and the label itself (default 0.25).</span>
+<span class="sd">            padding: Spacing around the label (default 0.05).</span>
+<span class="sd">            zord: Rendering priority.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">direction</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">offset</span><span class="p">,</span>
+            <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">direction</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">offset</span><span class="p">,</span>
+            <span class="n">tag</span><span class="p">,</span>
+            <span class="n">padding</span><span class="p">,</span>
+            <span class="n">zord</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="Label.extrema">
 <a class="viewcode-back" href="../../pythagoras.label.html#pythagoras.label.Label.extrema">[docs]</a>
