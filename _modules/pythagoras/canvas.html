@@ -98,7 +98,7 @@
 <a class="viewcode-back" href="../../pythagoras.canvas.html#pythagoras.canvas.Canvas.tikz">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tikz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Render the scene into TikZ.</span>
+<span class="sd">        Render the scene into a standalone TikZ figure.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The compiled TikZ document.</span>
@@ -106,13 +106,29 @@
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="p">(</span>
                 <span class="sa">r</span><span class="s2">&quot;\documentclass[crop,tikz]</span><span class="si">{standalone}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="sa">r</span><span class="s2">&quot;\usetikzlibrary</span><span class="si">{arrows.meta}</span><span class="s2">&quot;</span>
+                <span class="sa">r</span><span class="s2">&quot;\usetikzlibrary</span><span class="si">{arrows.meta}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="sa">r</span><span class="s2">&quot;\begin</span><span class="si">{document}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tikzpicture</span><span class="p">(),</span>
+                <span class="sa">r</span><span class="s2">&quot;\end</span><span class="si">{document}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Canvas.tikzpicture">
+<a class="viewcode-back" href="../../pythagoras.canvas.html#pythagoras.canvas.Canvas.tikzpicture">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tikzpicture</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Render the scene into a TikZ picture.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `tikzpicture` environment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">(</span>
                 <span class="sa">r</span><span class="s2">&quot;\begin</span><span class="si">{tikzpicture}</span><span class="s2">&quot;</span>
                 <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[scale=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scale</span><span class="si">}</span><span class="s2">]&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scale</span> <span class="o">!=</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
                 <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">tikz</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">)),</span>
                 <span class="sa">r</span><span class="s2">&quot;\end</span><span class="si">{tikzpicture}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="sa">r</span><span class="s2">&quot;\end</span><span class="si">{document}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 
@@ -124,7 +140,7 @@
 <span class="sd">        Render the scene into SVG.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The final SVG picture.</span>
+<span class="sd">            Final SVG picture.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="p">(</span>
