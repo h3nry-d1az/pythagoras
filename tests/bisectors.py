@@ -4,8 +4,11 @@ from pythagoras.prelude import (
     LIGHT_RED,
     RED,
     YELLOW,
+    AnchoringDirection,
+    Angle,
     Canvas,
     Fill,
+    Label,
     Line,
     Point,
     Stroke,
@@ -18,6 +21,10 @@ ctx.add(
     delta := Triangle(A := (1.22, 1.4), B := (3.68, 4.46), C := (7.68, 0.3)),
     Fill(LIGHT_BLUE),
 )
+
+ctx.add(Angle(delta.A, delta.B, delta.C, 0.5))
+ctx.add(Angle(delta.C, delta.A, delta.B, 0.5))
+ctx.add(Angle(delta.B, delta.C, delta.A, 0.5))
 
 # The circumcenter is the intersection of the side bisectors
 ctx.add(Line.segment_bisector(A, B), Stroke(LIGHT_RED))
@@ -34,5 +41,9 @@ ctx.add(Line.angle_bisector(A, C, B), Stroke(YELLOW))
 
 ctx.add(delta.incircle()[0], Stroke(GOLD))
 ctx.add(Point(*delta.incenter, 0.1, zord=1), Fill(GOLD))
+
+
+ctx.add(Label.anchored(delta.incenter, AnchoringDirection.NORTH_EAST, "X_1", 0.33))
+ctx.add(Label.anchored(delta.circumcenter, AnchoringDirection.EAST, "X_3", 0.33))
 
 print(ctx.svg())
