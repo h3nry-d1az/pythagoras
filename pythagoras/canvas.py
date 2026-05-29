@@ -52,7 +52,7 @@ class Canvas:
 
     def tikz(self) -> str:
         """
-        Render the scene into TikZ.
+        Render the scene into a standalone TikZ figure.
 
         Returns:
             The compiled TikZ document.
@@ -60,13 +60,26 @@ class Canvas:
         return "\n".join(
             (
                 r"\documentclass[crop,tikz]{standalone}",
-                r"\usetikzlibrary{arrows.meta}"
+                r"\usetikzlibrary{arrows.meta}",
                 r"\begin{document}",
+                self.tikzpicture(),
+                r"\end{document}",
+            )
+        )
+
+    def tikzpicture(self) -> str:
+        """
+        Render the scene into a TikZ picture.
+
+        Returns:
+            `tikzpicture` environment.
+        """
+        return "\n".join(
+            (
                 r"\begin{tikzpicture}"
                 + (f"[scale={self.context.scale}]" if self.context.scale != 1 else ""),
                 "\n".join(e.tikz(self.context, *a) for e, a in sorted(self.__elements)),
                 r"\end{tikzpicture}",
-                r"\end{document}",
             )
         )
 
@@ -75,7 +88,7 @@ class Canvas:
         Render the scene into SVG.
 
         Returns:
-            The final SVG picture.
+            Final SVG picture.
         """
         return "\n".join(
             (
