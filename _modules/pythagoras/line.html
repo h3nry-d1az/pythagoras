@@ -120,6 +120,75 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span> <span class="o">/</span> <span class="n">b</span><span class="p">),</span> <span class="n">Vector</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="p">))</span></div>
 
 
+<div class="viewcode-block" id="Line.segment_bisector">
+<a class="viewcode-back" href="../../pythagoras.line.html#pythagoras.line.Line.segment_bisector">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">segment_bisector</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">q</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">zord</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the line that bisects the segment :math:`\rm PQ`.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            p: First point of the segment, :math:`\rm P`.</span>
+<span class="sd">            q: Second point of the segment, :math:`\rm Q`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Segment bisector of :math:`\rm PQ`.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the segment is degenerate; that is, if :math:`\rm P = Q`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="n">q</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The segment cannot be degenerate, its boundary points must be different&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="p">((</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">unitary</span><span class="o">.</span><span class="n">perp</span><span class="p">,</span>
+            <span class="n">zord</span><span class="o">=</span><span class="n">zord</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Line.angle_bisector">
+<a class="viewcode-back" href="../../pythagoras.line.html#pythagoras.line.Line.angle_bisector">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_bisector</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">b</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">c</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">zord</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the line that bisects the angle :math:`\angle \rm ABC`.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            a: First point of the angle, :math:`\rm A`.</span>
+<span class="sd">            b: Center of the angle, :math:`\rm B`.</span>
+<span class="sd">            c: Second point of the angle, :math:`\rm C`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Angle bisector of :math:`\angle\rm ABC`.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the angle is degenerate, that is, if :math:`\rm A`,</span>
+<span class="sd">            :math:`\rm B` or :math:`\rm C` coincide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">or</span> <span class="n">b</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The angle cannot be degenerate; A, B and C must be different from each other&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">b</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">unitary</span>
+                <span class="o">+</span> <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">unitary</span>
+            <span class="p">),</span>
+            <span class="n">zord</span><span class="o">=</span><span class="n">zord</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">implicit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

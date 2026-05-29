@@ -50,6 +50,28 @@ a line extends throughout the entirety of the canvas.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.line.Line.angle_bisector">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">angle_bisector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/line.html#Line.angle_bisector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.line.Line.angle_bisector" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs the line that bisects the angle <span class="math notranslate nohighlight">\(\angle \rm ABC\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – First point of the angle, <span class="math notranslate nohighlight">\(\rm A\)</span>.</p></li>
+<li><p><strong>b</strong> – Center of the angle, <span class="math notranslate nohighlight">\(\rm B\)</span>.</p></li>
+<li><p><strong>c</strong> – Second point of the angle, <span class="math notranslate nohighlight">\(\rm C\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Angle bisector of <span class="math notranslate nohighlight">\(\angle\rm ABC\)</span>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the angle is degenerate, that is, if <span class="math notranslate nohighlight">\(\rm A\)</span>,</p>
+</dd>
+</dl>
+<p>:raises rm B` or <span class="math notranslate nohighlight">\(\rm C\)</span> coincide:</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pythagoras.line.Line.direction">
 <span class="sig-name descname"><span class="pre">direction</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="pythagoras.vector.html#pythagoras.vector.Vector" title="pythagoras.vector.Vector"><span class="pre">Vector</span></a></span><a class="headerlink" href="#pythagoras.line.Line.direction" title="Link to this definition">¶</a></dt>
@@ -110,6 +132,26 @@ are the coefficients of <span class="math notranslate nohighlight">\(x\)</span> 
 <dt class="sig sig-object py" id="pythagoras.line.Line.point">
 <span class="sig-name descname"><span class="pre">point</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pythagoras.line.Line.point" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pythagoras.line.Line.segment_bisector">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">segment_bisector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="_modules/pythagoras/line.html#Line.segment_bisector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pythagoras.line.Line.segment_bisector" title="Link to this definition">¶</a></dt>
+<dd><p>Constructs the line that bisects the segment <span class="math notranslate nohighlight">\(\rm PQ\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> – First point of the segment, <span class="math notranslate nohighlight">\(\rm P\)</span>.</p></li>
+<li><p><strong>q</strong> – Second point of the segment, <span class="math notranslate nohighlight">\(\rm Q\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Segment bisector of <span class="math notranslate nohighlight">\(\rm PQ\)</span>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the segment is degenerate; that is, if <span class="math notranslate nohighlight">\(\rm P = Q\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pythagoras.line.Line.svg">
@@ -199,12 +241,14 @@ intersect at another segment, or a point otherwise.</p>
     <ul>
 <li><a class="reference internal" href="#">pythagoras.line module</a><ul>
 <li><a class="reference internal" href="#pythagoras.line.Line"><code class="docutils literal notranslate"><span class="pre">Line</span></code></a><ul>
+<li><a class="reference internal" href="#pythagoras.line.Line.angle_bisector"><code class="docutils literal notranslate"><span class="pre">Line.angle_bisector()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.direction"><code class="docutils literal notranslate"><span class="pre">Line.direction</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.extrema"><code class="docutils literal notranslate"><span class="pre">Line.extrema()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.from_implicit"><code class="docutils literal notranslate"><span class="pre">Line.from_implicit()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.from_two_points"><code class="docutils literal notranslate"><span class="pre">Line.from_two_points()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.implicit"><code class="docutils literal notranslate"><span class="pre">Line.implicit</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.point"><code class="docutils literal notranslate"><span class="pre">Line.point</span></code></a></li>
+<li><a class="reference internal" href="#pythagoras.line.Line.segment_bisector"><code class="docutils literal notranslate"><span class="pre">Line.segment_bisector()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.svg"><code class="docutils literal notranslate"><span class="pre">Line.svg()</span></code></a></li>
 <li><a class="reference internal" href="#pythagoras.line.Line.tikz"><code class="docutils literal notranslate"><span class="pre">Line.tikz()</span></code></a></li>
 </ul>
