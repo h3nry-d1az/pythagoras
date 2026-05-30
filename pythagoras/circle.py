@@ -1,4 +1,4 @@
-from math import atan2, cos, degrees, hypot, sin, sqrt
+from math import atan2, cos, degrees, hypot, isclose, sin, sqrt
 from typing import Self
 
 from .backend import fill_default_args, svg_command, tikz_command
@@ -6,6 +6,7 @@ from .pobject import PObject, POProperty, RenderingContext
 from .style import CustomStyle, color
 from .style.draw import Fill, Stroke
 from .utils import cartesian_to_canvas
+from .vector import Vector
 
 __all__ = ["Circle", "Ellipse", "Point"]
 
@@ -145,6 +146,20 @@ class Circle(PObject):
             (p3[0] + (p1[0] - p3[0]) * q3, p3[1] + (p1[1] - p3[1]) * q3),
         )
 
+    def __contains__(self, p: tuple[float, float]) -> bool:
+        r"""
+        Checks whether a point belongs to the disk with the current circle as boundary.
+
+        Parameters:
+            p: A given point in :math:`\mathbf R^2`.
+
+        Returns:
+            `True` if `p` lies inside the disk, `False` otherwise.
+        """
+        return (d := hypot(p[0] - self.x, p[1] - self.y)) <= self.radius or isclose(
+            d, 0, abs_tol=1e-9
+        )
+
 
 class Ellipse(PObject):
     """
@@ -234,6 +249,22 @@ class Ellipse(PObject):
         ell = cls(x, y, rx, ry, zord)
         ell.theta = atan2(f2[1] - f1[1], f2[0] - f1[0])
         return ell
+
+    def __contains__(self, p: tuple[float, float]) -> bool:
+        r"""
+        Checks whether a point belongs to the region bounded by the ellipse.
+
+        Parameters:
+            p: A given point in :math:`\mathbf R^2`.
+
+        Returns:
+            `True` if `p` lies inside the ellipse, `False` otherwise.
+        """
+        d = Vector.from_two_points((self.x, self.y), p)
+        d >>= self.theta
+        return (q := d.x**2 / self.rx**2 + d.y**2 / self.ry**2) <= 1 or isclose(
+            q, 0, abs_tol=1e-9
+        )
 
 
 class Point(Circle):

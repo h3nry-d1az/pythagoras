@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from math import cos, hypot, sin
+from math import atan2, cos, hypot, sin
 from typing import Self
 
 __all__ = ["Vector", "dist"]
@@ -139,6 +139,11 @@ class Vector:
         operation there.
         """
         return self.x * other.y - self.y * other.x
+
+    @property
+    def theta(self) -> float:
+        """Angle formed by the vector with respect to the positive :math:`x`-axis."""
+        return atan2(self.y, self.x)
 
     @property
     def perp(self) -> Self:

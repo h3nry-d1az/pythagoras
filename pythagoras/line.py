@@ -9,7 +9,7 @@ from .pobject import PObject, POProperty, RenderingContext
 from .shape import Path
 from .style import CustomStyle, color
 from .style.draw import Stroke
-from .utils import cartesian_to_canvas
+from .utils import cartesian_to_canvas, segment_contains
 from .vector import Vector
 
 __all__ = [
@@ -17,8 +17,6 @@ __all__ = [
     "_intersect_line_and_path",
     "_intersect_line_and_segment",
     "_unpack_simple_intersection",
-    "intersect_segments",
-    "segment_contains",
 ]
 
 
@@ -364,55 +362,3 @@ def _unpack_simple_intersection(
         return [i] if sc(i, a, b) else []
     i = cast(Iterable[tuple[float, float]], i)
     return [j for j in i if sc(j, a, b)]
-
-
-def segment_contains(
-    p: tuple[float, float], pa: tuple[float, float], pb: tuple[float, float]
-) -> bool:
-    r"""
-    Checks whether a point lies in the segment that joins :math:`\rm A` and :math:`\rm B`.
-
-    Parameters:
-        p: Point to analyze.
-        pa: First endpoint of the segment.
-        pb: Second endpoint of the segment.
-
-    Returns:
-        Whether :math:`\rm P \in \overline{AB}`.
-    """
-    u = Vector.from_two_points(pa, pb)
-    v = Vector.from_two_points(pa, p)
-    d = u @ v
-    if not isclose(u ^ v, 0, abs_tol=1e-9) or d < -1e-9:
-        return False
-    return d <= abs(u) ** 2
-
-
-def intersect_segments(
-    a1: tuple[float, float],
-    b1: tuple[float, float],
-    a2: tuple[float, float],
-    b2: tuple[float, float],
-) -> None | tuple[float, float] | tuple[tuple[float, float], tuple[float, float]]:
-    """
-    Computes the intersection between two segments, described by their endpoints.
-
-    Parameters:
-        a1: First endpoint of the first segment.
-        b1: Second endpoint of the first segment.
-        a2: First endpoint of the second segment.
-        b2: Second endpoint of the second segment.
-
-    Returns:
-        `None` if the two segments do not intersect, two delimiting points if they
-        intersect at another segment, or a point otherwise.
-    """
-    l = Line.from_two_points(a1, b1)
-    i = _intersect_line_and_segment(l, a2, b2)
-    if not i:
-        return None
-    if isinstance(i[0], float):
-        i = cast(tuple[float, float], i)
-        return i if segment_contains(i, a1, b1) else None
-    (a1, b1), (a2, b2) = sorted((a1, b1)), sorted((a2, b2))
-    return (i, e) if (i := max(a1, a2)) <= (e := min(b1, b2)) else None

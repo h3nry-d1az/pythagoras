@@ -1,12 +1,13 @@
 from collections.abc import Callable
-from math import atan2, cos, degrees, hypot, inf, pi, sin, tau
+from math import atan2, cos, degrees, hypot, inf, isclose, pi, sin, tau
 from typing import Self
 
 from .backend import fill_default_args, svg_command, svg_path, tikz_command
 from .pobject import PObject, POProperty, RenderingContext
 from .style import CustomStyle, color
 from .style.draw import Fill, Stroke
-from .utils import cartesian_to_canvas
+from .utils import cartesian_to_canvas, segment_contains
+from .vector import Vector
 
 __all__ = ["Arc", "Parametric"]
 
@@ -173,6 +174,13 @@ class Arc(PObject):
             *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )
 
+    def __contains__(self, p: tuple[float, float]) -> bool:
+        v = Vector.from_two_points(self.o, p)
+        if not isclose(abs(v), self.radius, abs_tol=1e-9):
+            return False
+        v >>= self.theta
+        return (t := v.theta) <= self.theta or isclose(t, self.theta, abs_tol=1e-9)
+
 
 class Parametric(PObject):
     """
@@ -242,3 +250,7 @@ class Parametric(PObject):
             (cartesian_to_canvas(p, ctx) for p in self.make_points()),
             *fill_default_args(args, (Fill, Fill(None)), (Stroke, Stroke(color.BLACK))),
         )
+
+    def __contains__(self, p: tuple[float, float]) -> bool:
+        ps = self.make_points()
+        return any(segment_contains(p, ps[i], ps[i + 1]) for i in range(len(ps) - 1))

@@ -10,13 +10,12 @@ from ..line import (
     Line,
     _intersect_line_and_path,  # pyright: ignore[reportPrivateUsage]
     _unpack_simple_intersection,  # pyright: ignore[reportPrivateUsage]
-    intersect_segments,
 )
 from ..pobject import PObject, POProperty, RenderingContext
 from ..shape import Path
 from ..style.color import BLACK
 from ..style.draw import Fill, Stroke
-from ..utils import cartesian_to_canvas
+from ..utils import cartesian_to_canvas, intersect_segments
 from ..vector import Vector, dist
 
 __all__ = ["GenericBarycentric", "GenericCartesian", "GenericTrilinear", "Triangle"]

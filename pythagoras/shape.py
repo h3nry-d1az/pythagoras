@@ -6,7 +6,7 @@ from .backend import fill_default_args, svg_path, tikz_command
 from .pobject import PObject, POProperty, RenderingContext
 from .style import color
 from .style.draw import Fill, Stroke
-from .utils import cartesian_to_canvas
+from .utils import cartesian_to_canvas, segment_contains
 
 __all__ = ["Path", "Polygon", "grid"]
 
@@ -69,6 +69,12 @@ class Path(PObject):
             )
             for x, y in self.points
         ]
+
+    def __contains__(self, p: tuple[float, float]) -> bool:
+        return any(
+            segment_contains(p, self.points[i], self.points[i + 1])
+            for i in range(len(self.points) - 1)
+        )
 
 
 class Polygon(Path):
