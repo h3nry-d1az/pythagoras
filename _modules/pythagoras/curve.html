@@ -35,14 +35,15 @@
             
   <h1>Source code for pythagoras.curve</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">atan2</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">hypot</span><span class="p">,</span> <span class="n">inf</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">tau</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">atan2</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">hypot</span><span class="p">,</span> <span class="n">inf</span><span class="p">,</span> <span class="n">isclose</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">tau</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">fill_default_args</span><span class="p">,</span> <span class="n">svg_command</span><span class="p">,</span> <span class="n">svg_path</span><span class="p">,</span> <span class="n">tikz_command</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.style</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomStyle</span><span class="p">,</span> <span class="n">color</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.style.draw</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fill</span><span class="p">,</span> <span class="n">Stroke</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian_to_canvas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian_to_canvas</span><span class="p">,</span> <span class="n">segment_contains</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Arc&quot;</span><span class="p">,</span> <span class="s2">&quot;Parametric&quot;</span><span class="p">]</span>
 
@@ -224,7 +225,14 @@
             <span class="p">),</span>
             <span class="o">*</span><span class="n">fill_default_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="p">(</span><span class="n">Fill</span><span class="p">,</span> <span class="n">Fill</span><span class="p">(</span><span class="kc">None</span><span class="p">)),</span> <span class="p">(</span><span class="n">Stroke</span><span class="p">,</span> <span class="n">Stroke</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">))),</span>
         <span class="p">)</span></div>
-</div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">o</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isclose</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">v</span> <span class="o">&gt;&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">t</span> <span class="o">:=</span> <span class="n">v</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="ow">or</span> <span class="n">isclose</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span></div>
 
 
 
@@ -309,7 +317,11 @@
             <span class="p">(</span><span class="n">cartesian_to_canvas</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_points</span><span class="p">()),</span>
             <span class="o">*</span><span class="n">fill_default_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="p">(</span><span class="n">Fill</span><span class="p">,</span> <span class="n">Fill</span><span class="p">(</span><span class="kc">None</span><span class="p">)),</span> <span class="p">(</span><span class="n">Stroke</span><span class="p">,</span> <span class="n">Stroke</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">BLACK</span><span class="p">))),</span>
         <span class="p">)</span></div>
-</div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_points</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">segment_contains</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">ps</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ps</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div>
 
 </pre></div>
 

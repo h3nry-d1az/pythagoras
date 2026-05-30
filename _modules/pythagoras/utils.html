@@ -35,10 +35,12 @@
             
   <h1>Source code for pythagoras.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">isclose</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Phantom&quot;</span><span class="p">,</span> <span class="s2">&quot;cartesian_to_canvas&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Phantom&quot;</span><span class="p">,</span> <span class="s2">&quot;cartesian_to_canvas&quot;</span><span class="p">,</span> <span class="s2">&quot;intersect_segments&quot;</span><span class="p">,</span> <span class="s2">&quot;segment_contains&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="cartesian_to_canvas">
@@ -61,6 +63,79 @@
         <span class="n">ctx</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>
         <span class="n">ctx</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">ctx</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>
     <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="segment_contains">
+<a class="viewcode-back" href="../../pythagoras.utils.html#pythagoras.utils.segment_contains">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">segment_contains</span><span class="p">(</span>
+    <span class="n">p</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">pa</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">pb</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks whether a point lies in the segment that joins :math:`\rm A` and :math:`\rm B`.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        p: Point to analyze.</span>
+<span class="sd">        pa: First endpoint of the segment.</span>
+<span class="sd">        pb: Second endpoint of the segment.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Whether :math:`\rm P \in \overline{AB}`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">pa</span><span class="p">,</span> <span class="n">pb</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">pa</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">u</span> <span class="o">@</span> <span class="n">v</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isclose</span><span class="p">(</span><span class="n">u</span> <span class="o">^</span> <span class="n">v</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span> <span class="ow">or</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1e-9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+
+
+<div class="viewcode-block" id="intersect_segments">
+<a class="viewcode-back" href="../../pythagoras.utils.html#pythagoras.utils.intersect_segments">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">intersect_segments</span><span class="p">(</span>
+    <span class="n">a1</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">b1</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">a2</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">b2</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the intersection between two segments, described by their endpoints.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        a1: First endpoint of the first segment.</span>
+<span class="sd">        b1: Second endpoint of the first segment.</span>
+<span class="sd">        a2: First endpoint of the second segment.</span>
+<span class="sd">        b2: Second endpoint of the second segment.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        `None` if the two segments do not intersect, two delimiting points if they</span>
+<span class="sd">        intersect at another segment, or a point otherwise.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If one of the two segments is degenerate, i.e., its delimiting</span>
+<span class="sd">        points are the same.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">),</span> <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="n">b2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">u</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The first segment must have a nonzero length&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">v</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The second segment must have a nonzero length&quot;</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">from_two_points</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">u</span> <span class="o">|</span> <span class="n">v</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">a1</span> <span class="o">!=</span> <span class="n">a2</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">w</span> <span class="o">|</span> <span class="n">u</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">),</span> <span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="n">b2</span><span class="p">)</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">)),</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">a2</span><span class="p">,</span> <span class="n">b2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">:=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">e</span> <span class="o">:=</span> <span class="nb">min</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">))</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">u</span> <span class="o">^</span> <span class="n">v</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">u</span> <span class="o">^</span> <span class="n">w</span> <span class="o">/</span> <span class="n">d</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">v</span> <span class="o">^</span> <span class="n">w</span> <span class="o">/</span> <span class="n">d</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">a2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">k</span> <span class="o">*</span> <span class="n">v</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">k</span> <span class="o">*</span> <span class="n">v</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></div>
 
 
 

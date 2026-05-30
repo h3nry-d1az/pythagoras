@@ -46,13 +46,12 @@
     <span class="n">Line</span><span class="p">,</span>
     <span class="n">_intersect_line_and_path</span><span class="p">,</span>  <span class="c1"># pyright: ignore[reportPrivateUsage]</span>
     <span class="n">_unpack_simple_intersection</span><span class="p">,</span>  <span class="c1"># pyright: ignore[reportPrivateUsage]</span>
-    <span class="n">intersect_segments</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..pobject</span><span class="w"> </span><span class="kn">import</span> <span class="n">PObject</span><span class="p">,</span> <span class="n">POProperty</span><span class="p">,</span> <span class="n">RenderingContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..style.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">BLACK</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..style.draw</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fill</span><span class="p">,</span> <span class="n">Stroke</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian_to_canvas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">cartesian_to_canvas</span><span class="p">,</span> <span class="n">intersect_segments</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">dist</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GenericBarycentric&quot;</span><span class="p">,</span> <span class="s2">&quot;GenericCartesian&quot;</span><span class="p">,</span> <span class="s2">&quot;GenericTrilinear&quot;</span><span class="p">,</span> <span class="s2">&quot;Triangle&quot;</span><span class="p">]</span>
