@@ -619,6 +619,58 @@ class Triangle(PObject):
             )
         )
 
+    @property
+    def gergonne(self) -> tuple[float, float]:
+        """Gergonne point of the triangle (:math:`X_7`)."""
+        return self.barycentric(
+            (
+                1 / (-self.a + self.b + self.c),
+                1 / (self.a - self.b + self.c),
+                1 / (self.a + self.b - self.c),
+            )
+        )
+
+    @property
+    def nagel(self) -> tuple[float, float]:
+        """
+        Nagel point of the triangle (:math:`X_8`);
+        coincides with the isotomic conjugate of :meth:`Triangle.gergonne`.
+        """
+        return self.barycentric(
+            (
+                -self.a + self.b + self.c,
+                self.a - self.b + self.c,
+                self.a + self.b - self.c,
+            )
+        )
+
+    @property
+    def mittenpunkt(self) -> tuple[float, float]:
+        """_Mittenpunkt_ of the triangle (:math:`X_9`)."""
+        return self.barycentric(
+            (
+                self.a * (-self.a + self.b + self.c),
+                self.b * (self.a - self.b + self.c),
+                self.c * (self.a + self.b - self.c),
+            )
+        )
+
+    @property
+    def spieker(self) -> tuple[float, float]:
+        """Spieker center of the triangle (:math:`X_{10}`)."""
+        return self.barycentric((self.b + self.c, self.a + self.c, self.b + self.c))
+
+    @property
+    def feuerbach(self) -> tuple[float, float]:
+        """Feuerbach point of the triangle (:math:`X_{11}`)."""
+        return self.barycentric(
+            (
+                self.a * (1 - cos(self.beta - self.gamma)),
+                self.b * (1 - cos(self.gamma - self.alpha)),
+                self.c * (1 - cos(self.alpha - self.beta)),
+            )
+        )
+
     def pedal_triangle(self, point: tuple[float, float], zord: int = 0) -> Self:
         """
         Constructs the pedal triangle associated with a given point.

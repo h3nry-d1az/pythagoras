@@ -241,7 +241,7 @@ class Point(Circle):
     A circle small enough to represent a point.
     """
 
-    def __init__(self, x: float, y: float, radius: float = 1, zord: int = 0) -> None:
+    def __init__(self, x: float, y: float, radius: float = 0.1, zord: int = 0) -> None:
         super().__init__(x, y, radius, zord)
 
     def tikz(self, ctx: RenderingContext, *args: POProperty) -> str:

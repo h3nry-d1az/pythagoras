@@ -58,7 +58,7 @@ class Label(PObject):
         point: tuple[float, float],
         direction: AnchoringDirection,
         tag: str,
-        offset: float = 0.25,
+        offset: float = 0.33,
         padding: float = 0.05,
         zord: int = 0,
     ) -> Self:
@@ -69,7 +69,7 @@ class Label(PObject):
             point: Point to which the label is anchored.
             direction: Anchoring direction (north, west...). See :class:`AnchoringDirection` for further information.
             tag: :math:`{\rm \LaTeX}` string to render inside the label.
-            offset: Distance between the point to which the label is anchored and the label itself (default 0.25).
+            offset: Distance between the point to which the label is anchored and the label itself (default 0.33).
             padding: Spacing around the label (default 0.05).
             zord: Rendering priority.
         """
