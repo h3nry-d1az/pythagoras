@@ -683,7 +683,7 @@ class Triangle(PObject):
 
     @property
     def mittenpunkt(self) -> tuple[float, float]:
-        """_Mittenpunkt_ of the triangle (:math:`X_9`)."""
+        """*Mittenpunkt* of the triangle (:math:`X_9`)."""
         return self.barycentric(
             (
                 self.a * (-self.a + self.b + self.c),
