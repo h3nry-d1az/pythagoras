@@ -197,7 +197,8 @@ class Parametric(PObject):
     f: Callable[[float], tuple[float, float]]
     a: float
     b: float
-    dt: float
+    __dt: float
+    __points: list[tuple[float, float]] | None
 
     def __init__(
         self,
@@ -213,6 +214,15 @@ class Parametric(PObject):
         self.dt = dt if dt > 0 else (b - a) / 100
         self._zord = zord
 
+    @property
+    def dt(self) -> float:
+        return self.__dt
+
+    @dt.setter
+    def dt(self, _dt: float) -> None:
+        self.__points = None
+        self.__dt = _dt
+
     def make_points(self) -> list[tuple[float, float]]:
         """
         Compute the positions of each of the samples of the curve.
@@ -220,11 +230,14 @@ class Parametric(PObject):
         Returns:
             List containing the sampled points.
         """
+        if self.__points:
+            return self.__points
         ps: list[tuple[float, float]] = []
         t = self.a
         while t <= self.b:
             t += self.dt
             ps.append(self.f(t))
+        self.__points = ps
         return ps
 
     def extrema(self) -> list[tuple[float, float]]:

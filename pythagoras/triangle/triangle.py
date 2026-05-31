@@ -1,6 +1,6 @@
 from collections.abc import Callable
 from itertools import combinations
-from math import acos, cos, pi, sin, sqrt, tan
+from math import acos, atan, cos, pi, sin, sqrt, tan
 from typing import Annotated, Any, Self, cast
 
 from ..backend import fill_default_args, svg_path, tikz_command
@@ -184,6 +184,36 @@ class Triangle(PObject):
     def C(self, pc: tuple[float, float]) -> None:
         self.__pc = pc
         self._fill_data()
+
+    @property
+    def AB(self) -> Vector:
+        r"""Vector :math:`\overrightarrow{\rm AB}`."""
+        return Vector.from_two_points(self.__pa, self.__pb)
+
+    @property
+    def BA(self) -> Vector:
+        r"""Vector :math:`\overrightarrow{\rm BA}`."""
+        return Vector.from_two_points(self.__pb, self.__pa)
+
+    @property
+    def AC(self) -> Vector:
+        r"""Vector :math:`\overrightarrow{\rm AC}`."""
+        return Vector.from_two_points(self.__pa, self.__pc)
+
+    @property
+    def CA(self) -> Vector:
+        r"""Vector :math:`\overrightarrow{\rm CA}`."""
+        return Vector.from_two_points(self.__pc, self.__pa)
+
+    @property
+    def BC(self) -> Vector:
+        r"""Vector :math:`\overrightarrow{\rm BC}`."""
+        return Vector.from_two_points(self.__pb, self.__pc)
+
+    @property
+    def CB(self) -> Vector:
+        r"""Vector :math:`\overrightarrow{\rm CB}`."""
+        return Vector.from_two_points(self.__pc, self.__pb)
 
     @property
     def a(self) -> float:
@@ -456,6 +486,7 @@ class Triangle(PObject):
     def isogonal_conjugate(self, point: tuple[float, float]) -> tuple[float, float]:
         """
         Calculates the isogonal conjugate of a point expressed in Cartesian coordinates.
+        The operator `*` is also overloaded for this purpose.
 
         Parameters:
             point: The point in Cartesian coordinates.
@@ -466,9 +497,13 @@ class Triangle(PObject):
         u, v, w = self.to_barycentric(point)
         return self.barycentric((self.a**2 / u, self.b**2 / v, self.c**2 / w))
 
+    def __mul__(self, point: tuple[float, float]) -> tuple[float, float]:
+        return self.isogonal_conjugate(point)
+
     def isotomic_conjugate(self, point: tuple[float, float]) -> tuple[float, float]:
         """
         Calculates the isotomic conjugate of a point expressed in Cartesian coordinates.
+        The operator `@` is also overloaded for this purpose.
 
         Parameters:
             point: The point in Cartesian coordinates.
@@ -478,6 +513,9 @@ class Triangle(PObject):
         """
         u, v, w = self.to_barycentric(point)
         return self.barycentric((1 / u, 1 / v, 1 / w))
+
+    def __matmul__(self, point: tuple[float, float]) -> tuple[float, float]:
+        return self.isotomic_conjugate(point)
 
     def homothety(
         self, point: tuple[float, float], ratio: float, zord: int = 0
@@ -668,6 +706,30 @@ class Triangle(PObject):
                 self.b * (1 - cos(self.gamma - self.alpha)),
                 self.c * (1 - cos(self.alpha - self.beta)),
             )
+        )
+
+    @property
+    def brocard_angle(self) -> float:
+        r"""
+        Brocard angle :math:`\omega`; satisfies the identity
+        :math:`\cot\omega = (\cot \alpha + \cot \beta + \cot \gamma)`.
+        """
+        return atan(
+            1 / (1 / tan(self.alpha) + 1 / tan(self.beta) + 1 / tan(self.gamma))
+        )
+
+    @property
+    def brocard_first(self) -> tuple[float, float]:
+        """First Brocard point of the triangle."""
+        return self.barycentric(
+            ((self.c * self.a) ** 2, (self.a * self.b) ** 2, (self.b * self.c) ** 2)
+        )
+
+    @property
+    def brocard_second(self) -> tuple[float, float]:
+        """Second Brocard point of the triangle."""
+        return self.barycentric(
+            ((self.a * self.b) ** 2, (self.b * self.c) ** 2, (self.c * self.a) ** 2)
         )
 
     def pedal_triangle(self, point: tuple[float, float], zord: int = 0) -> Self:
