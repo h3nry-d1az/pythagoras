@@ -30,6 +30,10 @@ Tutorial
 I have uploaded `a YouTube video <https://youtu.be/UlX8bVKoGzg>`_ covering the fundamental
 aspects of the library; that is a good resource from which to learn.
 
+Contents
+--------
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+
+   modules
